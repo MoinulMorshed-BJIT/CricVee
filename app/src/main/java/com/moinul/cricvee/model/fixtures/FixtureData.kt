@@ -38,7 +38,6 @@ data class FixtureData(
     @Ignore
     var second_umpire_id: Int?,
     var stage_id: Int?,
-    @Ignore
     var starting_at: String?,
     var status: String?,
     var super_over: Boolean?,

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="@dimen/activity_horizontal_margin"
+    app:cardElevation="@dimen/text_to_text_margin"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/team1_img"
+            android:layout_width="@dimen/team_img_width"
+            android:layout_height="@dimen/team_img_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/ic_launcher_background"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team1_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintBottom_toBottomOf="@id/team1_img"
+            app:layout_constraintStart_toEndOf="@id/team1_img"
+            app:layout_constraintTop_toTopOf="@id/team1_img"
+            tools:text="@string/dummyName"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team1_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/team1_overs"
+            app:layout_constraintTop_toTopOf="@id/team1_name"
+            android:layout_marginEnd="@dimen/text_to_text_margin"
+            tools:text="@string/dummyScore"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team1_overs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/team1_score"
+            tools:text="@string/dummyOvers"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            />
+
+
+        <ImageView
+            android:id="@+id/team2_img"
+            android:layout_width="@dimen/team_img_width"
+            android:layout_height="@dimen/team_img_height"
+            app:layout_constraintTop_toBottomOf="@id/team1_img"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            tools:src="@drawable/ic_launcher_background"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team2_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintBottom_toBottomOf="@id/team2_img"
+            app:layout_constraintStart_toEndOf="@id/team2_img"
+            app:layout_constraintTop_toTopOf="@id/team2_img"
+            tools:text="@string/dummyName"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team2_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/team1_overs"
+            app:layout_constraintTop_toTopOf="@id/team2_name"
+            tools:text="@string/dummyScore"
+            android:layout_marginEnd="@dimen/text_to_text_margin"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/team2_overs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/team2_score"
+            tools:text="@string/dummyOvers"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/match_note_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/team2_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/dummyMatchNote"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            />
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
