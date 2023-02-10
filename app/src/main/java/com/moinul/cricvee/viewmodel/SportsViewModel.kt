@@ -14,16 +14,17 @@ import com.moinul.cricvee.database.SportsDatabase
 import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.fixtures.FixtureRunData
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
+import com.moinul.cricvee.model.fixtures.Run
 import com.moinul.cricvee.model.teams.TeamData
 import com.moinul.cricvee.network.SportsApi
 import com.moinul.cricvee.repository.Repository
 import com.moinul.cricvee.utils.ConnectivityReceiver
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SportsViewModel(application: Application): AndroidViewModel(application) {
     val repository: Repository
+    lateinit var currentFixtureWithRun: FixtureWithRun
+    lateinit var currentFixtureRunData: FixtureRunData
     private val _internetStatus = MutableLiveData<Boolean>()
     val internetStatus: LiveData<Boolean>
         get() = _internetStatus
@@ -52,16 +53,28 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun fetchRunsByFixtureId(fixtureId: Int):FixtureRunData?{
-        var fixtureWithRun: FixtureWithRun? = null
-        var fixtureRunData: FixtureRunData?=null
+    /*fun fetchData(fixtureId: Int, callback: (FixtureWithRun) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("TAGviewModel", "fetchRunsByFixtureId: ${fixtureRunData.toString()}")
-            fixtureWithRun = SportsApi.retrofitService.fetchRunsByFixtureId(fixtureId)
-            fixtureRunData = fixtureWithRun!!.data
-            Log.d("TAGviewModel", "fetchRunsByFixtureId: ${fixtureRunData.toString()}")
+            val data = fetchRunsByFixtureId(fixtureId)
+            withContext(Dispatchers.Main) {
+                callback(data)
+            }
         }
-        return fixtureRunData
+    }*/
+
+    suspend fun fetchRunsByFixtureId(fixtureId: Int):Result<FixtureWithRun>{
+
+        return viewModelScope.async(Dispatchers.IO) {
+
+            try {
+                val response = SportsApi.retrofitService.fetchRunsByFixtureId(fixtureId)
+                Log.d("TAGviewModel", "SUCCESS fetchRunsByFixtureId: ${response.data}")
+                Result.success(response)
+            } catch (e: Exception) {
+                Log.d("TAGviewModel", "API fetch fail $e")
+                Result.failure(e)
+            }
+        }.await()
     }
 
     fun readTeamById(teamId: Int):TeamData{

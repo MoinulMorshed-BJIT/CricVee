@@ -12,7 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moinul.cricvee.R
 import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.fixtures.FixtureRunData
+import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.teams.TeamData
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.match_item.view.*
 import kotlinx.coroutines.Dispatchers
@@ -43,12 +45,12 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val match = matchList[position]
         var team1Data:TeamData?
         var team2Data: TeamData?
+        var fixtureRunDataResponseResult: Result<FixtureWithRun>
         var fixtureRunData: FixtureRunData?
-        var team1runAndWicketsData: String = ""
-        var team1overData: String = ""
-        var team2runAndWicketsData: String = ""
-        var team2overData: String = ""
-
+        var team1runAndWicketsData = ""
+        var team1overData = ""
+        var team2runAndWicketsData = ""
+        var team2overData = ""
 
         val team1imageView = holder.itemView.team1_img
         val team2imageView = holder.itemView.team2_img
@@ -60,37 +62,48 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val team2score = holder.itemView.team2_score
         val team2overs = holder.itemView.team2_overs
 
+        noteResult.text = match.note
+
         GlobalScope.launch(Dispatchers.Default) {
             team1Data = match.visitorteam_id?.let { viewModel.readTeamById(it) }!!
             team2Data = match.localteam_id?.let { viewModel.readTeamById(it) }!!
 
             //Log.d("TAG", "onBindViewHolder: ${match.id}")
-            fixtureRunData = viewModel.fetchRunsByFixtureId(match.id)
-            Log.d("TAG", "onBindViewHolder: ${fixtureRunData?.runs?.get(0)?.team_id}")
-            if(fixtureRunData?.runs?.get(0)?.team_id == match.visitorteam_id){
-                team1runAndWicketsData = fixtureRunData?.runs?.get(0)?.score.toString()+" / "+fixtureRunData?.runs?.get(0)?.wickets.toString()
-                team1overData = "( ${fixtureRunData?.runs?.get(0)?.overs.toString()} )"
+            fixtureRunDataResponseResult = viewModel.fetchRunsByFixtureId(match.id)
 
-                team2runAndWicketsData = fixtureRunData?.runs?.get(1)?.score.toString()+" / "+fixtureRunData?.runs?.get(1)?.wickets.toString()
-                team2overData = "( ${fixtureRunData?.runs?.get(1)?.overs.toString()} )"
+            if(fixtureRunDataResponseResult.isSuccess) {
+                fixtureRunData = fixtureRunDataResponseResult.getOrNull()?.data
+                Log.d("TAG", "onBindViewHolder: Parent = $fixtureRunData")
+                Log.d("TAG", "onBindViewHolder: RUNS LIST = ${fixtureRunData?.runs}")
+                if (fixtureRunData?.runs?.get(0)?.team_id == match.visitorteam_id) {
+                    team1runAndWicketsData = fixtureRunData?.runs?.get(0)?.score.toString() + " / " + fixtureRunData?.runs?.get(0)?.wickets.toString()
+                    team1overData = "( ${fixtureRunData?.runs?.get(0)?.overs.toString()} )"
+
+                    team2runAndWicketsData = fixtureRunData?.runs?.get(1)?.score.toString() + " / " + fixtureRunData?.runs?.get(1)?.wickets.toString()
+                    team2overData = "( ${fixtureRunData?.runs?.get(1)?.overs.toString()} )"
+                } else {
+                    team2runAndWicketsData = fixtureRunData?.runs?.get(0)?.score.toString() + " / " + fixtureRunData?.runs?.get(0)?.wickets.toString()
+                    team2overData = "( ${fixtureRunData?.runs?.get(0)?.overs.toString()} )"
+
+
+                    team1runAndWicketsData = fixtureRunData?.runs?.get(1)?.score.toString() + " / " + fixtureRunData?.runs?.get(1)?.wickets.toString()
+                    team1overData = "( ${fixtureRunData?.runs?.get(1)?.overs.toString()} )"
+                }
             }else{
-                team2runAndWicketsData = fixtureRunData?.runs?.get(0)?.score.toString()+" / "+fixtureRunData?.runs?.get(0)?.wickets.toString()
-                team2overData = "( ${fixtureRunData?.runs?.get(0)?.overs.toString()} )"
+                team1runAndWicketsData = Constants.UNAVAILABLE
 
-
-                team1runAndWicketsData = fixtureRunData?.runs?.get(1)?.score.toString()+"/"+fixtureRunData?.runs?.get(1)?.wickets.toString()
-                team1overData = "( ${fixtureRunData?.runs?.get(1)?.overs.toString()} )"
+                team2runAndWicketsData = Constants.UNAVAILABLE
             }
 
             GlobalScope.launch(Dispatchers.Main) {
 
-                Glide.with(context).load(team1Data?.image_path).centerCrop()
+                Glide.with(context).load(team1Data?.image_path).fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .priority(Priority.HIGH)
                     .error(R.drawable.ic_connection_error)
                     .into(team1imageView)
 
-                Glide.with(context).load(team2Data?.image_path).centerCrop()
+                Glide.with(context).load(team2Data?.image_path).fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .priority(Priority.HIGH)
                     .error(R.drawable.ic_connection_error)
@@ -100,47 +113,11 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                 team1score.text = team1runAndWicketsData
                 team1overs.text = team1overData
 
-
                 team2name.text = team2Data?.name.toString()
                 team2score.text = team2runAndWicketsData
                 team2overs.text = team2overData
-
-
             }
-                /*name1 = team1Data?.name.toString()
-                name2 = team2Data?.name.toString()
-                image1path = team1Data?.image_path.toString()
-                image2path = team2Data?.image_path.toString()*/
-
         }
-        /*Glide.with(context).load(image1path).centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .priority(Priority.HIGH)
-            .into(team1imageView)
-
-        Glide.with(context).load(image2path).centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .priority(Priority.HIGH)
-            .into(team2imageView)
-
-        team1name.text = name1
-        team2name.text = name2*/
-        noteResult.text = match.note
-
-
-
-
-
-
-
-
-//        team1imageView.setImageResource(R.drawable.ic_home_black_24dp)
-//        team2imageView.setImageResource(R.drawable.ic_dashboard_black_24dp)
-
-
-
-
-
 
     }
 

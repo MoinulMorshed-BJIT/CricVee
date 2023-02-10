@@ -1,15 +1,12 @@
 package com.moinul.cricvee.network
 
-import com.google.gson.GsonBuilder
 import com.moinul.cricvee.model.fixtures.AllFixtures
-import com.moinul.cricvee.model.fixtures.FixtureRunData
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.teams.AllTeams
 import com.moinul.cricvee.utils.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -39,8 +36,9 @@ interface SportsApiService {
     @GET("teams")
     suspend fun fetchAllTeams(@Query("api_token") api_token :String = Constants.API_KEY):AllTeams
 
-    @GET("fixtures/{fixtureId}}")
-    suspend fun fetchRunsByFixtureId(@Path("fixtureId") fixtureId: Int, @Query("api_token") api_token: String = Constants.API_KEY):FixtureWithRun
+    @GET("fixtures/{fixtureId}")
+    suspend fun fetchRunsByFixtureId(@Path("fixtureId") fixtureId: Int, @Query("include") includeParam:String ="runs", @Query("api_token") api_token: String = Constants.API_KEY):FixtureWithRun
+
 
 }
 
