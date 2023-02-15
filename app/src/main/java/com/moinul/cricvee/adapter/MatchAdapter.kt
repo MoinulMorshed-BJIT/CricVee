@@ -75,19 +75,19 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                 fixtureRunData = fixtureRunDataResponseResult.getOrNull()?.data
                 Log.d("TAG", "onBindViewHolder: Parent = $fixtureRunData")
                 Log.d("TAG", "onBindViewHolder: RUNS LIST = ${fixtureRunData?.runs}")
-                if (fixtureRunData?.runs?.get(0)?.team_id == match.visitorteam_id) {
-                    team1runAndWicketsData = fixtureRunData?.runs?.get(0)?.score.toString() + " / " + fixtureRunData?.runs?.get(0)?.wickets.toString()
-                    team1overData = "( ${fixtureRunData?.runs?.get(0)?.overs.toString()} )"
+                if (fixtureRunData?.runs?.first()?.team_id == match.visitorteam_id) {
+                    team1runAndWicketsData = fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.get(0)?.wickets.toString()
+                    team1overData = "( ${fixtureRunData?.runs?.first()?.overs.toString()} )"
 
-                    team2runAndWicketsData = fixtureRunData?.runs?.get(1)?.score.toString() + " / " + fixtureRunData?.runs?.get(1)?.wickets.toString()
-                    team2overData = "( ${fixtureRunData?.runs?.get(1)?.overs.toString()} )"
+                    team2runAndWicketsData = fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.get(1)?.wickets.toString()
+                    team2overData = "( ${fixtureRunData?.runs?.last()?.overs.toString()} )"
                 } else {
-                    team2runAndWicketsData = fixtureRunData?.runs?.get(0)?.score.toString() + " / " + fixtureRunData?.runs?.get(0)?.wickets.toString()
-                    team2overData = "( ${fixtureRunData?.runs?.get(0)?.overs.toString()} )"
+                    team2runAndWicketsData = fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.get(0)?.wickets.toString()
+                    team2overData = "( ${fixtureRunData?.runs?.first()?.overs.toString()} )"
 
 
-                    team1runAndWicketsData = fixtureRunData?.runs?.get(1)?.score.toString() + " / " + fixtureRunData?.runs?.get(1)?.wickets.toString()
-                    team1overData = "( ${fixtureRunData?.runs?.get(1)?.overs.toString()} )"
+                    team1runAndWicketsData = fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.get(1)?.wickets.toString()
+                    team1overData = "( ${fixtureRunData?.runs?.last()?.overs.toString()} )"
                 }
             }else{
                 team1runAndWicketsData = Constants.UNAVAILABLE

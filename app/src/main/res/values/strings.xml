@@ -11,5 +11,19 @@
     <string name="dummyScore">195/9</string>
     <string name="dummyOvers">(50)</string>
     <string name="no_internet">No Internet</string>
+    <string name="home">HOME</string>
+    <string name="more">MORE</string>
+    <string name="players">PLAYERS</string>
+    <string name="player_search_hint">Enter player name</string>
+    <string name="statistics">STATISTICS</string>
+    <string name="rank">Rank</string>
+    <string name="team">TEAM</string>
+    <string name="ratings">Ratings</string>
+    <string name="points">Points</string>
+    <string name="men">MEN</string>
+    <string name="women">WOMEN</string>
+    <string name="odi">ODI</string>
+    <string name="test">TEST</string>
+    <string name="t20i">T20I</string>
 
 </resources>

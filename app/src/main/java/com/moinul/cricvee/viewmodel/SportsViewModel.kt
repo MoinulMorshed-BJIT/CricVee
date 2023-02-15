@@ -11,25 +11,39 @@ import com.bumptech.glide.Glide.init
 import com.moinul.cricvee.MyApplication
 import com.moinul.cricvee.database.SportsDao
 import com.moinul.cricvee.database.SportsDatabase
+import com.moinul.cricvee.model.countries.CountryData
+import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.fixtures.FixtureRunData
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.fixtures.Run
+import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
 import com.moinul.cricvee.model.teams.TeamData
 import com.moinul.cricvee.network.SportsApi
 import com.moinul.cricvee.repository.Repository
 import com.moinul.cricvee.utils.ConnectivityReceiver
+import com.moinul.cricvee.utils.Constants
 import kotlinx.coroutines.*
+import kotlin.math.log
 
+private const val TAG = "SportsViewModel"
 class SportsViewModel(application: Application): AndroidViewModel(application) {
     val repository: Repository
-    lateinit var currentFixtureWithRun: FixtureWithRun
-    lateinit var currentFixtureRunData: FixtureRunData
     private val _internetStatus = MutableLiveData<Boolean>()
     val internetStatus: LiveData<Boolean>
         get() = _internetStatus
 
     var readRecentFixtureData: LiveData<List<FixtureData>>
+    var readAllSquadPlayers: LiveData<List<Squad>>
+    var readAllTeams: LiveData<List<TeamData>>
+    var readAllTeamIdList: LiveData<List<Int>>
+    var readTestRankingMen: LiveData<List<LocalTeamRanking>>
+    var readODIRankingMen: LiveData<List<LocalTeamRanking>>
+    var readT20IRankingMen: LiveData<List<LocalTeamRanking>>
+
+    var readTestRankingWomen: LiveData<List<LocalTeamRanking>>
+    var readODIRankingWomen: LiveData<List<LocalTeamRanking>>
+    var readT20IRankingWomen: LiveData<List<LocalTeamRanking>>
     init {
         _internetStatus.value = ConnectivityReceiver.isConnected(application.applicationContext)
 
@@ -37,35 +51,130 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         repository = Repository(sportsDao)
 
         readRecentFixtureData = repository.readRecentFixtureData
+        readAllSquadPlayers = repository.readAllSquadPlayers
+        readAllTeams = repository.readAllTeams
+        readAllTeamIdList = repository.readAllTeamIdList
+        readTestRankingMen = repository.readTestRankingMen
+        readODIRankingMen = repository.readODIRankingMen
+        readT20IRankingMen = repository.readT20IRankingMen
+        readTestRankingWomen = repository.readTestRankingWomen
+        readODIRankingWomen = repository.readODIRankingWomen
+        readT20IRankingWomen = repository.readT20IRankingWomen
     }
 
     fun fetchAllFixtures(){
         viewModelScope.launch(Dispatchers.IO) {
-            val fixtureList = SportsApi.retrofitService.fetchAllFixtures().data
-            repository.insertAllFixtures(fixtureList)
+            var lastPage = 0
+            try {
+                lastPage = SportsApi.retrofitService.fetchAllFixtures(1).meta?.last_page!!
+                if(lastPage!=null){
+                    for(currentPage in 1..lastPage){
+                        val fixtureList = SportsApi.retrofitService.fetchAllFixtures(currentPage).data
+                        try{
+                            if(fixtureList.isNotEmpty()) {
+                                //repository.deleteAllFixtures()
+                                repository.insertAllFixtures(fixtureList)
+                            }
+                        }catch (e:Exception){
+                            Log.d("SportsViewModel", "fetchAllFixtures: fixtureList fetch $e")
+                        }
+                    }
+                }
+
+
+            }catch (e: Exception){
+                Log.d(TAG, "fetchAllFixtures: lastPage fetch $e ")
+            }
+
+
+        }
+    }
+
+    fun fetchTrendingFixtures(){
+        Log.d(TAG, "fetchTrendingFixtures: ${Constants.DURATION}  ${Constants.getDurationRange()}")
+        viewModelScope.launch(Dispatchers.IO) {
+
+            try{
+                Log.d(TAG, "INSIDE TRY fetchTrendingFixtures: ${Constants.DURATION}  ${Constants.getDurationRange()}")
+                val fixtureList = SportsApi.retrofitService.fetchTrendingFixtures().data
+                if(fixtureList.isNotEmpty()) {
+                    repository.deleteAllFixtures()
+                    repository.insertAllFixtures(fixtureList)
+                }
+            }catch (e:Exception){
+                Log.d("SportsViewModel", "fetchTrendingFixtures: $e")
+            }
         }
     }
 
     fun fetchAllTeams(){
         viewModelScope.launch(Dispatchers.IO) {
-            val teamList = SportsApi.retrofitService.fetchAllTeams().data
-            repository.insertAllTeams(teamList)
+
+            try {
+                val teamList = SportsApi.retrofitService.fetchAllTeams().data
+                //repository.deleteAllTeams()
+                repository.insertAllTeams(teamList)
+            }catch (e: Exception){
+                Log.d("SportsViewModel", "fetchAllTeams: $e")
+            }
         }
     }
 
-    /*fun fetchData(fixtureId: Int, callback: (FixtureWithRun) -> Unit) {
+    fun fetchCountries(){
         viewModelScope.launch(Dispatchers.IO) {
-            val data = fetchRunsByFixtureId(fixtureId)
-            withContext(Dispatchers.Main) {
-                callback(data)
+            try {
+                val countryList = SportsApi.retrofitService.fetchCountries().data
+                repository.insertAllCountries(countryList)
+            }catch (e: Exception){
+                Log.d(TAG, "fetchCountries: $e")
             }
         }
-    }*/
+    }
+
+    fun fetchTeamRankings(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val teamRankingDataList = SportsApi.retrofitService.fetchTeamRankings().data
+                val mutableListOfTeamRanking : MutableList<LocalTeamRanking> = mutableListOf()
+                for (teamRankData in teamRankingDataList){
+
+                    for(team in teamRankData.team){
+                        var localTeamRanking = LocalTeamRanking()
+                        var nameOfTeamOrCountry = team.name.toString()
+                        //Log.d(TAG, "fetchTeamRankings: NAME: $nameOfTeamOrCountry")
+
+                        if(teamRankData.gender=="women"){
+                            Log.d(TAG, "fetchTeamRankings: NAME: $nameOfTeamOrCountry")
+                            Log.d(TAG, "fetchTeamRankings: Retrieved CountryID: ${repository.getCountryIdByTeamName(nameOfTeamOrCountry)}")
+                            nameOfTeamOrCountry = nameOfTeamOrCountry.substring(0, nameOfTeamOrCountry.lastIndex-1)
+                            Log.d(TAG, "fetchTeamRankings: NAME: $nameOfTeamOrCountry")
+                        }
+
+
+
+                        localTeamRanking = localTeamRanking.setGender(teamRankData.gender!!)
+                            .setType(teamRankData.type!!)
+                            .setCountryId(repository.getCountryIdByTeamName(nameOfTeamOrCountry))
+                            .setTeamId(team.id)
+                            .setPosition(team.ranking?.position!!)
+                            .setMatches(team.ranking?.matches)
+                            .setPoints(team.ranking?.points)
+                            .setRating(team.ranking?.rating)
+                            .setName(nameOfTeamOrCountry)
+                        mutableListOfTeamRanking.add(localTeamRanking)
+                    }
+                }
+                repository.deleteAllTeamRankings()
+                repository.insertTeamRankings(mutableListOfTeamRanking)
+
+            }catch (e: Exception){
+                Log.d(TAG, "fetchTeamRankings: $e")
+            }
+        }
+    }
 
     suspend fun fetchRunsByFixtureId(fixtureId: Int):Result<FixtureWithRun>{
-
         return viewModelScope.async(Dispatchers.IO) {
-
             try {
                 val response = SportsApi.retrofitService.fetchRunsByFixtureId(fixtureId)
                 Log.d("TAGviewModel", "SUCCESS fetchRunsByFixtureId: ${response.data}")
@@ -80,10 +189,41 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     fun readTeamById(teamId: Int):TeamData{
         return repository.readTeamById(teamId)
     }
+    fun fetchCurrentSquad(teamIdList: List<Int>){
+        Log.d(TAG, "fetchCurrentSquad: CALLED")
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d(TAG, "fetchCurrentSquad: teamList: ${teamIdList.size} $teamIdList")
+            if(teamIdList.isNotEmpty()){
+                for(teamId in teamIdList){
+                    try {
+                        val playersList = SportsApi.retrofitService.fetchCurrentSquad(teamId).data.squad
+
+                        //repository.deleteAllTeams()
+                        Log.d("SportsViewModel", "fetchCurrentSquad: SUCCESS ${playersList}")
+                        repository.insertAllSquadPlayers(playersList)
+                    }catch (e: Exception){
+                        Log.d("SportsViewModel", "fetchCurrentSquad: $e")
+                    }
+                }
+            }
+        }
+    }
 
 
 
     fun updateInternetStatus(isConnected: Boolean) {
         _internetStatus.value = isConnected
+    }
+
+    fun getCountryById(countryId: Int):CountryData{
+        return repository.getCountryById(countryId)
+    }
+
+    fun getTeamByName(teamName: String):TeamData{
+        return repository.getTeamByName(teamName)
+    }
+
+    fun getCountryByName(countryName: String):CountryData{
+        return repository.getCountryByName(countryName)
     }
 }

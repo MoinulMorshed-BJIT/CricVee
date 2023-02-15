@@ -1,6 +1,5 @@
 package com.moinul.cricvee
 
-import android.annotation.SuppressLint
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
@@ -9,36 +8,82 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.view.get
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.moinul.cricvee.databinding.ActivityMainBinding
 import com.moinul.cricvee.utils.ConnectivityReceiver
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.viewmodel.SportsViewModel
+import kotlinx.android.synthetic.main.activity_main.*
+
+
 const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityReceiverListener{
     private val viewModel: SportsViewModel by viewModels()
-
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
     private var receiver: ConnectivityReceiver? = null
     private lateinit var noInternetBar: TextView
 
     //private lateinit var viewModel: SportsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         receiver = ConnectivityReceiver()
         noInternetBar = findViewById(R.id.no_internet_bar)
-
-
+        Log.d(TAG, "onCreate: AMI EKHANE  ${Constants.DURATION}  ${Constants.getDurationRange()}")
         viewModel.internetStatus.observe(this, Observer { isConnected ->
             if (isConnected) {
                 noInternetBar.visibility = View.GONE
-                viewModel.fetchAllFixtures()
+
+                viewModel.fetchTrendingFixtures()
                 viewModel.fetchAllTeams()
+                viewModel.fetchCountries()
+                viewModel.readAllTeamIdList.observe(this){
+                    //viewModel.fetchCurrentSquad(it)
+                }
+                viewModel.fetchTeamRankings()
+
             } else {
                 noInternetBar.visibility = View.VISIBLE
             }
         })
 
+
+        val bottomNavBar = binding.bottomNavbar
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        navController = navHostFragment.findNavController()
+        setupActionBarWithNavController(navController)
+        binding.bottomNavbar.setupWithNavController(navController)
+
+
+        bottomNavBar.setOnItemSelectedListener{
+            when(it.itemId){
+
+                R.id.home_bottom_nav -> {
+                    findNavController(R.id.nav_host_fragment_container).navigate(R.id.homeFragment)
+                }
+
+                R.id.players_bottom_nav -> {
+                    findNavController(R.id.nav_host_fragment_container).navigate(R.id.playersFragment)
+                }
+                R.id.statistics_bottom_nav -> {
+                    findNavController(R.id.nav_host_fragment_container).navigate(R.id.statisticsFragment)
+                }
+
+                else -> { }
+            }
+            true
+        }
     }
     override fun onResume() {
         super.onResume()
@@ -54,5 +99,9 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         Log.d(TAG, "onNetworkConnectionChanged: called")
         viewModel.updateInternetStatus(isConnected)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

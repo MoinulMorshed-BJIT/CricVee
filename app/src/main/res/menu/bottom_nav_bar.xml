@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="@string/home"
+        android:id="@+id/home_bottom_nav"
+        android:icon="@drawable/ic_home_black_24dp"
+
+        />
+    <item android:title="@string/players"
+        android:id="@+id/players_bottom_nav"
+        android:icon="@drawable/icons_cricket_player"
+        />
+    <item android:title="@string/statistics"
+        android:id="@+id/statistics_bottom_nav"
+        android:icon="@drawable/baseline_stacked_bar_chart_24"
+        />
+</menu>

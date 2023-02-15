@@ -1,7 +1,10 @@
 package com.moinul.cricvee.network
 
+import com.moinul.cricvee.model.countries.Countries
+import com.moinul.cricvee.model.currentPlayers.CurrentSquad
 import com.moinul.cricvee.model.fixtures.AllFixtures
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
+import com.moinul.cricvee.model.teamRanking.TeamRanking
 import com.moinul.cricvee.model.teams.AllTeams
 import com.moinul.cricvee.utils.Constants
 import com.squareup.moshi.Moshi
@@ -31,13 +34,26 @@ val retrofit = Retrofit.Builder()
 interface SportsApiService {
 
     @GET("fixtures")
-    suspend fun fetchAllFixtures(@Query("api_token") api_token :String = Constants.API_KEY):AllFixtures
+    suspend fun fetchAllFixtures(@Query("page") currentPage:Int, @Query("api_token") api_token :String = Constants.API_KEY):AllFixtures
+
+    @GET("fixtures")
+    suspend fun fetchTrendingFixtures(@Query("filter[starts_between]") duration:String = Constants.getDurationRange(), @Query("api_token") api_token :String = Constants.API_KEY):AllFixtures
+
 
     @GET("teams")
     suspend fun fetchAllTeams(@Query("api_token") api_token :String = Constants.API_KEY):AllTeams
 
     @GET("fixtures/{fixtureId}")
     suspend fun fetchRunsByFixtureId(@Path("fixtureId") fixtureId: Int, @Query("include") includeParam:String ="runs", @Query("api_token") api_token: String = Constants.API_KEY):FixtureWithRun
+
+    @GET("teams/{teamId}/squad/23")
+    suspend fun fetchCurrentSquad(@Path("teamId") teamId:Int, @Query("api_token") api_token: String = Constants.API_KEY):CurrentSquad
+
+    @GET("countries")
+    suspend fun fetchCountries(@Query("api_token") api_token: String = Constants.API_KEY):Countries
+
+    @GET("team-rankings")
+    suspend fun fetchTeamRankings(@Query("api_token") api_token: String = Constants.API_KEY):TeamRanking
 
 
 }

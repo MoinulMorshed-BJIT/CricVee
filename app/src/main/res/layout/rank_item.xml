@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/text_to_text_margin"
+    android:layout_margin="@dimen/rankMargin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rankValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/dummyOvers"
+            android:layout_marginStart="@dimen/bottNavElevation"
+            />
+        <ImageView
+            android:id="@+id/country_flag_img"
+            android:layout_width="@dimen/team_img_width"
+            android:layout_height="@dimen/team_img_height"
+            app:layout_constraintStart_toEndOf="@id/rankValue"
+            app:layout_constraintTop_toTopOf="@id/rankValue"
+            app:layout_constraintBottom_toBottomOf="@id/rankValue"
+            android:layout_marginStart="@dimen/text_margin"
+            tools:src="@drawable/icons_cricket_player"
+            />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/country_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toEndOf="@id/country_flag_img"
+            app:layout_constraintTop_toTopOf="@id/country_flag_img"
+
+            tools:text="@string/app_name"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/matchesValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toEndOf="@id/country_flag_img"
+            app:layout_constraintBottom_toBottomOf="@id/country_flag_img"
+
+            tools:text="@string/app_name"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/pointsValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="@dimen/text_to_text_margin"
+            tools:text="@string/app_name"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/ratingValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/pointsValue"
+            app:layout_constraintTop_toTopOf="@id/pointsValue"
+            app:layout_constraintBottom_toBottomOf="@id/pointsValue"
+            tools:text="@string/app_name"
+            android:layout_marginEnd="@dimen/horizontal_double"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

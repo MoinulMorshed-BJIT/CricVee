@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.moinul.cricvee.R
 import com.moinul.cricvee.adapter.MatchAdapter
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
-        binding.lifecycleOwner = this
+        //binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -51,6 +52,14 @@ class HomeFragment : Fragment() {
             val adapterScrollState = recentMatchRecyclerView.layoutManager?.onSaveInstanceState()
             recentMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
             recentMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navbar)
+        bottomNavigationView?.let {
+            it.menu.getItem(0).isChecked = true
         }
     }
 
