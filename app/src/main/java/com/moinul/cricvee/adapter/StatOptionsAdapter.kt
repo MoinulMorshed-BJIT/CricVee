@@ -9,10 +9,11 @@ import androidx.navigation.findNavController
 import com.moinul.cricvee.R
 import com.moinul.cricvee.databinding.StatOptionsItemBinding
 import com.moinul.cricvee.utils.Constants
+import com.moinul.cricvee.utils.UtilTools
 
 
 class StatOptionsAdapter(
-    private val values: List<Constants.Companion.Option>
+    private val values: List<UtilTools.Companion.Option>
 ) : RecyclerView.Adapter<StatOptionsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

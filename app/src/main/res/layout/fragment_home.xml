@@ -20,19 +20,52 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recent_match_recyclerView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="match_parent">
 
-                />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/recent_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:textSize="@dimen/homeScreen_title_size"
+                    android:textStyle="bold"
+                    android:text="@string/recent_matches"
+                    />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recent_match_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recent_text"
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/upcoming_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recent_match_recyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="@dimen/homeScreen_title_size"
+                    android:textStyle="bold"
+                    android:text="UPCOMING MATCHES"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/upcoming_match_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upcoming_text"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -18,6 +18,7 @@ import com.moinul.cricvee.viewmodel.SportsViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var recentMatchRecyclerView: RecyclerView
+    private lateinit var upcomingMatchRecyclerView: RecyclerView
     private val viewModel: SportsViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -39,11 +40,16 @@ class HomeFragment : Fragment() {
 
         recentMatchRecyclerView = binding.recentMatchRecyclerView
         recentMatchRecyclerView.setHasFixedSize(true)
+
+        upcomingMatchRecyclerView = binding.upcomingMatchRecyclerView
+        upcomingMatchRecyclerView.setHasFixedSize(true)
+
         initialiseLayoutManager()
     }
 
     fun initialiseLayoutManager(){
         recentMatchRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        upcomingMatchRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         observeData()
     }
 
@@ -52,6 +58,12 @@ class HomeFragment : Fragment() {
             val adapterScrollState = recentMatchRecyclerView.layoutManager?.onSaveInstanceState()
             recentMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
             recentMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it)
+        }
+
+        viewModel.readUpcomingFixtureData.observe(viewLifecycleOwner){
+            val adapterScrollState = upcomingMatchRecyclerView.layoutManager?.onSaveInstanceState()
+            upcomingMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
+            upcomingMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it)
         }
     }
 

@@ -25,5 +25,7 @@
     <string name="odi">ODI</string>
     <string name="test">TEST</string>
     <string name="t20i">T20I</string>
+    <string name="recent_matches">RECENT MATCHES</string>
+    <string name="vs">VS</string>
 
 </resources>

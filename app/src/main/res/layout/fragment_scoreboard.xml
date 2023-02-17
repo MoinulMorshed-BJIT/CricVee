@@ -1,0 +1,980 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team A"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="vs"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team B"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <!-- Scorecard section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/player_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Player"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/runs_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/balls_column"
+                app:layout_constraintTop_toTopOf="@id/player_column"
+                app:layout_constraintBottom_toBottomOf="@id/player_column"
+                android:text="Runs"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/balls_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balls"
+                app:layout_constraintEnd_toStartOf="@id/fours_column"
+                app:layout_constraintTop_toTopOf="@id/player_column"
+                app:layout_constraintBottom_toBottomOf="@id/player_column"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/fours_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/sixes_column"
+                app:layout_constraintTop_toTopOf="@id/player_column"
+                app:layout_constraintBottom_toBottomOf="@id/player_column"
+                android:text="Fours"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/sixes_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/strike_rate_column"
+                app:layout_constraintTop_toTopOf="@id/player_column"
+                app:layout_constraintBottom_toBottomOf="@id/player_column"
+                android:text="Sixes"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/strike_rate_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/player_column"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Strike\nRate"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:layout_marginLeft="16dp" />
+
+
+            <!-- Sample scorecard row1 -->
+            <TextView
+                android:id="@+id/player1_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 1"
+
+                android:textSize="12.85sp" />
+            <TextView
+                android:id="@+id/player1_dismissal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player1_name"
+                app:layout_constraintStart_toStartOf="@id/player1_name"
+                app:layout_constraintEnd_toEndOf="@id/player1_name"
+                app:layout_constraintBottom_toTopOf="@id/player2_name"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="c wsfwk b csmoc"
+
+                android:textSize="10sp"
+                />
+
+            <TextView
+                android:id="@+id/player1_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player1_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player1_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player1_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player1_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                app:layout_constraintStart_toEndOf="@id/player1_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+
+            <!-- Sample scorecard row2 -->
+            <TextView
+                android:id="@+id/player2_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player1_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player2_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player1_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player2_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player1_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player2_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player1_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player2_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player1_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player2_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player1_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player1_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row3 -->
+            <TextView
+                android:id="@+id/player3_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player2_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player3_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player2_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player3_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player2_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player3_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player2_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player3_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player2_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player3_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player2_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player2_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row4 -->
+            <TextView
+                android:id="@+id/player4_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player3_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player4_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player3_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player4_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player3_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player4_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player3_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player4_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player3_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player4_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player3_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player3_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row5 -->
+            <TextView
+                android:id="@+id/player5_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player4_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player5_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player4_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player5_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player4_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player5_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player4_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player5_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player4_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player5_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player4_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player4_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row6 -->
+            <TextView
+                android:id="@+id/player6_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player5_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player6_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player5_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player6_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player5_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player6_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player5_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player6_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player5_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player6_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player5_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player5_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row7 -->
+            <TextView
+                android:id="@+id/player7_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player6_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player7_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player6_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player7_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player6_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player7_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player6_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player7_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player6_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player7_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player6_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player6_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row8 -->
+            <TextView
+                android:id="@+id/player8_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player7_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player8_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player7_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player8_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player7_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player8_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player7_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player8_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player7_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player8_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player7_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player7_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row9 -->
+            <TextView
+                android:id="@+id/player9_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player8_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player9_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player8_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player9_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player8_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player9_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player8_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player9_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player8_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player9_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player8_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player8_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row10 -->
+            <TextView
+                android:id="@+id/player10_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player9_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player10_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player9_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player10_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player9_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player10_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player9_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player10_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player9_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player10_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player9_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player9_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+            <!-- Sample scorecard row11 -->
+            <TextView
+                android:id="@+id/player11_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player10_name"
+                app:layout_constraintStart_toStartOf="@id/player_column"
+                app:layout_constraintEnd_toStartOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginRight="@dimen/options_margin"
+                android:text="Player 2"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player11_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player10_run"
+                app:layout_constraintStart_toStartOf="@id/runs_column"
+                app:layout_constraintEnd_toEndOf="@id/runs_column"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:text="50"
+                android:textAlignment="center"
+                android:textSize="12.85sp" />
+
+            <TextView
+                android:id="@+id/player11_balls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/player10_balls"
+                app:layout_constraintStart_toStartOf="@id/balls_column"
+                app:layout_constraintEnd_toEndOf="@id/balls_column"
+                android:text="40"
+                android:textAlignment="center"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player11_fours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player10_fours"
+                app:layout_constraintStart_toStartOf="@id/fours_column"
+                app:layout_constraintEnd_toEndOf="@id/fours_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+            <TextView
+                android:id="@+id/player11_sixes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player10_sixes"
+                app:layout_constraintStart_toStartOf="@id/sixes_column"
+                app:layout_constraintEnd_toEndOf="@id/sixes_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin" />
+
+            <TextView
+                android:id="@+id/player11_strike_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="125.00"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/player10_strike_rate"
+                app:layout_constraintStart_toEndOf="@id/player10_sixes"
+                app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
+                android:textSize="12.85sp"
+                android:layout_marginTop="@dimen/text_to_text_margin"
+                android:layout_marginLeft="22dp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+
+    
+
+    <!-- Other details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: 150/2"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overs: 20"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

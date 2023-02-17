@@ -52,6 +52,8 @@ interface SportsDao {
 
     @Query("select * from fixture_table where status='Finished' order by starting_at desc limit 7")
     fun readRecentFixtureData():LiveData<List<FixtureData>>
+    @Query("select * from fixture_table where status='NS' order by starting_at limit 7")
+    fun readUpcomingFixtureData():LiveData<List<FixtureData>>
 
     @Query("select * from team_table where id= :teamId")
     fun readTeamById(teamId: Int):TeamData

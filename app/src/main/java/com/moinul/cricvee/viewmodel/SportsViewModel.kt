@@ -17,6 +17,8 @@ import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.fixtures.FixtureRunData
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.fixtures.Run
+import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureScoreboardData
+import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
 import com.moinul.cricvee.model.teams.TeamData
 import com.moinul.cricvee.network.SportsApi
@@ -24,16 +26,21 @@ import com.moinul.cricvee.repository.Repository
 import com.moinul.cricvee.utils.ConnectivityReceiver
 import com.moinul.cricvee.utils.Constants
 import kotlinx.coroutines.*
+import retrofit2.await
 import kotlin.math.log
 
 private const val TAG = "SportsViewModel"
 class SportsViewModel(application: Application): AndroidViewModel(application) {
     val repository: Repository
     private val _internetStatus = MutableLiveData<Boolean>()
+
     val internetStatus: LiveData<Boolean>
         get() = _internetStatus
 
+
+
     var readRecentFixtureData: LiveData<List<FixtureData>>
+    var readUpcomingFixtureData: LiveData<List<FixtureData>>
     var readAllSquadPlayers: LiveData<List<Squad>>
     var readAllTeams: LiveData<List<TeamData>>
     var readAllTeamIdList: LiveData<List<Int>>
@@ -44,6 +51,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     var readTestRankingWomen: LiveData<List<LocalTeamRanking>>
     var readODIRankingWomen: LiveData<List<LocalTeamRanking>>
     var readT20IRankingWomen: LiveData<List<LocalTeamRanking>>
+
+
     init {
         _internetStatus.value = ConnectivityReceiver.isConnected(application.applicationContext)
 
@@ -51,6 +60,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         repository = Repository(sportsDao)
 
         readRecentFixtureData = repository.readRecentFixtureData
+        readUpcomingFixtureData = repository.readUpcomingFixtureData
         readAllSquadPlayers = repository.readAllSquadPlayers
         readAllTeams = repository.readAllTeams
         readAllTeamIdList = repository.readAllTeamIdList
@@ -90,15 +100,13 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun fetchTrendingFixtures(){
-        Log.d(TAG, "fetchTrendingFixtures: ${Constants.DURATION}  ${Constants.getDurationRange()}")
+    fun fetchTrendingFixtures(duration: String){
         viewModelScope.launch(Dispatchers.IO) {
 
             try{
-                Log.d(TAG, "INSIDE TRY fetchTrendingFixtures: ${Constants.DURATION}  ${Constants.getDurationRange()}")
-                val fixtureList = SportsApi.retrofitService.fetchTrendingFixtures().data
+                val fixtureList = SportsApi.retrofitService.fetchTrendingFixtures(duration).data
                 if(fixtureList.isNotEmpty()) {
-                    repository.deleteAllFixtures()
+                    //repository.deleteAllFixtures()
                     repository.insertAllFixtures(fixtureList)
                 }
             }catch (e:Exception){
@@ -185,6 +193,29 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
             }
         }.await()
     }
+    private val _fixtureWithScoreboard = MutableLiveData<FixtureWithScoreboard>()
+    val fixtureWithScoreboard: LiveData<FixtureWithScoreboard>
+        get() = _fixtureWithScoreboard
+    suspend fun fetchScoreboardByFixtureId(fixtureId: Int):FixtureWithScoreboard{
+        return SportsApi.retrofitService.fetchScoreboardByFixtureId(fixtureId).await()
+    }
+    fun getFixtureWithScoreboard(fixtureId: Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    val fixtureWithScoreboard = fetchScoreboardByFixtureId(fixtureId)
+                    Log.d(TAG, "getFixtureWithScoreboard: $fixtureWithScoreboard")
+                    _fixtureWithScoreboard.postValue(fixtureWithScoreboard)
+                    Log.d(TAG, "getFixtureWithScoreboard: ${_fixtureWithScoreboard.value}")
+                }catch (e: Exception){
+                    Log.d(TAG, "getFixtureWithScoreboard: $e")
+                }
+
+            }
+
+        }
+    }
+
 
     fun readTeamById(teamId: Int):TeamData{
         return repository.readTeamById(teamId)
@@ -192,8 +223,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     fun fetchCurrentSquad(teamIdList: List<Int>){
         Log.d(TAG, "fetchCurrentSquad: CALLED")
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d(TAG, "fetchCurrentSquad: teamList: ${teamIdList.size} $teamIdList")
-            if(teamIdList.isNotEmpty()){
+            if(repository.readAllSquadPlayers.value?.isEmpty() == true && teamIdList.isNotEmpty()){
                 for(teamId in teamIdList){
                     try {
                         val playersList = SportsApi.retrofitService.fetchCurrentSquad(teamId).data.squad

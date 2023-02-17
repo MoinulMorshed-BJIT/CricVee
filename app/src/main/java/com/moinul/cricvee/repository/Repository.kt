@@ -13,6 +13,7 @@ import com.moinul.cricvee.model.teams.TeamData
 private const val TAG = "Repository"
 class Repository(private val sportsDao: SportsDao) {
     val readRecentFixtureData: LiveData<List<FixtureData>> = sportsDao.readRecentFixtureData()
+    val readUpcomingFixtureData: LiveData<List<FixtureData>> = sportsDao.readUpcomingFixtureData()
     val readAllTeams: LiveData<List<TeamData>> = sportsDao.readAllTeams()
     val readAllTeamIdList: LiveData<List<Int>> = sportsDao.readAllTeamIdList()
     val readAllSquadPlayers: LiveData<List<Squad>> = sportsDao.readAllSquadPlayers()

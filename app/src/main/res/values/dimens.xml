@@ -21,4 +21,11 @@
     <dimen name="rankMargin">1dp</dimen>
     <dimen name="columnMargin">70dp</dimen>
     <dimen name="horizontal_double">32dp</dimen>
+    <dimen name="homeScreen_title_size">15sp</dimen>
+    <dimen name="invisible_runs_size">40sp</dimen>
+    <dimen name="invisible_fours_size">46sp</dimen>
+    <dimen name="invisible_sixes_size">43sp</dimen>
+    <dimen name="minimum_dp">0.0000001dp</dimen>
+    <dimen name="team_header">125dp</dimen>
+    <dimen name="scorecardTeamNameSize">18.5sp</dimen>
 </resources>

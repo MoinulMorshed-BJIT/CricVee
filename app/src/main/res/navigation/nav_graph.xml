@@ -23,4 +23,17 @@
         android:id="@+id/ICCTeamRankingsFragment"
         android:name="com.moinul.cricvee.ui.ICCTeamRankingsFragment"
         android:label="ICC Team Rankings" />
+    <fragment
+        android:id="@+id/matchDetailsFragment"
+        android:name="com.moinul.cricvee.ui.MatchDetailsFragment"
+        android:label="MatchDetailsFragment" >
+        <argument
+            android:name="fixtureId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/battingScoreboardFragment"
+        android:name="com.moinul.cricvee.ui.BattingScoreboardFragment"
+        android:label="BattingScoreboardFragment" />
 </navigation>

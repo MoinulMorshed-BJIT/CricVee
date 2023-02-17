@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.moinul.cricvee.R
 import com.moinul.cricvee.adapter.StatOptionsAdapter
 import com.moinul.cricvee.utils.Constants
+import com.moinul.cricvee.utils.UtilTools
 import kotlinx.android.synthetic.main.activity_main.*
 
 class StatisticsFragment : Fragment() {
@@ -35,7 +36,7 @@ class StatisticsFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = StatOptionsAdapter(Constants.allOptions)
+                adapter = StatOptionsAdapter(UtilTools.allOptions)
             }
         }
         return view

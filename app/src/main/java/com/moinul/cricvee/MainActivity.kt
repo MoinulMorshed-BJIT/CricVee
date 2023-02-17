@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.moinul.cricvee.databinding.ActivityMainBinding
 import com.moinul.cricvee.utils.ConnectivityReceiver
 import com.moinul.cricvee.utils.Constants
+import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,16 +41,16 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
 
         receiver = ConnectivityReceiver()
         noInternetBar = findViewById(R.id.no_internet_bar)
-        Log.d(TAG, "onCreate: AMI EKHANE  ${Constants.DURATION}  ${Constants.getDurationRange()}")
         viewModel.internetStatus.observe(this, Observer { isConnected ->
             if (isConnected) {
                 noInternetBar.visibility = View.GONE
 
-                viewModel.fetchTrendingFixtures()
+                viewModel.fetchTrendingFixtures(UtilTools.DURATION)
+                viewModel.fetchTrendingFixtures(UtilTools.UPCOMING_DURATION)
                 viewModel.fetchAllTeams()
                 viewModel.fetchCountries()
                 viewModel.readAllTeamIdList.observe(this){
-                    //viewModel.fetchCurrentSquad(it)
+                    viewModel.fetchCurrentSquad(it)
                 }
                 viewModel.fetchTeamRankings()
 
