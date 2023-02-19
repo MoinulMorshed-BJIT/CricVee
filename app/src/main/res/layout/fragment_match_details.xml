@@ -22,12 +22,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/activity_horizontal_margin">
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/visitor_team_img"
-                android:layout_width="@dimen/team_img_width"
-                android:layout_height="@dimen/team_img_height"
+                android:layout_width="@dimen/teamImgHeaderWidth"
+                android:layout_height="@dimen/teamImgHeaderWidth"
                 tools:src="@drawable/ic_dashboard_black_24dp" />
 
             <TextView
@@ -43,13 +44,14 @@
 
 
             <TextView
+                android:id="@+id/vs_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/vs"
                 android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="@dimen/vs_text_size" />
 
             <TextView
                 android:layout_width="@dimen/team_header"
@@ -64,26 +66,52 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/local_team_img"
-                android:layout_width="@dimen/team_img_width"
-                android:layout_height="@dimen/team_img_height"
+                android:layout_width="@dimen/teamImgHeaderWidth"
+                android:layout_height="@dimen/teamImgHeaderWidth"
                 tools:src="@drawable/ic_dashboard_black_24dp" />
 
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/visitorTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tab_text_size"
+            app:layout_constraintBottom_toTopOf="@id/tab_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/match_title"
+            android:layout_margin="@dimen/bottNavElevation"
+            tools:text="@string/dummyScore" />
+
+        <TextView
+            android:id="@+id/localTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/bottNavElevation"
+            android:textSize="@dimen/tab_text_size"
+            app:layout_constraintBottom_toTopOf="@id/tab_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/match_title"
+            tools:text="@string/dummyScore" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="36sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/tabLayoutMargin"
             app:layout_constraintTop_toBottomOf="@id/match_title"
-            android:background="#FFFFFF"
-            app:tabIndicatorColor="@color/darkViolet"
+            app:tabIndicatorColor="@color/colorTabIndicator"
             app:tabIndicatorHeight="3.5dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/darkViolet"
-            app:tabTextColor="#577B7E" />
+            app:tabBackground="@color/darkViolet"
+            app:tabSelectedTextColor="@color/colorTabIndicator"
+            app:tabTextColor="@color/colorOnBackground" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager2"

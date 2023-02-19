@@ -14,23 +14,23 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/gender_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/options_margin"
+            android:layout_marginTop="@dimen/options_margin"
             android:background="@drawable/tab_border_shape"
             android:padding="@dimen/options_margin"
             android:text="@string/men"
             android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="@dimen/tab_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gender_text2"
             app:layout_constraintHorizontal_bias="0.43"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/gender_text2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/options_margin"
             android:background="@drawable/tab_border_shape"

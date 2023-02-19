@@ -69,9 +69,15 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         noteResult.text = match.note
 
         GlobalScope.launch(Dispatchers.Default) {
-            team1Data = match.visitorteam_id?.let { viewModel.readTeamById(it) }!!
-            team2Data = match.localteam_id?.let { viewModel.readTeamById(it) }!!
+            try {
+                team1Data = match.visitorteam_id?.let { viewModel.readTeamById(it) }!!
+                team2Data = match.localteam_id?.let { viewModel.readTeamById(it) }!!
 
+            }catch (e: Exception){
+                team1Data = null
+                team2Data = null
+                Log.d(TAG, "Catch onBindViewHolder: $e")
+            }
             //Log.d("TAG", "onBindViewHolder: ${match.id}")
             fixtureRunDataResponseResult = viewModel.fetchRunsByFixtureId(match.id)
 
@@ -82,28 +88,20 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                     Log.d("TAG", "onBindViewHolder: RUNS LIST = ${fixtureRunData?.runs}")
                     if (fixtureRunData?.runs?.first()?.team_id == match.visitorteam_id) {
                         team1runAndWicketsData =
-                            fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.get(
-                                0
-                            )?.wickets.toString()
+                            fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.first()?.wickets.toString()
                         team1overData = "( ${fixtureRunData?.runs?.first()?.overs.toString()} )"
 
                         team2runAndWicketsData =
-                            fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.get(
-                                1
-                            )?.wickets.toString()
+                            fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.last()?.wickets.toString()
                         team2overData = "( ${fixtureRunData?.runs?.last()?.overs.toString()} )"
                     } else {
                         team2runAndWicketsData =
-                            fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.get(
-                                0
-                            )?.wickets.toString()
+                            fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.first()?.wickets.toString()
                         team2overData = "( ${fixtureRunData?.runs?.first()?.overs.toString()} )"
 
 
                         team1runAndWicketsData =
-                            fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.get(
-                                1
-                            )?.wickets.toString()
+                            fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.last()?.wickets.toString()
                         team1overData = "( ${fixtureRunData?.runs?.last()?.overs.toString()} )"
                     }
                 }else{
@@ -146,7 +144,9 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
             /*val bundle = Bundle()
             bundle.putInt("fixtureId", match.id)*/
             UtilTools.CLICKED_FIXTURE_ID = match.id
-            holder.itemView.findNavController().navigate(R.id.matchDetailsFragment)
+            if(match.status=="Finished"){
+                holder.itemView.findNavController().navigate(R.id.matchDetailsFragment)
+            }
         }
     }
 

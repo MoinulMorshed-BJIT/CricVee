@@ -13,7 +13,7 @@ data class Ball(
     val fixture_id: Int?,
     val id: Int?,
     val resource: String?,
-    val runout_by_id: Any?,
+    val runout_by_id: Int?,
     val score: Score?,
     val score_id: Int?,
     val scoreboard: String?,

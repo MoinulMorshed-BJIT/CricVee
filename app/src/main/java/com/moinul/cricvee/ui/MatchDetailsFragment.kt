@@ -80,6 +80,23 @@ class MatchDetailsFragment : Fragment() {
             val localTeamId = it.data?.localteam_id
             var localTeamFound = false
             var visitorTeamFound = false
+            var localTotalValue = ""
+            var visitorTotalValue = ""
+            try {
+                for(run in it.data?.runs!!){
+                    if(run.team_id==localTeamId){
+                        localTotalValue = "Total: ${run.score}/${run.wickets} (${run.overs})"
+                    }else{
+                        visitorTotalValue = "Total: ${run.score}/${run.wickets} (${run.overs})"
+                    }
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "onViewCreated: $e")
+            }
+
+            binding.localTotal.text = localTotalValue
+            binding.visitorTotal.text = visitorTotalValue
+
             for(teams in it.data?.balls!!){
                 if(localTeamFound && visitorTeamFound){
                     break;
@@ -110,14 +127,14 @@ class MatchDetailsFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "BATTING"
-                    tab.setIcon(R.drawable.icons_cricket_player)
+                    tab.text = "SCORECARD"
+                    //tab.setIcon(R.drawable.icons_cricket_player)
                 }
-               /* 1 -> {
-                    tab.text = "Business"
-                    tab.setIcon(R.drawable.icon_business_news)
+                1 -> {
+                    tab.text = "LINEUP"
+                    //tab.setIcon(R.drawable.baseline_sports_baseball_24)
                 }
-                2 -> {
+                /*2 -> {
                     tab.text = "Entertainment"
                     tab.setIcon(R.drawable.icon_entertainment)
 

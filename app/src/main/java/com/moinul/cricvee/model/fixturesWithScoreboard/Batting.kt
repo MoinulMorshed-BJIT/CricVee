@@ -3,7 +3,7 @@ package com.moinul.cricvee.model.fixturesWithScoreboard
 data class Batting(
     val active: Boolean?,
     val ball: Int?,
-    val batsmanout_id: Any?,
+    val batsmanout_id: Int?,
     val bowling_player_id: Int?,
     val catch_stump_player_id: Int?,
     val fixture_id: Int?,
@@ -14,7 +14,7 @@ data class Batting(
     val player_id: Int?,
     val rate: Double?,
     val resource: String?,
-    val runout_by_id: Any?,
+    val runout_by_id: Int?,
     val score: Int?,
     val score_id: Int?,
     val scoreboard: String?,

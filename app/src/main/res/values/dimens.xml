@@ -15,7 +15,9 @@
     <dimen name="bottNavWidth">53dp</dimen>
     <dimen name="search_marginTop">30dp</dimen>
     <dimen name="playerName_text_size">20sp</dimen>
+    <dimen name="tabLayoutMargin">35sp</dimen>
     <dimen name="tab_text_size">15sp</dimen>
+    <dimen name="teamHeaderTextSize">12sp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="options_margin">5dp</dimen>
     <dimen name="rankMargin">1dp</dimen>
@@ -27,5 +29,8 @@
     <dimen name="invisible_sixes_size">43sp</dimen>
     <dimen name="minimum_dp">0.0000001dp</dimen>
     <dimen name="team_header">125dp</dimen>
-    <dimen name="scorecardTeamNameSize">18.5sp</dimen>
+    <dimen name="scorecardTeamNameSize">16.75sp</dimen>
+    <dimen name="cardCornerRadius">14dp</dimen>
+    <dimen name="teamImgHeaderWidth">48dp</dimen>
+    <dimen name="vs_text_size">18.75sp</dimen>
 </resources>

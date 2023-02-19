@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="@dimen/bottNavElevation"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
     app:cardElevation="@dimen/text_to_text_margin"
     android:layout_margin="@dimen/activity_horizontal_margin"
     >
@@ -94,14 +94,18 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/match_note_result"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/team2_img"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="@string/dummyMatchNote"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:padding="4dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/darkViolet"
+            android:textColor="@color/white"
+            android:textAlignment="center"
             />
 
 

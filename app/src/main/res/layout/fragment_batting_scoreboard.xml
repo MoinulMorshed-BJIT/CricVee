@@ -12,10 +12,39 @@
         android:layout_height="match_parent"
         tools:context=".ui.BattingScoreboardFragment">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <TextView
+            android:id="@+id/innings_team1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/innings_team2"
+            tools:text="Team A Innings"
+            android:layout_marginTop="@dimen/text_to_text_margin"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/scorecardTeamNameSize"
+            />
+        <TextView
+            android:id="@+id/innings_team2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintTop_toTopOf="@id/innings_team1"
+            app:layout_constraintBottom_toBottomOf="@id/innings_team1"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Team B Innings"
+            android:textSize="@dimen/scorecardTeamNameSize"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/innings_team2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -24,201 +53,213 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/first_innings_team"
+                <LinearLayout
+                    android:id="@+id/batting_header_row"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/fours_column"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:text="Team A Innings"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/scorecardTeamNameSize"
-                    />
+                    android:background="@color/scoreHeaderRowColor"
+                    >
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/player_column"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/first_innings_team"
-                    android:text="Player"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/runs_column"
-                    android:layout_width="@dimen/invisible_runs_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/balls_column"
-                    app:layout_constraintTop_toTopOf="@id/player_column"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column"
-                    android:text="R"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/player_column"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/text_to_text_margin"
+                            android:text="Batter"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/runs_column"
+                            />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/balls_column"
-                    android:layout_width="@dimen/invisible_runs_size"
-                    android:layout_height="wrap_content"
-                    android:text="B"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@id/fours_column"
-                    app:layout_constraintTop_toTopOf="@id/player_column"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/runs_column"
+                            android:layout_width="@dimen/invisible_runs_size"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:text="R"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/player_column"
+                            app:layout_constraintEnd_toStartOf="@id/balls_column"
+                            app:layout_constraintTop_toTopOf="@id/player_column" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/fours_column"
-                    android:layout_width="@dimen/invisible_fours_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/sixes_column"
-                    app:layout_constraintTop_toTopOf="@id/player_column"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column"
-                    android:text="4s"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/balls_column"
+                            android:layout_width="@dimen/invisible_runs_size"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:text="B"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/player_column"
+                            app:layout_constraintEnd_toStartOf="@id/fours_column"
+                            app:layout_constraintTop_toTopOf="@id/player_column" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/sixes_column"
-                    android:layout_width="@dimen/invisible_sixes_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/strike_rate_column"
-                    app:layout_constraintTop_toTopOf="@id/player_column"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column"
-                    android:text="6s"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/fours_column"
+                            android:layout_width="@dimen/invisible_fours_size"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:text="4s"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/player_column"
+                            app:layout_constraintEnd_toStartOf="@id/sixes_column"
+                            app:layout_constraintTop_toTopOf="@id/player_column" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/strike_rate_column"
-                    android:layout_width="@dimen/invisible_fours_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/player_column"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column"
-                    android:text="S/R"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/sixes_column"
+                            android:layout_width="@dimen/invisible_sixes_size"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:text="6s"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/player_column"
+                            app:layout_constraintEnd_toStartOf="@id/strike_rate_column"
+                            app:layout_constraintTop_toTopOf="@id/player_column" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/strike_rate_column"
+                            android:layout_width="@dimen/invisible_fours_size"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="S/R"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/player_column"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/player_column" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/batting_score_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
+                    app:layout_constraintTop_toBottomOf="@id/batting_header_row"
                     tools:listitem="@layout/batting_score_item"
                     />
-
-               <TextView
-                   android:id="@+id/second_innings_team"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintTop_toBottomOf="@id/batting_score_recyclerView"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintBottom_toTopOf="@id/balls_column2"
-                   tools:text="Team B Innings"
-                   android:textSize="@dimen/scorecardTeamNameSize"
-                   android:textStyle="bold"
-                   />
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/player_column2"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/bowling_header_row"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/options_margin"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/second_innings_team"
-                    android:text="Player"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
+                    app:layout_constraintTop_toBottomOf="@id/batting_score_recyclerView"
+                    android:background="@color/scoreHeaderRowColor"
+                    >
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/runs_column2"
-                    android:layout_width="@dimen/invisible_runs_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/balls_column2"
-                    app:layout_constraintTop_toTopOf="@id/player_column2"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column2"
-                    android:text="R"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/balls_column2"
-                    android:layout_width="@dimen/invisible_runs_size"
-                    android:layout_height="wrap_content"
-                    android:text="B"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@id/fours_column2"
-                    app:layout_constraintTop_toTopOf="@id/player_column2"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column2"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/bowler_column"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/overs_column"
+                            android:text="Bowler"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/fours_column2"
-                    android:layout_width="@dimen/invisible_fours_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/sixes_column2"
-                    app:layout_constraintTop_toTopOf="@id/player_column2"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column2"
-                    android:text="4s"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                            />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/sixes_column2"
-                    android:layout_width="@dimen/invisible_sixes_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/strike_rate_column2"
-                    app:layout_constraintTop_toTopOf="@id/player_column2"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column2"
-                    android:text="6s"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginRight="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/overs_column"
+                            android:layout_width="@dimen/invisible_runs_size"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toStartOf="@id/maidens_column"
+                            app:layout_constraintTop_toTopOf="@id/bowler_column"
+                            app:layout_constraintBottom_toBottomOf="@id/bowler_column"
+                            android:text="O"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:layout_marginRight="16dp" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/strike_rate_column2"
-                    android:layout_width="@dimen/invisible_fours_size"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/player_column2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/player_column2"
-                    android:text="S/R"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="16dp" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/maidens_column"
+                            android:layout_width="@dimen/invisible_runs_size"
+                            android:layout_height="wrap_content"
+                            android:text="M"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/runs_conceded_column"
+                            app:layout_constraintTop_toTopOf="@id/bowler_column"
+                            app:layout_constraintBottom_toBottomOf="@id/bowler_column"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:layout_marginRight="16dp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/runs_conceded_column"
+                            android:layout_width="@dimen/invisible_fours_size"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toStartOf="@id/wickets_column"
+                            app:layout_constraintTop_toTopOf="@id/bowler_column"
+                            app:layout_constraintBottom_toBottomOf="@id/bowler_column"
+                            android:text="R"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:layout_marginRight="16dp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/wickets_column"
+                            android:layout_width="@dimen/invisible_sixes_size"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toStartOf="@id/economy_rate_column"
+                            app:layout_constraintTop_toTopOf="@id/bowler_column"
+                            app:layout_constraintBottom_toBottomOf="@id/bowler_column"
+                            android:text="W"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:layout_marginRight="16dp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/economy_rate_column"
+                            android:layout_width="@dimen/invisible_fours_size"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/bowler_column"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/bowler_column"
+                            android:text="ECO"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:textSize="18sp"
+                            android:layout_marginLeft="16dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/batting2_score_recyclerView"
+                    android:id="@+id/bowling_score_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/strike_rate_column2"
+                    app:layout_constraintTop_toBottomOf="@id/bowling_header_row"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:listitem="@layout/batting_score_item"
+                    tools:listitem="@layout/bowling_score_item"
                     />
 
 

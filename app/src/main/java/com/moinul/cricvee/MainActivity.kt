@@ -49,9 +49,7 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
                 viewModel.fetchTrendingFixtures(UtilTools.UPCOMING_DURATION)
                 viewModel.fetchAllTeams()
                 viewModel.fetchCountries()
-                viewModel.readAllTeamIdList.observe(this){
-                    viewModel.fetchCurrentSquad(it)
-                }
+
                 viewModel.fetchTeamRankings()
 
             } else {

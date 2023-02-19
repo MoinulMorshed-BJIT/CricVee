@@ -223,7 +223,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     fun fetchCurrentSquad(teamIdList: List<Int>){
         Log.d(TAG, "fetchCurrentSquad: CALLED")
         viewModelScope.launch(Dispatchers.IO) {
-            if(repository.readAllSquadPlayers.value?.isEmpty() == true && teamIdList.isNotEmpty()){
+            Log.d(TAG, "STATE fetchCurrentSquad: ${repository.readAllSquadPlayers.value} ${teamIdList.isNotEmpty()}")
+            if((repository.readAllSquadPlayers.value==null || repository.readAllSquadPlayers.value?.isEmpty() == true) && teamIdList.isNotEmpty()){
                 for(teamId in teamIdList){
                     try {
                         val playersList = SportsApi.retrofitService.fetchCurrentSquad(teamId).data.squad
@@ -232,7 +233,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
                         Log.d("SportsViewModel", "fetchCurrentSquad: SUCCESS ${playersList}")
                         repository.insertAllSquadPlayers(playersList)
                     }catch (e: Exception){
-                        Log.d("SportsViewModel", "fetchCurrentSquad: $e")
+                        Log.d("SportsViewModel", "FAILED fetchCurrentSquad: $e")
                     }
                 }
             }

@@ -80,8 +80,7 @@ interface SportsDao {
 
     @Query("select * from team_table")
     fun readAllTeams():LiveData<List<TeamData>>
-
-    @Query("select id from team_table where national_team=1 ")
+    @Query("select id from team_table where national_team=1")
     fun readAllTeamIdList():LiveData<List<Int>>
 
     @Query("select * from current_players_table")

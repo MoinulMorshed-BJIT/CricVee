@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_red">#9B1313</color>
     <color name="darkViolet">#2A1B56</color>
-    <color name="colorOnBackground">#837F88</color>
-    <color name="colorSelectedTab">#1B8072</color>
+    <color name="colorOnBackground">#757575</color>
+    <color name="colorSelectedTab">#2A1B56</color>
+    <color name="colorTabIndicator">#F7D54E</color>
+    <color name="colorTabIndicator2">#E68913</color>
+    <color name="scoreHeaderRowColor">#5061CC</color>
 </resources>
