@@ -8,6 +8,7 @@
 
     <dimen name="player_img_width">100dp</dimen>
     <dimen name="player_img_height">100dp</dimen>
+    <dimen name="lineup_text_size">11.5sp</dimen>
 
     <dimen name="bottNavElevation">10dp</dimen>
     <dimen name="bottNavIconSize">27dp</dimen>
@@ -20,6 +21,7 @@
     <dimen name="teamHeaderTextSize">12sp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="options_margin">5dp</dimen>
+    <dimen name="innings_padding">3.5dp</dimen>
     <dimen name="rankMargin">1dp</dimen>
     <dimen name="columnMargin">70dp</dimen>
     <dimen name="horizontal_double">32dp</dimen>

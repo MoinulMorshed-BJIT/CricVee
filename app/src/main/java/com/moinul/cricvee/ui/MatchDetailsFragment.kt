@@ -1,5 +1,6 @@
 package com.moinul.cricvee.ui
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,7 +27,8 @@ class MatchDetailsFragment : Fragment() {
     private val viewModel: SportsViewModel by viewModels()
     private val args: MatchDetailsFragmentArgs by navArgs()
     private var fixtureId: Int = 0
-
+    /*var localTeamIdForChild = 0
+    var visitorTeamIdForChild = 0*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
@@ -72,7 +74,6 @@ class MatchDetailsFragment : Fragment() {
         viewPager2.isUserInputEnabled = true
 
 
-
         viewModel.getFixtureWithScoreboard(UtilTools.CLICKED_FIXTURE_ID)
 
         viewModel.fixtureWithScoreboard.observe(viewLifecycleOwner){
@@ -99,6 +100,8 @@ class MatchDetailsFragment : Fragment() {
 
             for(teams in it.data?.balls!!){
                 if(localTeamFound && visitorTeamFound){
+                    /*localTeamIdForChild = localTeamId!!
+                    visitorTeamIdForChild = visitorTeamId!!*/
                     break;
                 }
                 if(!localTeamFound && teams.team?.id == localTeamId){

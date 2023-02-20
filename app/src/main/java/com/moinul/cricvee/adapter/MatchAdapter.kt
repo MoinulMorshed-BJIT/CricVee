@@ -1,6 +1,7 @@
 package com.moinul.cricvee.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -144,6 +145,9 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
             /*val bundle = Bundle()
             bundle.putInt("fixtureId", match.id)*/
             UtilTools.CLICKED_FIXTURE_ID = match.id
+
+
+
             if(match.status=="Finished"){
                 holder.itemView.findNavController().navigate(R.id.matchDetailsFragment)
             }

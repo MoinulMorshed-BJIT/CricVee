@@ -16,6 +16,7 @@
             android:id="@+id/innings_team1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:padding="@dimen/innings_padding"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +31,7 @@
             android:id="@+id/innings_team2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:padding="@dimen/innings_padding"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintTop_toTopOf="@id/innings_team1"
             app:layout_constraintBottom_toBottomOf="@id/innings_team1"
@@ -44,10 +46,13 @@
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingStart="@dimen/options_margin"
+            android:paddingEnd="@dimen/options_margin"
             app:layout_constraintTop_toBottomOf="@id/innings_team2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/text_to_text_margin">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -56,7 +61,8 @@
                 <LinearLayout
                     android:id="@+id/batting_header_row"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

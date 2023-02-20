@@ -74,12 +74,6 @@ class PlayersFragment : Fragment() {
         viewModel.readAllTeamIdList.observe(viewLifecycleOwner){
             viewModel.fetchCurrentSquad(it)
         }
-
-
-
-
-
-
         initialiseLayoutManager()
 
         Log.d("Fragment e Search Test", "onCreateOptionsMenu: HERE!!")

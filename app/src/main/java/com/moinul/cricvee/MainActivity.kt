@@ -1,5 +1,6 @@
 package com.moinul.cricvee
 
+import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
     private lateinit var navController: NavController
     private var receiver: ConnectivityReceiver? = null
     private lateinit var noInternetBar: TextView
+
+
 
     //private lateinit var viewModel: SportsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
