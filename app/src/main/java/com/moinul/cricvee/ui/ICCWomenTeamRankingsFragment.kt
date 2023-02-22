@@ -12,19 +12,18 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moinul.cricvee.R
-import com.moinul.cricvee.adapter.PlayerSearchAdapter
 import com.moinul.cricvee.adapter.RankingAdapter
 import com.moinul.cricvee.databinding.FragmentICCTeamRankingsBinding
-import com.moinul.cricvee.utils.Constants
+import com.moinul.cricvee.databinding.FragmentICCWomenTeamRankingsBinding
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_i_c_c_team_rankings.*
-import kotlinx.android.synthetic.main.fragment_players.*
 
-private const val TAG = "ICCTeamRankingsFragment"
-class ICCTeamRankingsFragment : Fragment() {
+private const val TAG = "ICCWomenTeamRankingsFra"
+
+class ICCWomenTeamRankingsFragment : Fragment() {
     private val viewModel: SportsViewModel by viewModels()
-    private lateinit var binding: FragmentICCTeamRankingsBinding
+    private lateinit var binding: FragmentICCWomenTeamRankingsBinding
     private lateinit var teamRankingRecyclerView: RecyclerView
     private var currentFormatTabIndex = 1
 
@@ -38,7 +37,7 @@ class ICCTeamRankingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentICCTeamRankingsBinding.inflate(layoutInflater)
+        binding = FragmentICCWomenTeamRankingsBinding.inflate(layoutInflater)
 
         return binding.root
     }
@@ -65,11 +64,6 @@ class ICCTeamRankingsFragment : Fragment() {
             selectFormatTab()
             updateRecyclerView()
         }
-        binding.typeText3.setOnClickListener{
-            currentFormatTabIndex = 3
-            selectFormatTab()
-            updateRecyclerView()
-        }
 
     }
 
@@ -80,9 +74,8 @@ class ICCTeamRankingsFragment : Fragment() {
 
     private fun updateRecyclerView(){
         when(currentFormatTabIndex){
-            1 -> observeMenTestData()
-            2 -> observeMenODIData()
-            3 -> observeMenT20IData()
+            1 -> observeWomenODIData()
+            2 -> observeWomenT20IData()
         }
     }
 
@@ -155,9 +148,6 @@ class ICCTeamRankingsFragment : Fragment() {
                 binding.typeText2.isSelected = false
                 binding.typeText2.setBackgroundResource(R.drawable.tab_border_shape)
                 binding.typeText2.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground))
-                binding.typeText3.isSelected = false
-                binding.typeText3.setBackgroundResource(R.drawable.tab_border_shape)
-                binding.typeText3.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground))
 
             }
             2 -> {
@@ -168,22 +158,7 @@ class ICCTeamRankingsFragment : Fragment() {
                 binding.typeText.isSelected = false
                 binding.typeText.setBackgroundResource(R.drawable.tab_border_shape)
                 binding.typeText.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground))
-                binding.typeText3.isSelected = false
-                binding.typeText3.setBackgroundResource(R.drawable.tab_border_shape)
-                binding.typeText3.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground))
 
-            }
-            3 -> {
-                binding.typeText3.isSelected = true
-                binding.typeText3.setBackgroundResource(R.color.colorSelectedTab)
-                binding.typeText3.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorTabIndicator))
-
-                binding.typeText.isSelected = false
-                binding.typeText.setBackgroundResource(R.drawable.tab_border_shape)
-                binding.typeText.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground))
-                binding.typeText2.isSelected = false
-                binding.typeText2.setBackgroundResource(R.drawable.tab_border_shape)
-                binding.typeText2.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorOnBackground))
             }
         }
     }

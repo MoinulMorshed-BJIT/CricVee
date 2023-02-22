@@ -6,8 +6,8 @@
     <dimen name="team_img_width">45dp</dimen>
     <dimen name="team_img_height">45dp</dimen>
 
-    <dimen name="player_img_width">100dp</dimen>
-    <dimen name="player_img_height">100dp</dimen>
+    <dimen name="player_img_width">55dp</dimen>
+    <dimen name="player_img_height">55dp</dimen>
     <dimen name="lineup_text_size">11.5sp</dimen>
 
     <dimen name="bottNavElevation">10dp</dimen>
@@ -15,7 +15,7 @@
     <dimen name="bottNavMargin">7dp</dimen>
     <dimen name="bottNavWidth">53dp</dimen>
     <dimen name="search_marginTop">30dp</dimen>
-    <dimen name="playerName_text_size">20sp</dimen>
+    <dimen name="playerName_text_size">16.5sp</dimen>
     <dimen name="tabLayoutMargin">35sp</dimen>
     <dimen name="tab_text_size">15sp</dimen>
     <dimen name="teamHeaderTextSize">12sp</dimen>
@@ -35,4 +35,15 @@
     <dimen name="cardCornerRadius">14dp</dimen>
     <dimen name="teamImgHeaderWidth">48dp</dimen>
     <dimen name="vs_text_size">18.75sp</dimen>
+    <dimen name="playerInfoMargin">27sp</dimen>
+    <dimen name="flag_small_size">20sp</dimen>
+    <dimen name="playerProfile_txtV_height">30dp</dimen>
+    <dimen name="playerProfileName_txtSize">20sp</dimen>
+    <dimen name="playerDetails_coverPhotoHeight">145sp</dimen>
+    <dimen name="playerProfileImageSize">135dp</dimen>
+    <dimen name="profilePictureMarginTop">100dp</dimen>
+    <dimen name="profilePictureMarginStart">20dp</dimen>
+    <dimen name="profilePictureStrokeWidth">3sp</dimen>
+    <dimen name="profilePicturePadding">2dp</dimen>
+    <dimen name="bigMargin">64dp</dimen>
 </resources>

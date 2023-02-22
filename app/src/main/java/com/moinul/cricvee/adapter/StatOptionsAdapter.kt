@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import com.moinul.cricvee.R
 import com.moinul.cricvee.databinding.StatOptionsItemBinding
-import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.utils.UtilTools
 
 
@@ -36,6 +35,13 @@ class StatOptionsAdapter(
                 holder.optionTextView.setText(item.optionName)
                 holder.itemView.setOnClickListener{
                     holder.itemView.findNavController().navigate(R.id.ICCTeamRankingsFragment)
+                }
+            }
+            1 -> {
+                holder.optionImgView.setImageResource(item.optionImage)
+                holder.optionTextView.setText(item.optionName)
+                holder.itemView.setOnClickListener{
+                    holder.itemView.findNavController().navigate(R.id.ICCWomenTeamRankingsFragment)
                 }
             }
         }

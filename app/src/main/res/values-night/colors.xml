@@ -2,4 +2,7 @@
 <resources>
 
     <color name="scoreHeaderRowColor">#006699</color>
+    <color name="darkLightTint">#FFFFFF</color>
+    <color name="darkLightFill">#000000</color>
+
 </resources>

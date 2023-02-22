@@ -77,7 +77,6 @@
                             android:id="@+id/player_column"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/text_to_text_margin"
                             android:text="Batter"
                             android:textAlignment="center"
                             android:textSize="18sp"

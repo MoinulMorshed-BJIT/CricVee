@@ -22,11 +22,11 @@
     <fragment
         android:id="@+id/ICCTeamRankingsFragment"
         android:name="com.moinul.cricvee.ui.ICCTeamRankingsFragment"
-        android:label="ICC Team Rankings" />
+        android:label="Men's Team Rankings" />
     <fragment
         android:id="@+id/matchDetailsFragment"
         android:name="com.moinul.cricvee.ui.MatchDetailsFragment"
-        android:label="MatchDetailsFragment" >
+        android:label="Match Details" >
         <argument
             android:name="fixtureId"
             app:argType="integer"
@@ -36,4 +36,34 @@
         android:id="@+id/battingScoreboardFragment"
         android:name="com.moinul.cricvee.ui.BattingScoreboardFragment"
         android:label="BattingScoreboardFragment" />
+    <fragment
+        android:id="@+id/playerCareerFragment"
+        android:name="com.moinul.cricvee.ui.PlayerCareerFragment"
+        android:label="Player Career Details"
+        tools:layout="@layout/fragment_player_career" >
+        <argument
+            android:name="playerName"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="flagImagePath"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="playerImagePath"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="playerCountryName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="playerID"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/ICCWomenTeamRankingsFragment"
+        android:name="com.moinul.cricvee.ui.ICCWomenTeamRankingsFragment"
+        android:label="Women's Team Rankings" />
 </navigation>

@@ -11,87 +11,73 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/gender_text"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/format_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/options_margin"
-            android:background="@drawable/tab_border_shape"
-            android:padding="@dimen/options_margin"
-            android:text="@string/men"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textSize="@dimen/tab_text_size"
-            app:layout_constraintEnd_toStartOf="@id/gender_text2"
-            app:layout_constraintHorizontal_bias="0.43"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/gender_text2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/options_margin"
-            android:background="@drawable/tab_border_shape"
-            android:padding="@dimen/options_margin"
-            android:text="@string/women"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textSize="@dimen/tab_text_size"
-            app:layout_constraintBottom_toBottomOf="@id/gender_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/gender_text"
             app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/type_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_to_text_margin"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/tab_border_shape"
-            android:padding="@dimen/options_margin"
-            android:text="@string/test"
-            android:textSize="@dimen/tab_text_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/teamString"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.35"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gender_text2" />
+            >
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/type_text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_to_text_margin"
-            android:background="@drawable/tab_border_shape"
-            android:padding="@dimen/options_margin"
-            android:text="@string/odi"
-            android:textStyle="bold"
-            android:textSize="@dimen/tab_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.52"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gender_text" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/type_text3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_to_text_margin"
-            android:padding="@dimen/options_margin"
-            android:textSize="@dimen/tab_text_size"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.67"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gender_text2"
-            android:background="@drawable/tab_border_shape"
-            android:text="@string/t20i"
-            android:textStyle="bold"/>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/type_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/tab_border_shape"
+                    app:layout_constraintHorizontal_weight="0.33"
+                    android:padding="@dimen/options_margin"
+                    android:text="@string/test"
+                    android:textSize="@dimen/tab_text_size"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@id/type_text2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/type_text2"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/tab_border_shape"
+                    android:padding="@dimen/options_margin"
+                    android:text="@string/odi"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/tab_text_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/type_text3"
+                    app:layout_constraintHorizontal_weight="0.33"
+                    app:layout_constraintStart_toEndOf="@id/type_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/type_text3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    app:layout_constraintHorizontal_weight="0.33"
+                    android:padding="@dimen/options_margin"
+                    android:textSize="@dimen/tab_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/type_text2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/tab_border_shape"
+                    android:text="@string/t20i"
+                    android:textAlignment="center"
+                    android:textStyle="bold"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/rankString"
@@ -99,8 +85,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="@string/rank"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type_text" />
+            app:layout_constraintTop_toBottomOf="@id/format_layout" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/teamString"
@@ -108,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/columnMargin"
             android:text="@string/team"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/rankString"
             app:layout_constraintTop_toTopOf="@id/rankString"
             app:layout_constraintBottom_toBottomOf="@id/rankString"
@@ -119,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/horizontal_double"
             android:text="@string/ratings"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/pointsString"
             app:layout_constraintTop_toTopOf="@id/rankString"
             app:layout_constraintBottom_toBottomOf="@id/rankString"
@@ -130,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/points"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rankString"
             app:layout_constraintBottom_toBottomOf="@id/rankString"

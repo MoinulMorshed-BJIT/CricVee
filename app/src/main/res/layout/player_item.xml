@@ -2,6 +2,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:elevation="@dimen/innings_padding"
+    android:layout_margin="@dimen/rankMargin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     
@@ -28,7 +30,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/player_img"
             app:layout_constraintBottom_toBottomOf="@id/player_img"
-            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/playerInfoMargin"
+            android:textSize="@dimen/playerName_text_size"
+            tools:text="@string/dummyName"
+            />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/flag_image"
+            android:layout_width="@dimen/flag_small_size"
+            android:layout_height="@dimen/flag_small_size"
+            app:layout_constraintStart_toEndOf="@id/player_img"
+            app:layout_constraintTop_toTopOf="@id/player_img"
+            app:layout_constraintBottom_toBottomOf="@id/player_img"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/playerInfoMargin"
+            tools:src="@drawable/ic_home_black_24dp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/player_country"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/flag_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/player_img"
+            app:layout_constraintBottom_toBottomOf="@id/player_img"
+            android:layout_marginStart="@dimen/options_margin"
+            android:layout_marginTop="@dimen/playerInfoMargin"
             android:textSize="@dimen/playerName_text_size"
             tools:text="@string/dummyName"
             />

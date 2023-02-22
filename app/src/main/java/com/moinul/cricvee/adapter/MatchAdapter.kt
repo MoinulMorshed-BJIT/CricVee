@@ -67,7 +67,11 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val team2score = holder.itemView.team2_score
         val team2overs = holder.itemView.team2_overs
 
-        noteResult.text = match.note
+        when(match.status){
+            "Finished" -> noteResult.text = match.note
+            "NS" -> noteResult.text = "Yet to start"
+        }
+
 
         GlobalScope.launch(Dispatchers.Default) {
             try {
@@ -129,11 +133,11 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                         .error(R.drawable.ic_connection_error)
                         .into(team2imageView)
 
-                    team1name.text = team1Data?.name.toString()
+                    team1name.text = team1Data?.code.toString()
                     team1score.text = team1runAndWicketsData
                     team1overs.text = team1overData
 
-                    team2name.text = team2Data?.name.toString()
+                    team2name.text = team2Data?.code.toString()
                     team2score.text = team2runAndWicketsData
                     team2overs.text = team2overData
                 }catch (e:Exception){

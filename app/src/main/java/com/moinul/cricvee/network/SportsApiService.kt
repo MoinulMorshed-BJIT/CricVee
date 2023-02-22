@@ -1,5 +1,6 @@
 package com.moinul.cricvee.network
 
+import com.moinul.cricvee.model.career.Career
 import com.moinul.cricvee.model.countries.Countries
 import com.moinul.cricvee.model.currentPlayers.CurrentSquad
 import com.moinul.cricvee.model.fixtures.AllFixtures
@@ -76,6 +77,13 @@ interface SportsApiService {
         @Query("include") includeParam: String = "batting,bowling,lineup,balls,runs",
         @Query("api_token") api_token: String = Constants.API_KEY
     ): Call<FixtureWithScoreboard>
+
+    @GET("players/{playerId}")
+    fun fetchCareerByPlayerId(
+        @Path("playerId") playerId: Int,
+        @Query("include") includeParam: String = "career",
+        @Query("api_token") api_token: String = Constants.API_KEY
+    ): Call<Career>
 
 
 }

@@ -25,37 +25,6 @@ class PlayersFragment : Fragment() {
     private lateinit var searchPlayerRecyclerView: RecyclerView
     private val viewModel: SportsViewModel by viewModels()
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        /*Log.d("Fragment e Search Test", "onCreateOptionsMenu: HERE!!")
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-
-            override fun onQueryTextSubmit(newText: String?): Boolean {
-                binding.searchView.clearFocus()
-                val adapter = searchPlayerRecyclerView?.adapter as PlayerSearchAdapter?
-                Log.d("Fragment e Search Test", "onQueryTextSubmit: $newText")
-                *//*if (newText != null) {
-                    adapter?.performSearch(newText)
-                }*//*
-
-
-
-                return  false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val adapter = searchPlayerRecyclerView?.adapter as PlayerSearchAdapter?
-                Log.d("Fragment e Search Test", "onQueryTextSubmit: $newText")
-                if (newText != null) {
-                    adapter?.performSearch(newText)
-                }
-                return  false
-            }
-        })*/
-    }
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -124,6 +93,8 @@ class PlayersFragment : Fragment() {
         bottomNavigationView?.let {
             it.menu.getItem(1).isChecked = true
         }
+        binding.searchView.isIconified=true
+        binding.searchView.clearFocus()
     }
 
 }

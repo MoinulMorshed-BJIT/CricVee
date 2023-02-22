@@ -17,8 +17,9 @@ class UtilTools {
             }
         }
         var CLICKED_FIXTURE_ID = 0
-        val allOptions = listOf<Option>( Option( "ICC Team Rankings",
-            R.drawable.icc_team_ranking) )
+        val allOptions = listOf<Option>( Option( "ICC Men's Team Rankings", R.drawable.icc_team_ranking),
+            Option("ICC Women's Team Rankings", R.drawable.icc_team_ranking)
+            )
 
         var DURATION = getDurationRange()
         var UPCOMING_DURATION = getUpcomingDurationRange()

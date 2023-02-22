@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide.init
 import com.moinul.cricvee.MyApplication
 import com.moinul.cricvee.database.SportsDao
 import com.moinul.cricvee.database.SportsDatabase
+import com.moinul.cricvee.model.career.Career
 import com.moinul.cricvee.model.countries.CountryData
 import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.fixtures.FixtureData
@@ -199,6 +200,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     suspend fun fetchScoreboardByFixtureId(fixtureId: Int):FixtureWithScoreboard{
         return SportsApi.retrofitService.fetchScoreboardByFixtureId(fixtureId).await()
     }
+
     fun getFixtureWithScoreboard(fixtureId: Int) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -209,6 +211,31 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
                     Log.d(TAG, "getFixtureWithScoreboard: ${_fixtureWithScoreboard.value}")
                 }catch (e: Exception){
                     Log.d(TAG, "getFixtureWithScoreboard: $e")
+                }
+
+            }
+
+        }
+    }
+
+    private val _playerCareer = MutableLiveData<Career>()
+    val playerCareer: LiveData<Career>
+        get() = _playerCareer
+    suspend fun fetchCareerByPlayerId(playerId: Int): Career {
+        return SportsApi.retrofitService.fetchCareerByPlayerId(playerId).await()
+    }
+
+
+    fun getCareerByPlayerId(playerId: Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    val playerCareerLocal = fetchCareerByPlayerId(playerId)
+                    Log.d(TAG, "getCareerByPlayerId: $playerCareerLocal")
+                    _playerCareer.postValue(playerCareerLocal)
+                    Log.d(TAG, "getCareerByPlayerId: ${_playerCareer.value}")
+                }catch (e: Exception){
+                    Log.d(TAG, "getCareerByPlayerId: $e")
                 }
 
             }
