@@ -116,22 +116,21 @@
                             android:id="@+id/xi_A_recyclerView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.492"
+                            android:layout_weight="0.49"
                             android:layout_gravity="start"
                             android:padding="@dimen/activity_horizontal_margin" />
-                        <LinearLayout
+                        <View
                             android:layout_width="@dimen/options_margin"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:layout_gravity="center"
-                            android:layout_weight="0.015"
+                            android:layout_weight="0.02"
                             />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/xi_B_recyclerView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.492"
+                            android:layout_weight="0.49"
                             android:layout_gravity="end"
                             android:padding="@dimen/activity_horizontal_margin" />
 

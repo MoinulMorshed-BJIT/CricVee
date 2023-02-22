@@ -20,8 +20,12 @@ import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.fixtures.Run
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureScoreboardData
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
+import com.moinul.cricvee.model.league.LeagueData
+import com.moinul.cricvee.model.season.SeasonData
+import com.moinul.cricvee.model.stage.StageData
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
 import com.moinul.cricvee.model.teams.TeamData
+import com.moinul.cricvee.model.venue.VenueData
 import com.moinul.cricvee.network.SportsApi
 import com.moinul.cricvee.repository.Repository
 import com.moinul.cricvee.utils.ConnectivityReceiver
@@ -48,6 +52,10 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     var readTestRankingMen: LiveData<List<LocalTeamRanking>>
     var readODIRankingMen: LiveData<List<LocalTeamRanking>>
     var readT20IRankingMen: LiveData<List<LocalTeamRanking>>
+    var readAllLeagueData: LiveData<List<LeagueData>>
+    var readAllVenueData: LiveData<List<VenueData>>
+    var readAllSeasonData: LiveData<List<SeasonData>>
+    var readAllStageData: LiveData<List<StageData>>
 
     var readTestRankingWomen: LiveData<List<LocalTeamRanking>>
     var readODIRankingWomen: LiveData<List<LocalTeamRanking>>
@@ -71,6 +79,10 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         readTestRankingWomen = repository.readTestRankingWomen
         readODIRankingWomen = repository.readODIRankingWomen
         readT20IRankingWomen = repository.readT20IRankingWomen
+        readAllLeagueData =repository.readAllLeagueData
+        readAllVenueData = repository.readAllVenueData
+        readAllSeasonData =repository.readAllSeasonData
+        readAllStageData = repository.readAllStageData
     }
 
     fun fetchAllFixtures(){
@@ -136,6 +148,46 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
                 repository.insertAllCountries(countryList)
             }catch (e: Exception){
                 Log.d(TAG, "fetchCountries: $e")
+            }
+        }
+    }
+    fun fetchLeagues(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val leagueList = SportsApi.retrofitService.fetchAllLeagues().data
+                repository.insertAllLeagues(leagueList)
+            }catch (e: Exception){
+                Log.d(TAG, "fetchLeagues: $e")
+            }
+        }
+    }
+    fun fetchVenues(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val venueList = SportsApi.retrofitService.fetchAllVenues().data
+                repository.insertAllVenues(venueList)
+            }catch (e: Exception){
+                Log.d(TAG, "fetchVenues: $e")
+            }
+        }
+    }
+    fun fetchSeasons(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val seasonList = SportsApi.retrofitService.fetchAllSeasons().data
+                repository.insertAllSeasons(seasonList)
+            }catch (e: Exception){
+                Log.d(TAG, "fetchSeasons: $e")
+            }
+        }
+    }
+    fun fetchStages(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val stageList = SportsApi.retrofitService.fetchAllStages().data
+                repository.insertAllStages(stageList)
+            }catch (e: Exception){
+                Log.d(TAG, "fetchStages: $e")
             }
         }
     }
@@ -251,12 +303,10 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         Log.d(TAG, "fetchCurrentSquad: CALLED")
         viewModelScope.launch(Dispatchers.IO) {
             Log.d(TAG, "STATE fetchCurrentSquad: ${repository.readAllSquadPlayers.value} ${teamIdList.isNotEmpty()}")
-            if((repository.readAllSquadPlayers.value==null || repository.readAllSquadPlayers.value?.isEmpty() == true) && teamIdList.isNotEmpty()){
+            if(repository.readAllSquadPlayers.value==null || repository.readAllSquadPlayers.value?.isEmpty() == true) {
                 for(teamId in teamIdList){
                     try {
                         val playersList = SportsApi.retrofitService.fetchCurrentSquad(teamId).data.squad
-
-                        //repository.deleteAllTeams()
                         Log.d("SportsViewModel", "fetchCurrentSquad: SUCCESS ${playersList}")
                         repository.insertAllSquadPlayers(playersList)
                     }catch (e: Exception){

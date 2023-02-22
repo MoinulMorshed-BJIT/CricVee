@@ -28,7 +28,6 @@ data class FixtureData(
     var referee_id: Int?,
     @Ignore
     var resource: String?,
-    @Ignore
     var round: String?,
     @Ignore
     var rpc_overs: String?,

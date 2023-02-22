@@ -8,10 +8,17 @@ import com.moinul.cricvee.model.countries.Countries
 import com.moinul.cricvee.model.countries.CountryData
 import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.fixtures.FixtureData
+import com.moinul.cricvee.model.league.LeagueData
+import com.moinul.cricvee.model.season.SeasonData
+import com.moinul.cricvee.model.stage.StageData
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
 import com.moinul.cricvee.model.teams.TeamData
+import com.moinul.cricvee.model.venue.VenueData
 
-@Database(entities = [FixtureData::class, TeamData::class, Squad::class, CountryData::class, LocalTeamRanking::class], version = 5, exportSchema = false)
+@Database(entities = [FixtureData::class,
+    TeamData::class, Squad::class, CountryData::class,
+    LocalTeamRanking::class, LeagueData::class, StageData::class,
+    VenueData::class, SeasonData::class], version = 7, exportSchema = false)
 abstract class SportsDatabase :RoomDatabase(){
     abstract fun getDao(): SportsDao
 

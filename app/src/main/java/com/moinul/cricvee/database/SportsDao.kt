@@ -10,9 +10,13 @@ import com.moinul.cricvee.model.countries.CountryData
 import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.currentPlayers.SquadPlayerData
 import com.moinul.cricvee.model.fixtures.FixtureData
+import com.moinul.cricvee.model.league.LeagueData
+import com.moinul.cricvee.model.season.SeasonData
+import com.moinul.cricvee.model.stage.StageData
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
 import com.moinul.cricvee.model.teamRanking.TeamRanking
 import com.moinul.cricvee.model.teams.TeamData
+import com.moinul.cricvee.model.venue.VenueData
 
 @Dao
 interface SportsDao {
@@ -35,6 +39,15 @@ interface SportsDao {
     @Query("delete from team_ranking_table")
     fun deleteAllTeamRankings()
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAllLeagueData(leagueList: List<LeagueData>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAllVenueData(venueList: List<VenueData>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAllSeasonData(seasonList: List<SeasonData>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAllStageData(stageList: List<StageData>)
+
 
     @Query("select * from team_ranking_table where type='TEST' and gender='men' order by position")
     fun readTestRankingMen():LiveData<List<LocalTeamRanking>>
@@ -54,6 +67,15 @@ interface SportsDao {
     fun readRecentFixtureData():LiveData<List<FixtureData>>
     @Query("select * from fixture_table where status='NS' order by starting_at limit 7")
     fun readUpcomingFixtureData():LiveData<List<FixtureData>>
+    @Query("select * from league_table")
+    fun readAllLeagueData():LiveData<List<LeagueData>>
+    @Query("select * from venue_table")
+    fun readAllVenueData():LiveData<List<VenueData>>
+    @Query("select * from season_table")
+    fun readAllSeasonData():LiveData<List<SeasonData>>
+    @Query("select * from stage_table")
+    fun readAllStageData():LiveData<List<StageData>>
+
 
     @Query("select * from team_table where id= :teamId")
     fun readTeamById(teamId: Int):TeamData
@@ -69,6 +91,15 @@ interface SportsDao {
 
     @Query("select * from team_table where name= :teamName ")
     fun getTeamByName(teamName: String):TeamData
+
+    @Query("select * from league_table where id= :leagueId")
+    fun readLeaugeById(leagueId: Int):LeagueData
+    @Query("select * from venue_table where id= :venueId")
+    fun readVenueById(venueId: Int):VenueData
+    @Query("select * from season_table where id= :seasonId")
+    fun readSeasonById(seasonId: Int):SeasonData
+    @Query("select * from stage_table where id= :stageId")
+    fun readStageById(stageId: Int):StageData
 
 
 

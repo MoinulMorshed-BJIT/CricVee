@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
                 viewModel.fetchCountries()
 
                 viewModel.fetchTeamRankings()
+                viewModel.fetchLeagues()
+                viewModel.fetchVenues()
+                viewModel.fetchSeasons()
+                viewModel.fetchStages()
 
             } else {
                 noInternetBar.visibility = View.VISIBLE

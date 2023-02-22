@@ -41,7 +41,9 @@ class PlayersFragment : Fragment() {
         searchPlayerRecyclerView.setHasFixedSize(true)
 
         viewModel.readAllTeamIdList.observe(viewLifecycleOwner){
-            viewModel.fetchCurrentSquad(it)
+            if(it!=null && it.isNotEmpty()){
+                viewModel.fetchCurrentSquad(it)
+            }
         }
         initialiseLayoutManager()
 

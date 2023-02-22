@@ -6,8 +6,12 @@ import com.moinul.cricvee.model.currentPlayers.CurrentSquad
 import com.moinul.cricvee.model.fixtures.AllFixtures
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
+import com.moinul.cricvee.model.league.League
+import com.moinul.cricvee.model.season.Season
+import com.moinul.cricvee.model.stage.Stage
 import com.moinul.cricvee.model.teamRanking.TeamRanking
 import com.moinul.cricvee.model.teams.AllTeams
+import com.moinul.cricvee.model.venue.Venue
 import com.moinul.cricvee.utils.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -84,6 +88,23 @@ interface SportsApiService {
         @Query("include") includeParam: String = "career",
         @Query("api_token") api_token: String = Constants.API_KEY
     ): Call<Career>
+
+    @GET("leagues")
+    suspend fun fetchAllLeagues(
+        @Query("api_token") api_token: String = Constants.API_KEY
+    ):League
+    @GET("seasons")
+    suspend fun fetchAllSeasons(
+        @Query("api_token") api_token: String = Constants.API_KEY
+    ):Season
+    @GET("stages")
+    suspend fun fetchAllStages(
+        @Query("api_token") api_token: String = Constants.API_KEY
+    ):Stage
+    @GET("venues")
+    suspend fun fetchAllVenues(
+        @Query("api_token") api_token: String = Constants.API_KEY
+    ):Venue
 
 
 }
