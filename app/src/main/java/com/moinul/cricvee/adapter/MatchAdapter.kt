@@ -1,8 +1,6 @@
 package com.moinul.cricvee.adapter
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +14,17 @@ import com.moinul.cricvee.R
 import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.fixtures.FixtureRunData
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
+import com.moinul.cricvee.model.league.LeagueData
+import com.moinul.cricvee.model.season.SeasonData
+import com.moinul.cricvee.model.stage.StageData
 import com.moinul.cricvee.model.teams.TeamData
-import com.moinul.cricvee.utils.Constants
+import com.moinul.cricvee.model.venue.VenueData
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.match_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 private const val TAG = "MatchAdapter"
 class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val listFromFragment: List<FixtureData>)
@@ -56,9 +56,14 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         var team1overData = ""
         var team2runAndWicketsData = ""
         var team2overData = ""
+        var matchInfoTitleData = ""
+        var stageData:StageData?
+        var leagueData:LeagueData?
+        var venueData:VenueData?
+        var seasonData:SeasonData?
 
-        val team1imageView = holder.itemView.team1_img
-        val team2imageView = holder.itemView.team2_img
+        val team1imageView = holder.itemView.team1_imgV
+        val team2imageView = holder.itemView.team2_imgV
         val team1name = holder.itemView.team1_name
         val team2name = holder.itemView.team2_name
         val noteResult = holder.itemView.match_note_result
@@ -66,6 +71,10 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val team1overs = holder.itemView.team1_overs
         val team2score = holder.itemView.team2_score
         val team2overs = holder.itemView.team2_overs
+        val round = holder.itemView.round_txtV
+        val leagueImage = holder.itemView.leagueImgV
+        val matchStatus = holder.itemView.match_status
+        val stageLeagueTitle = holder.itemView.stage_league_title
 
         when(match.status){
             "Finished" -> noteResult.text = match.note
@@ -77,10 +86,16 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
             try {
                 team1Data = match.visitorteam_id?.let { viewModel.readTeamById(it) }!!
                 team2Data = match.localteam_id?.let { viewModel.readTeamById(it) }!!
+                stageData = match.stage_id?.let { viewModel.readStageById(it) }
+                leagueData = match.league_id?.let { viewModel.readLeagueById(it) }
+                venueData = match.venue_id?.let { viewModel.readVenueById(it) }
 
             }catch (e: Exception){
                 team1Data = null
                 team2Data = null
+                stageData = null
+                leagueData = null
+                venueData = null
                 Log.d(TAG, "Catch onBindViewHolder: $e")
             }
             //Log.d("TAG", "onBindViewHolder: ${match.id}")
@@ -93,29 +108,30 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                     Log.d("TAG", "onBindViewHolder: RUNS LIST = ${fixtureRunData?.runs}")
                     if (fixtureRunData?.runs?.first()?.team_id == match.visitorteam_id) {
                         team1runAndWicketsData =
-                            fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.first()?.wickets.toString()
-                        team1overData = "( ${fixtureRunData?.runs?.first()?.overs.toString()} )"
+                            "Total: "+fixtureRunData?.runs?.first()?.score.toString() + "/" + fixtureRunData?.runs?.first()?.wickets.toString()
+                        team1overData = "Overs: ${fixtureRunData?.runs?.first()?.overs.toString()}"
 
                         team2runAndWicketsData =
-                            fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.last()?.wickets.toString()
-                        team2overData = "( ${fixtureRunData?.runs?.last()?.overs.toString()} )"
+                            "Total: "+fixtureRunData?.runs?.last()?.score.toString() + "/" + fixtureRunData?.runs?.last()?.wickets.toString()
+                        team2overData = "Overs: ${fixtureRunData?.runs?.last()?.overs.toString()}"
                     } else {
                         team2runAndWicketsData =
-                            fixtureRunData?.runs?.first()?.score.toString() + " / " + fixtureRunData?.runs?.first()?.wickets.toString()
-                        team2overData = "( ${fixtureRunData?.runs?.first()?.overs.toString()} )"
+                            "Total: "+fixtureRunData?.runs?.first()?.score.toString() + "/" + fixtureRunData?.runs?.first()?.wickets.toString()
+                        team2overData = "Overs: ${fixtureRunData?.runs?.first()?.overs.toString()}"
 
 
                         team1runAndWicketsData =
-                            fixtureRunData?.runs?.last()?.score.toString() + " / " + fixtureRunData?.runs?.last()?.wickets.toString()
-                        team1overData = "( ${fixtureRunData?.runs?.last()?.overs.toString()} )"
+                            "Total: "+fixtureRunData?.runs?.last()?.score.toString() + "/" + fixtureRunData?.runs?.last()?.wickets.toString()
+                        team1overData = "Overs: ${fixtureRunData?.runs?.last()?.overs.toString()}"
                     }
                 }else{
 
                 }
             }else{
-                team1runAndWicketsData = Constants.UNAVAILABLE
-
-                team2runAndWicketsData = Constants.UNAVAILABLE
+                //team1runAndWicketsData = Constants.UNAVAILABLE
+                team1runAndWicketsData = ""
+                //team2runAndWicketsData = Constants.UNAVAILABLE
+                team2runAndWicketsData = ""
             }
 
             GlobalScope.launch(Dispatchers.Main) {
@@ -132,6 +148,11 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                         .priority(Priority.HIGH)
                         .error(R.drawable.ic_connection_error)
                         .into(team2imageView)
+                    Glide.with(context).load(leagueData?.image_path).fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error)
+                        .into(leagueImage)
 
                     team1name.text = team1Data?.code.toString()
                     team1score.text = team1runAndWicketsData
@@ -140,6 +161,20 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                     team2name.text = team2Data?.code.toString()
                     team2score.text = team2runAndWicketsData
                     team2overs.text = team2overData
+                    stageLeagueTitle.text = "${leagueData?.name.toString()} | ${stageData?.name.toString()}"
+                    round.text = match.round
+
+                    if(match.status=="Finished"){
+                        matchStatus.text = match.status
+                        matchStatus.setBackgroundResource(R.drawable.oval_finished_status)
+                        matchStatus.setTextColor(context.resources.getColor(R.color.white))
+
+                    }else if(match.status=="NS"){
+                        matchStatus.text = context.getString(R.string.upcomingStr)
+                        matchStatus.setBackgroundResource(R.drawable.oval_upcoming_status)
+                        matchStatus.setTextColor(context.resources.getColor(R.color.white))
+
+                    }
                 }catch (e:Exception){
                     Log.d(TAG, "onBindViewHolder: $e")
                 }

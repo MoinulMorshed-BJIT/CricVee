@@ -66,4 +66,58 @@
         android:id="@+id/ICCWomenTeamRankingsFragment"
         android:name="com.moinul.cricvee.ui.ICCWomenTeamRankingsFragment"
         android:label="Women's Team Rankings" />
+    <fragment
+        android:id="@+id/fixtureListFragment"
+        android:name="com.moinul.cricvee.ui.FixtureListFragment"
+        android:label="FixtureListFragment" />
+    <fragment
+        android:id="@+id/stageListFragment"
+        android:name="com.moinul.cricvee.ui.StageListFragment"
+        android:label="StageListFragment" >
+        <argument
+            android:name="leagueId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="seasonId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="leagueImagePath"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="leagueName"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreboardFragment"
+        android:name="com.moinul.cricvee.ui.ScoreboardFragment"
+        android:label="ScoreboardFragment" />
+    <fragment
+        android:id="@+id/tournamentFixtureFragment"
+        android:name="com.moinul.cricvee.ui.TournamentFixtureFragment"
+        android:label="TournamentFixtureFragment" >
+        <argument
+            android:name="stageId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="leagueId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="seasonId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="leagueImagePath"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="leagueName"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
 </navigation>

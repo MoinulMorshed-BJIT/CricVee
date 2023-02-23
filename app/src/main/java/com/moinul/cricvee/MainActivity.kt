@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.moinul.cricvee.databinding.ActivityMainBinding
+import com.moinul.cricvee.ui.FixtureListFragment
 import com.moinul.cricvee.utils.ConnectivityReceiver
 import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.utils.UtilTools
@@ -77,6 +79,9 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
 
                 R.id.home_bottom_nav -> {
                     findNavController(R.id.nav_host_fragment_container).navigate(R.id.homeFragment)
+                }
+                R.id.fixtures_bottom_nav ->{
+                    findNavController(R.id.nav_host_fragment_container).navigate(R.id.fixtureListFragment)
                 }
 
                 R.id.players_bottom_nav -> {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.moinul.cricvee.R
 import com.moinul.cricvee.adapter.StatOptionsAdapter
 import com.moinul.cricvee.utils.Constants
@@ -44,7 +45,10 @@ class StatisticsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navbar)
+        bottomNavigationView?.let {
+            it.menu.getItem(3).isChecked = true
+        }
     }
 
     override fun onPause() {

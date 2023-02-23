@@ -64,9 +64,13 @@ interface SportsDao {
     fun readT20IRankingWomen(): LiveData<List<LocalTeamRanking>>
 
     @Query("select * from fixture_table where status='Finished' order by starting_at desc limit 7")
-    fun readRecentFixtureData():LiveData<List<FixtureData>>
+    fun readRecentFixtureData(): LiveData<List<FixtureData>>
     @Query("select * from fixture_table where status='NS' order by starting_at limit 7")
     fun readUpcomingFixtureData():LiveData<List<FixtureData>>
+
+    @Query("select * from fixture_table where stage_id= :stageId order by starting_at desc")
+    fun readFixturesByStageId(stageId: Int): LiveData<List<FixtureData>>
+
     @Query("select * from league_table")
     fun readAllLeagueData():LiveData<List<LeagueData>>
     @Query("select * from venue_table")
@@ -75,6 +79,8 @@ interface SportsDao {
     fun readAllSeasonData():LiveData<List<SeasonData>>
     @Query("select * from stage_table")
     fun readAllStageData():LiveData<List<StageData>>
+    @Query("select * from stage_table where league_id= :leagueId and season_id= :seasonId")
+    fun readStagesByLeagueId(leagueId: Int, seasonId:Int):LiveData<List<StageData>>
 
 
     @Query("select * from team_table where id= :teamId")
@@ -93,7 +99,7 @@ interface SportsDao {
     fun getTeamByName(teamName: String):TeamData
 
     @Query("select * from league_table where id= :leagueId")
-    fun readLeaugeById(leagueId: Int):LeagueData
+    fun readLeagueById(leagueId: Int): LeagueData
     @Query("select * from venue_table where id= :venueId")
     fun readVenueById(venueId: Int):VenueData
     @Query("select * from season_table where id= :seasonId")

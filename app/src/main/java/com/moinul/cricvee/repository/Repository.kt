@@ -2,6 +2,7 @@ package com.moinul.cricvee.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.room.Query
 import com.moinul.cricvee.database.SportsDao
 import com.moinul.cricvee.model.countries.CountryData
 import com.moinul.cricvee.model.currentPlayers.Squad
@@ -80,6 +81,14 @@ class Repository(private val sportsDao: SportsDao) {
         return sportsDao.readTeamById(teamId)
     }
 
+    fun readStagesByLeagueId(leagueId: Int, seasonId: Int):LiveData<List<StageData>>{
+        return sportsDao.readStagesByLeagueId(leagueId, seasonId)
+    }
+
+    fun readFixturesByStageId(stageId: Int):LiveData<List<FixtureData>>{
+        return sportsDao.readFixturesByStageId(stageId)
+    }
+
     fun getCountryIdByTeamName(teamName: String):Int{
         Log.d(TAG, "getCountryIdByTeamName: TeamName: $teamName Retrieved: ${sportsDao.getCountryIdByTeamName(teamName)}")
         return sportsDao.getCountryIdByTeamName(teamName)
@@ -99,6 +108,22 @@ class Repository(private val sportsDao: SportsDao) {
 
     suspend fun insertAllSquadPlayers(playersList :List<Squad>){
         return sportsDao.insertAllSquadPlayers(playersList)
+    }
+
+    fun readLeagueById(leagueId: Int): LeagueData{
+        return sportsDao.readLeagueById(leagueId)
+    }
+
+    fun readVenueById(venueId: Int):VenueData{
+        return sportsDao.readVenueById(venueId)
+    }
+
+    fun readSeasonById(seasonId: Int):SeasonData{
+        return sportsDao.readSeasonById(seasonId)
+    }
+
+    fun readStageById(stageId: Int):StageData{
+        return sportsDao.readStageById(stageId)
     }
 
 

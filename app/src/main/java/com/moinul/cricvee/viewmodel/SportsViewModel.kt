@@ -57,6 +57,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     var readAllSeasonData: LiveData<List<SeasonData>>
     var readAllStageData: LiveData<List<StageData>>
 
+//    var readAllT20IStages: LiveData<List<StageData>>
+
     var readTestRankingWomen: LiveData<List<LocalTeamRanking>>
     var readODIRankingWomen: LiveData<List<LocalTeamRanking>>
     var readT20IRankingWomen: LiveData<List<LocalTeamRanking>>
@@ -315,6 +317,30 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
                 }
             }
         }
+    }
+    fun readLeagueById(leagueId: Int): LeagueData{
+        return repository.readLeagueById(leagueId)
+    }
+
+    fun readVenueById(venueId: Int):VenueData{
+        return repository.readVenueById(venueId)
+    }
+
+    fun readSeasonById(seasonId: Int):SeasonData{
+        return repository.readSeasonById(seasonId)
+    }
+
+    fun readStageById(stageId: Int):StageData{
+        return repository.readStageById(stageId)
+    }
+
+
+    fun readStagesByLeagueId(leagueId: Int, seasonId: Int):LiveData<List<StageData>>{
+        return repository.readStagesByLeagueId(leagueId, seasonId)
+    }
+
+    fun readFixturesByStageId(stageId: Int):LiveData<List<FixtureData>>{
+        return repository.readFixturesByStageId(stageId)
     }
 
 

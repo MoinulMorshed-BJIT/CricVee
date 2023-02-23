@@ -12,8 +12,8 @@
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/option_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="@dimen/activity_horizontal_margin"
             android:layout_margin="@dimen/text_margin"
             tools:src="@drawable/baseline_stacked_bar_chart_24"
             app:layout_constraintTop_toTopOf="parent"

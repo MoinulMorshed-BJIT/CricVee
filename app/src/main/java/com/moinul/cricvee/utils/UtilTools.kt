@@ -10,11 +10,30 @@ class UtilTools {
         class Option(){
             var optionName: String = ""
             var optionImage: Int = 0
+            var optionImagePath: String = ""
+            var optionLeagueId: Int = 0
+            var optionSeasonId: Int = 0
+            var optionStageId: Int = 0
+            var optionLeagueName:String = ""
 
             constructor(optionName:String, optionImage:Int) : this() {
                 this.optionImage = optionImage
                 this.optionName = optionName
             }
+            constructor(optionStageId: Int, optionName: String, optionImagePath: String, optionLeagueName: String) : this() {
+                this.optionStageId = optionStageId
+                this.optionName = optionName
+                this.optionImagePath = optionImagePath
+                this.optionLeagueName = optionLeagueName
+            }
+
+            constructor(optionName: String, optionImagePath:String, optionLeagueId:Int, optionSeasonId:Int): this(){
+                this.optionName = optionName
+                this.optionImagePath = optionImagePath
+                this.optionLeagueId = optionLeagueId
+                this.optionSeasonId = optionSeasonId
+            }
+
         }
         var CLICKED_FIXTURE_ID = 0
         val allOptions = listOf<Option>( Option( "ICC Men's Team Rankings", R.drawable.icc_team_ranking),

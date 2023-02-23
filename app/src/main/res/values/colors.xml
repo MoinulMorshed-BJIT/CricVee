@@ -17,5 +17,7 @@
     <color name="photoBackground">#706969</color>
     <color name="darkLightTint">#000000</color>
     <color name="darkLightFill">#FFFFFF</color>
+    <color name="roundInfoTextColor">#976C0B</color>
+    <color name="finishedStatusColor">#179786</color>
 
 </resources>

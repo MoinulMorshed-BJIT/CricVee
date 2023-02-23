@@ -93,7 +93,7 @@ class PlayersFragment : Fragment() {
         super.onResume()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navbar)
         bottomNavigationView?.let {
-            it.menu.getItem(1).isChecked = true
+            it.menu.getItem(2).isChecked = true
         }
         binding.searchView.isIconified=true
         binding.searchView.clearFocus()
