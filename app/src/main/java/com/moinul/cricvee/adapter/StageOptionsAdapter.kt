@@ -35,6 +35,11 @@ class StageOptionsAdapter (private val context: Context,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
+        Glide.with(context).load(item.optionImagePath).fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .priority(Priority.HIGH)
+            .error(R.drawable.ic_connection_error)
+            .into(holder.optionImgView)
         holder.optionTextView.setText(item.optionName)
 
         holder.itemView.setOnClickListener{
