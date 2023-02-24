@@ -20,6 +20,9 @@ import com.moinul.cricvee.adapter.LineupsAdapter
 import com.moinul.cricvee.databinding.FragmentLineupsBinding
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private const val TAG = "LineupsFragment"
 
@@ -104,8 +107,33 @@ class LineupsFragment : Fragment() {
             }catch (e: Exception){
                 Log.d(TAG, "onViewCreated: $e")
             }*/
+            GlobalScope.launch(Dispatchers.IO){
+                val team = visitorTeamId?.let { it1 -> viewModel.readTeamById(it1) }
+                GlobalScope.launch(Dispatchers.Main){
+                    binding.visitorTeamHeader.text = team?.name
+                    Glide.with(requireContext()).load(team?.image_path).fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error)
+                        .into(binding.visitorImgSmall)
+                    //visitorTeamFound = true
+                }
+            }
 
-            for(teams in it.data?.balls!!){
+            GlobalScope.launch(Dispatchers.IO) {
+                val team = localTeamId?.let { it1 -> viewModel.readTeamById(it1) }
+                GlobalScope.launch(Dispatchers.Main) {
+                    binding.localTeamHeader.text = team?.name
+                    Glide.with(requireContext()).load(team?.image_path).fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error)
+                        .into(binding.localImgSmall)
+                    //localTeamFound = true
+                }
+            }
+
+            /*for(teams in it.data?.balls!!){
                 if(localTeamFound && visitorTeamFound){
                     break;
                 }
@@ -128,7 +156,7 @@ class LineupsFragment : Fragment() {
                         .into(binding.visitorImgSmall)
                     visitorTeamFound = true
                 }
-            }
+            }*/
 
             val teamA = it.data?.lineup?.filter { it.lineup?.team_id==visitorTeamId }
             val teamB = it.data?.lineup?.filter { it.lineup?.team_id==localTeamId }

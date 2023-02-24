@@ -86,6 +86,25 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val stageLeagueTitle = holder.itemView.stage_league_title
         val countdownTimer = holder.itemView.timer_txtV
 
+        if(!inFixtureFragment){
+            viewModel.getCountdownList().observe(lifecycleOwner) { countdownList ->
+                val countdown = countdownList[position]
+                val countdownText = formatCountdownText(countdown)
+                Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
+                countdownTimer.text = countdownText
+            }
+        }else{
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+            formatter.timeZone = TimeZone.getTimeZone("UTC")
+            val date = formatter.parse(match.starting_at)
+            var dateString = date.toString()
+            //countdownTimer.text = date.toString()
+            var timeZoneSliceIndex = dateString.indexOf("GMT")
+            var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
+            dateString = dateString.substring(0, timeZoneSliceIndex)
+            countdownTimer.text = dateString+yearString
+        }
+
         when(match.status){
             "Finished" -> {
                 noteResult.text = match.note
@@ -100,31 +119,13 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                 countdownTimer.text = dateString+yearString
             }
             "NS" -> {
-                if(match.note=="Final result only"){
+                if(countdownTimer.text=="Countdown ended"){
                     noteResult.text = "LIVE/Ongoing"
-                    countdownTimer.text = "Countdown ended"
+                    //countdownTimer.text = "Countdown ended"
                 }else{
                     noteResult.text = "Yet to start"
+                }
 
-                }
-                if(!inFixtureFragment){
-                    viewModel.getCountdownList().observe(lifecycleOwner) { countdownList ->
-                        val countdown = countdownList[position]
-                        val countdownText = formatCountdownText(countdown)
-                        Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
-                        countdownTimer.text = countdownText
-                    }
-                }else{
-                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
-                    formatter.timeZone = TimeZone.getTimeZone("UTC")
-                    val date = formatter.parse(match.starting_at)
-                    var dateString = date.toString()
-                    //countdownTimer.text = date.toString()
-                    var timeZoneSliceIndex = dateString.indexOf("GMT")
-                    var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
-                    dateString = dateString.substring(0, timeZoneSliceIndex)
-                    countdownTimer.text = dateString+yearString
-                }
             }
         }
 
@@ -235,10 +236,10 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
             UtilTools.CLICKED_FIXTURE_ID = match.id
 
 
-
-            if(match.status=="Finished"){
+            holder.itemView.findNavController().navigate(R.id.matchDetailsFragment)
+            /*if(match.status=="Finished"){
                 holder.itemView.findNavController().navigate(R.id.matchDetailsFragment)
-            }
+            }*/
         }
     }
 

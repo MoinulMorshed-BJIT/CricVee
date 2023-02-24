@@ -19,6 +19,9 @@ import com.moinul.cricvee.adapter.MatchAdapter
 import com.moinul.cricvee.databinding.FragmentBattingScoreboardBinding
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private const val TAG = "BattingScoreboardFragment"
 
@@ -88,13 +91,33 @@ class BattingScoreboardFragment() : Fragment() {
 //            Log.d(TAG, "observeData: CALLED ${it}")
 //            Log.d(TAG, "observeData: BALLS TEAM 1st NAME: ${it.data?.balls?.get(0)?.team?.code}")
 //            Log.d(TAG, "observeData: BALLS TEAM last NAME: ${it.data?.balls?.last()?.team?.code}")
-            if(it.data?.balls?.isNotEmpty() == true){
+            /*if(it.data?.balls?.isNotEmpty() == true){
                 binding.inningsTeam1.text = it.data?.balls?.first()?.team?.code+" Innings"
                 binding.inningsTeam2.text = it.data?.balls?.last()?.team?.code+" Innings"
+            }*/
+            if(it.data?.status=="Finished"){
+                GlobalScope.launch(Dispatchers.IO) {
+                    val firstInningsTeam = it.data?.batting?.first()?.team_id?.let { it1 ->
+                        viewModel.readTeamById(
+                            it1
+                        )
+                    }
+                    val secondInningsTeam = it.data?.batting?.last()?.team_id?.let { it1 ->
+                        viewModel.readTeamById(
+                            it1
+                        )
+                    }
+                    GlobalScope.launch(Dispatchers.Main){
+                        binding.inningsTeam1.text = firstInningsTeam?.code+" Innings"
+                        binding.inningsTeam2.text = secondInningsTeam?.code+" Innings"
+                    }
+                }
+
+
+                battingScoreRecyclerView.adapter = BattingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
+                bowlingScoreRecyclerView.adapter = BowlingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
             }
 
-            battingScoreRecyclerView.adapter = BattingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
-            bowlingScoreRecyclerView.adapter = BowlingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
         }
     }
 

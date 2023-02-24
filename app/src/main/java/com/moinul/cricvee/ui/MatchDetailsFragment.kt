@@ -19,6 +19,9 @@ import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_match_details.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private const val TAG = "MatchDetailsFragment"
 class MatchDetailsFragment : Fragment() {
@@ -97,10 +100,10 @@ class MatchDetailsFragment : Fragment() {
             binding.localTotal.text = localTotalValue
             binding.visitorTotal.text = visitorTotalValue
 
-            for(teams in it.data?.balls!!){
+            /*for(teams in it.data?.balls!!){
                 if(localTeamFound && visitorTeamFound){
-                    /*localTeamIdForChild = localTeamId!!
-                    visitorTeamIdForChild = visitorTeamId!!*/
+                    *//*localTeamIdForChild = localTeamId!!
+                    visitorTeamIdForChild = visitorTeamId!!*//*
                     break;
                 }
                 if(!localTeamFound && teams.team?.id == localTeamId){
@@ -122,8 +125,32 @@ class MatchDetailsFragment : Fragment() {
                         .into(binding.visitorTeamImg)
                     visitorTeamFound = true
                 }
+            }*/
+            GlobalScope.launch(Dispatchers.IO){
+                val team = visitorTeamId?.let { it1 -> viewModel.readTeamById(it1) }
+                GlobalScope.launch(Dispatchers.Main){
+                    binding.visitorTeamName.text = team?.name
+                    Glide.with(requireContext()).load(team?.image_path).fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error)
+                        .into(binding.visitorTeamImg)
+                    //visitorTeamFound = true
+                }
             }
 
+            GlobalScope.launch(Dispatchers.IO) {
+                val team = localTeamId?.let { it1 -> viewModel.readTeamById(it1) }
+                GlobalScope.launch(Dispatchers.Main) {
+                    binding.localTeamName.text = team?.name
+                    Glide.with(requireContext()).load(team?.image_path).fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.DATA)
+                        .priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error)
+                        .into(binding.localTeamImg)
+                    //localTeamFound = true
+                }
+            }
         }
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
