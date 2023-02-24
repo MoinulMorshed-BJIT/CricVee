@@ -68,4 +68,5 @@ class FixtureListFragment : Fragment() {
         }
     }
 
+
 }

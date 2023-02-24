@@ -18,6 +18,7 @@ import com.moinul.cricvee.adapter.MatchAdapter
 import com.moinul.cricvee.databinding.FragmentTournamentFixtureBinding
 import com.moinul.cricvee.model.league.LeagueData
 import com.moinul.cricvee.viewmodel.SportsViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -59,7 +60,7 @@ class TournamentFixtureFragment : Fragment() {
         viewModel.readFixturesByStageId(args.stageId).observe(viewLifecycleOwner){
             val adapterScrollState = tournamentFixtureRecyclerView.layoutManager?.onSaveInstanceState()
             tournamentFixtureRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            tournamentFixtureRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it)
+            tournamentFixtureRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it, viewLifecycleOwner)
         }
 
 
@@ -71,5 +72,10 @@ class TournamentFixtureFragment : Fragment() {
         binding.fixtureLeagueTitle.text = args.leagueName+"\nFixture"
 
     }
+    override fun onResume() {
+        super.onResume()
+        requireActivity().bottom_navbar.visibility=View.GONE
+    }
+
 
 }

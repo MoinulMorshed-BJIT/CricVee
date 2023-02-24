@@ -138,6 +138,17 @@
             android:textColor="@color/darkLightTint"
             tools:text="31D:23H:59M:59S"
             />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/dateTime_txtV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/team2_name"
+            android:textColor="@color/darkLightTint"
+            tools:text="31D:23H:59M:59S"
+            />
             
 
         <com.google.android.material.card.MaterialCardView

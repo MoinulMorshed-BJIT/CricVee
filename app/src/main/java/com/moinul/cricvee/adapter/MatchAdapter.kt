@@ -1,10 +1,15 @@
 package com.moinul.cricvee.adapter
 
 import android.content.Context
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,9 +30,10 @@ import kotlinx.android.synthetic.main.match_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 private const val TAG = "MatchAdapter"
-class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val listFromFragment: List<FixtureData>)
+class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val listFromFragment: List<FixtureData>, private val lifecycleOwner: LifecycleOwner)
     : RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
     private val matchList = listFromFragment
@@ -46,6 +52,7 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         return matchList.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         val match = matchList[position]
         var team1Data:TeamData?
@@ -59,7 +66,6 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         var matchInfoTitleData = ""
         var stageData:StageData?
         var leagueData:LeagueData?
-        var venueData:VenueData?
         var seasonData:SeasonData?
 
         val team1imageView = holder.itemView.team1_imgV
@@ -75,10 +81,20 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val leagueImage = holder.itemView.leagueImgV
         val matchStatus = holder.itemView.match_status
         val stageLeagueTitle = holder.itemView.stage_league_title
+        val countdownTimer = holder.itemView.timer_txtV
 
         when(match.status){
             "Finished" -> noteResult.text = match.note
-            "NS" -> noteResult.text = "Yet to start"
+            "NS" -> {
+                noteResult.text = "Yet to start"
+                viewModel.getCountdownList().observe(lifecycleOwner) { countdownList ->
+                    val countdown = countdownList[position]
+                    val countdownText = formatCountdownText(countdown)
+                    Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
+                    countdownTimer.text = countdownText
+                }
+
+            }
         }
 
 
@@ -88,14 +104,12 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                 team2Data = match.localteam_id?.let { viewModel.readTeamById(it) }!!
                 stageData = match.stage_id?.let { viewModel.readStageById(it) }
                 leagueData = match.league_id?.let { viewModel.readLeagueById(it) }
-                venueData = match.venue_id?.let { viewModel.readVenueById(it) }
 
             }catch (e: Exception){
                 team1Data = null
                 team2Data = null
                 stageData = null
                 leagueData = null
-                venueData = null
                 Log.d(TAG, "Catch onBindViewHolder: $e")
             }
             //Log.d("TAG", "onBindViewHolder: ${match.id}")
@@ -191,6 +205,14 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                 holder.itemView.findNavController().navigate(R.id.matchDetailsFragment)
             }
         }
+    }
+
+    private fun formatCountdownText(countdown: Long): String {
+        val days = TimeUnit.MILLISECONDS.toDays(countdown)
+        val hours = TimeUnit.MILLISECONDS.toHours(countdown) % 24
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(countdown) % 60
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(countdown) % 60
+        return String.format("⏳ %02dD:%02dH:%02dM:%02dS", days, hours, minutes, seconds)
     }
 
 }

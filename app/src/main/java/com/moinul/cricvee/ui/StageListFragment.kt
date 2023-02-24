@@ -16,6 +16,7 @@ import com.moinul.cricvee.adapter.FixtureOptionsAdapter
 import com.moinul.cricvee.adapter.StageOptionsAdapter
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
 
 class StageListFragment : Fragment() {
@@ -66,10 +67,12 @@ class StageListFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottom_navbar)
-        bottomNavigationView?.let {
-            it.menu.getItem(1).isChecked = true
-        }
+        requireActivity().bottom_navbar.visibility=View.GONE
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireActivity().bottom_navbar.visibility = View.VISIBLE
     }
 
 }

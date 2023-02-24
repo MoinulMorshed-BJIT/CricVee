@@ -60,13 +60,13 @@ class HomeFragment : Fragment() {
         viewModel.readRecentFixtureData.observe(viewLifecycleOwner){
             val adapterScrollState = recentMatchRecyclerView.layoutManager?.onSaveInstanceState()
             recentMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            recentMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it)
+            recentMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it, viewLifecycleOwner)
         }
 
         viewModel.readUpcomingFixtureData.observe(viewLifecycleOwner){
             val adapterScrollState = upcomingMatchRecyclerView.layoutManager?.onSaveInstanceState()
             upcomingMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            upcomingMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it)
+            upcomingMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it, viewLifecycleOwner)
         }
     }
 

@@ -1,7 +1,13 @@
 package com.moinul.cricvee.viewmodel
 
 import android.app.Application
+import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeZone
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,6 +38,7 @@ import com.moinul.cricvee.utils.ConnectivityReceiver
 import com.moinul.cricvee.utils.Constants
 import kotlinx.coroutines.*
 import retrofit2.await
+import java.util.*
 import kotlin.math.log
 
 private const val TAG = "SportsViewModel"
@@ -41,6 +48,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
 
     val internetStatus: LiveData<Boolean>
         get() = _internetStatus
+    private val handler = Handler(Looper.getMainLooper())
 
 
 
@@ -62,6 +70,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     var readTestRankingWomen: LiveData<List<LocalTeamRanking>>
     var readODIRankingWomen: LiveData<List<LocalTeamRanking>>
     var readT20IRankingWomen: LiveData<List<LocalTeamRanking>>
+    private val countdownList = MutableLiveData<List<Long>>()
 
 
     init {
@@ -128,6 +137,37 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
                 Log.d("SportsViewModel", "fetchTrendingFixtures: $e")
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun calculateCountdown() {
+        val currentMillis = System.currentTimeMillis()
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+
+        readUpcomingFixtureData.value?.let { upcomingFixtureDataList ->
+            val countdownList = mutableListOf<Long>()
+            upcomingFixtureDataList.forEach { fixtureData ->
+                formatter.timeZone = TimeZone.getTimeZone("UTC")
+                val date = formatter.parse(fixtureData.starting_at)
+                val eventMillis = date.time
+                val countdown = eventMillis - currentMillis
+                countdownList.add(countdown)
+            }
+            this.countdownList.value = countdownList
+            handler.postDelayed({ calculateCountdown() }, 1000)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getCountdownList(): LiveData<List<Long>> {
+        calculateCountdown()
+        return countdownList
     }
 
     fun fetchAllTeams(){
@@ -235,6 +275,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
+
+
 
     suspend fun fetchRunsByFixtureId(fixtureId: Int):Result<FixtureWithRun>{
         return viewModelScope.async(Dispatchers.IO) {

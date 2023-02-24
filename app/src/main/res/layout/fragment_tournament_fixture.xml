@@ -12,33 +12,53 @@
         android:layout_height="match_parent"
         tools:context=".ui.TournamentFixtureFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/leagueImageView"
-            android:layout_width="@dimen/team_imgCard_big_width"
-            android:layout_height="@dimen/team_imgCard_big_height"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fixtureLeagueTitleCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            />
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/fixtureLeagueTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/leagueImageView"
-            app:layout_constraintTop_toTopOf="@id/leagueImageView"
-            app:layout_constraintBottom_toBottomOf="@id/leagueImageView"
-            tools:text="Bangladesh Premier League 2023\nFixture"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cardElevation="@dimen/activity_horizontal_margin">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/leagueImageView"
+                    android:layout_width="@dimen/team_imgCard_big_width"
+                    android:layout_height="@dimen/team_imgCard_big_height"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/text_to_text_margin"
+                    android:layout_marginBottom="@dimen/text_to_text_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/fixtureLeagueTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_to_text_margin"
+                    app:layout_constraintStart_toEndOf="@id/leagueImageView"
+                    app:layout_constraintTop_toTopOf="@id/leagueImageView"
+                    app:layout_constraintBottom_toBottomOf="@id/leagueImageView"
+                    tools:text="Bangladesh Premier League 2023\nFixture"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tournamentFixtureRecyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/leagueImageView"
+            app:layout_constraintTop_toBottomOf="@id/fixtureLeagueTitleCard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

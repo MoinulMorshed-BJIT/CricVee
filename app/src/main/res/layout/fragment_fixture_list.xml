@@ -12,8 +12,13 @@
         android:name="com.moinul.cricvee.ui.FixtureListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/bigMargin"
         app:layoutManager="LinearLayoutManager"
         tools:context=".ui.FixtureListFragment"
-        tools:listitem="@layout/stat_options_item" />
+        tools:listitem="@layout/stat_options_item"
+        />
+
 </layout>
