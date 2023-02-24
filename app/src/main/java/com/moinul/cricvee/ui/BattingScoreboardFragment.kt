@@ -88,8 +88,10 @@ class BattingScoreboardFragment() : Fragment() {
 //            Log.d(TAG, "observeData: CALLED ${it}")
 //            Log.d(TAG, "observeData: BALLS TEAM 1st NAME: ${it.data?.balls?.get(0)?.team?.code}")
 //            Log.d(TAG, "observeData: BALLS TEAM last NAME: ${it.data?.balls?.last()?.team?.code}")
-            binding.inningsTeam1.text = it.data?.balls?.get(0)?.team?.code+" Innings"
-            binding.inningsTeam2.text = it.data?.balls?.last()?.team?.code+" Innings"
+            if(it.data?.balls?.isNotEmpty() == true){
+                binding.inningsTeam1.text = it.data?.balls?.first()?.team?.code+" Innings"
+                binding.inningsTeam2.text = it.data?.balls?.last()?.team?.code+" Innings"
+            }
 
             battingScoreRecyclerView.adapter = BattingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
             bowlingScoreRecyclerView.adapter = BowlingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)

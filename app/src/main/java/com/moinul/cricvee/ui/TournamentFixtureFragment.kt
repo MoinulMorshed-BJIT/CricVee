@@ -60,7 +60,7 @@ class TournamentFixtureFragment : Fragment() {
         viewModel.readFixturesByStageId(args.stageId).observe(viewLifecycleOwner){
             val adapterScrollState = tournamentFixtureRecyclerView.layoutManager?.onSaveInstanceState()
             tournamentFixtureRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            tournamentFixtureRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it, viewLifecycleOwner)
+            tournamentFixtureRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it, viewLifecycleOwner, true)
         }
 
 

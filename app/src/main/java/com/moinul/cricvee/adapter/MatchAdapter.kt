@@ -1,6 +1,8 @@
 package com.moinul.cricvee.adapter
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeZone
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -30,10 +32,11 @@ import kotlinx.android.synthetic.main.match_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "MatchAdapter"
-class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val listFromFragment: List<FixtureData>, private val lifecycleOwner: LifecycleOwner)
+class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val listFromFragment: List<FixtureData>, private val lifecycleOwner: LifecycleOwner, private val inFixtureFragment:Boolean)
     : RecyclerView.Adapter<MatchAdapter.MatchViewHolder>() {
 
     private val matchList = listFromFragment
@@ -79,21 +82,49 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val team2overs = holder.itemView.team2_overs
         val round = holder.itemView.round_txtV
         val leagueImage = holder.itemView.leagueImgV
-        val matchStatus = holder.itemView.match_status
+        //val matchStatus = holder.itemView.match_status
         val stageLeagueTitle = holder.itemView.stage_league_title
         val countdownTimer = holder.itemView.timer_txtV
 
         when(match.status){
-            "Finished" -> noteResult.text = match.note
+            "Finished" -> {
+                noteResult.text = match.note
+                val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+                formatter.timeZone = TimeZone.getTimeZone("UTC")
+                val date = formatter.parse(match.starting_at)
+                var dateString = date.toString()
+                //countdownTimer.text = date.toString()
+                var timeZoneSliceIndex = dateString.indexOf("GMT")
+                var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
+                dateString = dateString.substring(0, timeZoneSliceIndex)
+                countdownTimer.text = dateString+yearString
+            }
             "NS" -> {
-                noteResult.text = "Yet to start"
-                viewModel.getCountdownList().observe(lifecycleOwner) { countdownList ->
-                    val countdown = countdownList[position]
-                    val countdownText = formatCountdownText(countdown)
-                    Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
-                    countdownTimer.text = countdownText
-                }
+                if(match.note=="Final result only"){
+                    noteResult.text = "LIVE/Ongoing"
+                    countdownTimer.text = "Countdown ended"
+                }else{
+                    noteResult.text = "Yet to start"
 
+                }
+                if(!inFixtureFragment){
+                    viewModel.getCountdownList().observe(lifecycleOwner) { countdownList ->
+                        val countdown = countdownList[position]
+                        val countdownText = formatCountdownText(countdown)
+                        Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
+                        countdownTimer.text = countdownText
+                    }
+                }else{
+                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+                    formatter.timeZone = TimeZone.getTimeZone("UTC")
+                    val date = formatter.parse(match.starting_at)
+                    var dateString = date.toString()
+                    //countdownTimer.text = date.toString()
+                    var timeZoneSliceIndex = dateString.indexOf("GMT")
+                    var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
+                    dateString = dateString.substring(0, timeZoneSliceIndex)
+                    countdownTimer.text = dateString+yearString
+                }
             }
         }
 
@@ -125,18 +156,21 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                             "Total: "+fixtureRunData?.runs?.first()?.score.toString() + "/" + fixtureRunData?.runs?.first()?.wickets.toString()
                         team1overData = "Overs: ${fixtureRunData?.runs?.first()?.overs.toString()}"
 
-                        team2runAndWicketsData =
-                            "Total: "+fixtureRunData?.runs?.last()?.score.toString() + "/" + fixtureRunData?.runs?.last()?.wickets.toString()
-                        team2overData = "Overs: ${fixtureRunData?.runs?.last()?.overs.toString()}"
-                    } else {
+                        if(fixtureRunData?.runs?.size==2){
+                            team2runAndWicketsData =
+                                "Total: "+fixtureRunData?.runs?.last()?.score.toString() + "/" + fixtureRunData?.runs?.last()?.wickets.toString()
+                            team2overData = "Overs: ${fixtureRunData?.runs?.last()?.overs.toString()}"
+                        }
+                    } else if (fixtureRunData?.runs?.first()?.team_id == match.localteam_id) {
                         team2runAndWicketsData =
                             "Total: "+fixtureRunData?.runs?.first()?.score.toString() + "/" + fixtureRunData?.runs?.first()?.wickets.toString()
                         team2overData = "Overs: ${fixtureRunData?.runs?.first()?.overs.toString()}"
 
-
-                        team1runAndWicketsData =
-                            "Total: "+fixtureRunData?.runs?.last()?.score.toString() + "/" + fixtureRunData?.runs?.last()?.wickets.toString()
-                        team1overData = "Overs: ${fixtureRunData?.runs?.last()?.overs.toString()}"
+                        if(fixtureRunData?.runs?.size==2){
+                            team1runAndWicketsData =
+                                "Total: "+fixtureRunData?.runs?.last()?.score.toString() + "/" + fixtureRunData?.runs?.last()?.wickets.toString()
+                            team1overData = "Overs: ${fixtureRunData?.runs?.last()?.overs.toString()}"
+                        }
                     }
                 }else{
 
@@ -178,7 +212,8 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                     stageLeagueTitle.text = "${leagueData?.name.toString()} | ${stageData?.name.toString()}"
                     round.text = match.round
 
-                    if(match.status=="Finished"){
+
+                   /* if(match.status=="Finished"){
                         matchStatus.text = match.status
                         matchStatus.setBackgroundResource(R.drawable.oval_finished_status)
                         matchStatus.setTextColor(context.resources.getColor(R.color.white))
@@ -188,7 +223,7 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                         matchStatus.setBackgroundResource(R.drawable.oval_upcoming_status)
                         matchStatus.setTextColor(context.resources.getColor(R.color.white))
 
-                    }
+                    }*/
                 }catch (e:Exception){
                     Log.d(TAG, "onBindViewHolder: $e")
                 }
@@ -212,6 +247,11 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val hours = TimeUnit.MILLISECONDS.toHours(countdown) % 24
         val minutes = TimeUnit.MILLISECONDS.toMinutes(countdown) % 60
         val seconds = TimeUnit.MILLISECONDS.toSeconds(countdown) % 60
+
+        if(days<0 || hours<0 || minutes<0 || seconds<0){
+            return "Countdown ended"
+        }
+
         return String.format("⏳ %02dD:%02dH:%02dM:%02dS", days, hours, minutes, seconds)
     }
 

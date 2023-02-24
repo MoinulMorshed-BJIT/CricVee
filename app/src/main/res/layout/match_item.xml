@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/cardCornerRadius"
     app:cardElevation="@dimen/text_to_text_margin"
-    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:layout_margin="@dimen/text_to_text_margin"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -116,7 +116,7 @@
             android:textStyle="bold"
             />
         
-        <com.google.android.material.textview.MaterialTextView
+        <!--<com.google.android.material.textview.MaterialTextView
             android:id="@+id/match_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
             app:layout_constraintEnd_toStartOf="@id/team2_score"
             android:padding="@dimen/matchNotePadding"
             tools:text="Upcoming"
-            />
+            />-->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/timer_txtV"
             android:layout_width="wrap_content"
@@ -147,7 +147,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/team2_name"
             android:textColor="@color/darkLightTint"
-            tools:text="31D:23H:59M:59S"
+            tools:text=" "
             />
             
 
@@ -219,6 +219,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/text_to_text_margin"
             tools:text="@string/dummyMatchNote"
             android:padding="@dimen/matchNotePadding"
             android:background="@color/darkViolet"
