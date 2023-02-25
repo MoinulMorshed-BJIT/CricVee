@@ -358,7 +358,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     val currentFixture: LiveData<FixtureData>
         get() = _currentFixture
     fun readFixtureById(fixtureId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try{
                     _currentFixture.postValue(repository.readFixtureById(fixtureId))
@@ -380,7 +380,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     get() = _currentTeam
 
     fun readTeamByIdLive(teamId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try{
                     _currentTeam.postValue(repository.readTeamById(teamId))
@@ -399,7 +399,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         get() = _current1stUmpire
 
     fun read1stUmpireById(firstUmpireId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try{
                     _current1stUmpire.postValue(repository.readOfficialById(firstUmpireId))
@@ -416,7 +416,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         get() = _current2ndUmpire
 
     fun read2ndUmpireById(officialId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try{
                     _current2ndUmpire.postValue(repository.readOfficialById(officialId))
@@ -433,7 +433,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         get() = _currentTVUmpire
 
     fun readTVUmpireById(officialId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             withContext(Dispatchers.IO) {
                 try{
                     _currentTVUmpire.postValue(repository.readOfficialById(officialId))
@@ -449,8 +449,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     val currentReferee: LiveData<OfficialsData>
         get() = _currentReferee
 
-    fun readRefereelById(officialId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
+    fun readRefereeById(officialId: Int){
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try{
                     _currentReferee.postValue(repository.readOfficialById(officialId))
@@ -490,7 +490,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         get() = _currentVenue
 
     fun readVenueById(venueId: Int){
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try{
                     _currentVenue.postValue(repository.readVenueById(venueId))
@@ -514,7 +514,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun readStageByIdLive(stageId:Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
                     _currentStage.postValue(repository.readStageById(stageId))
