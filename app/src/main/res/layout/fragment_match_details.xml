@@ -39,6 +39,8 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:singleLine="false"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textColor="@color/darkLightTint"
                 android:gravity="center"
                 tools:text="@string/dummyName" />
 
@@ -50,7 +52,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/vs"
-                android:textStyle="bold"
+                android:textColor="@color/darkLightTint"
+                android:textStyle="bold|italic"
                 android:textSize="@dimen/vs_text_size" />
 
             <TextView
@@ -61,6 +64,8 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textAlignment="center"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textColor="@color/darkLightTint"
                 android:singleLine="false"
                 tools:text="@string/dummyName" />
 
@@ -82,6 +87,8 @@
             app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/match_title"
+            android:textStyle="bold"
+            android:textColor="@color/darkLightTint"
             android:layout_margin="@dimen/bottNavElevation"
             tools:text="@string/dummyScore" />
 
@@ -96,6 +103,8 @@
             app:layout_constraintHorizontal_bias="0.85"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/match_title"
+            android:textColor="@color/darkLightTint"
+            android:textStyle="bold"
             tools:text="@string/dummyScore" />
 
         <com.google.android.material.tabs.TabLayout

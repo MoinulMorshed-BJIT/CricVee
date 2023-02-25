@@ -9,6 +9,7 @@ import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.currentPlayers.SquadPlayerData
 import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.league.LeagueData
+import com.moinul.cricvee.model.officials.OfficialsData
 import com.moinul.cricvee.model.season.SeasonData
 import com.moinul.cricvee.model.stage.StageData
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
@@ -72,6 +73,9 @@ class Repository(private val sportsDao: SportsDao) {
     fun insertAllStages(stageList: List<StageData>){
         sportsDao.insertAllStageData(stageList)
     }
+    fun insertAllOfficials(officialsList: List<OfficialsData>){
+        sportsDao.insertAllOfficials(officialsList)
+    }
 
     fun deleteAllTeams(){
         sportsDao.deleteAllTeams()
@@ -79,6 +83,14 @@ class Repository(private val sportsDao: SportsDao) {
 
     fun readTeamById(teamId: Int):TeamData{
         return sportsDao.readTeamById(teamId)
+    }
+
+    fun readFixtureById(fixtureId: Int): LiveData<FixtureData>{
+        return sportsDao.readFixtureById(fixtureId)
+    }
+
+    fun readOfficialById(officialId: Int): OfficialsData{
+        return sportsDao.readOfficialById(officialId)
     }
 
     fun readStagesByLeagueId(leagueId: Int, seasonId: Int):LiveData<List<StageData>>{

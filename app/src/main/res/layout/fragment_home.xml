@@ -35,6 +35,8 @@
                     android:textSize="@dimen/homeScreen_title_size"
                     android:textStyle="bold"
                     android:text="@string/recent_matches"
+                    android:padding="@dimen/matchNotePadding"
+                    android:textColor="@color/finishedStatusColor"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -54,6 +56,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textSize="@dimen/homeScreen_title_size"
                     android:textStyle="bold"
+                    android:textColor="@color/colorTabIndicator2"
+                    android:padding="@dimen/matchNotePadding"
                     android:text="UPCOMING MATCHES"
                     />
                 <androidx.recyclerview.widget.RecyclerView

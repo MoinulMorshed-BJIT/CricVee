@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() , ConnectivityReceiver.ConnectivityRece
                 viewModel.fetchTrendingFixtures(UtilTools.UPCOMING_DURATION)
                 viewModel.fetchAllTeams()
                 viewModel.fetchCountries()
-
+                viewModel.fetchOfficials()
                 viewModel.fetchTeamRankings()
                 viewModel.fetchLeagues()
                 viewModel.fetchVenues()

@@ -63,11 +63,12 @@
             app:layout_constraintStart_toStartOf="@id/team1_img"
             app:layout_constraintTop_toBottomOf="@id/team1_img"
             android:textColor="@color/darkLightTint"
+            android:textSize="@dimen/score_summary_text_size"
             tools:text="@string/dummyName"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team1_score"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/scoreSummaryWidth"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/team1_img"
             app:layout_constraintTop_toTopOf="@id/team1_img"
@@ -75,6 +76,7 @@
             android:textColor="@color/darkLightTint"
             android:layout_marginStart="@dimen/text_to_text_margin"
             android:textSize="@dimen/score_summary_text_size"
+            android:textAlignment="center"
             tools:text="@string/dummyScoreHomeScreen"
             />
         <com.google.android.material.textview.MaterialTextView
@@ -87,6 +89,7 @@
             android:textColor="@color/darkLightTint"
             tools:text="@string/dummyOvers"
             android:textSize="@dimen/score_summary_text_size"
+            android:textAlignment="center"
             />
         
         <com.google.android.material.textview.MaterialTextView
@@ -183,12 +186,13 @@
             app:layout_constraintStart_toStartOf="@id/team2_img"
             app:layout_constraintTop_toBottomOf="@id/team2_img"
             android:layout_margin="@dimen/text_to_text_margin"
+            android:textSize="@dimen/score_summary_text_size"
             android:textColor="@color/darkLightTint"
             tools:text="@string/dummyName"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/team2_score"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/scoreSummaryWidth"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/text_to_text_margin"
             app:layout_constraintEnd_toStartOf="@id/team2_img"
@@ -196,6 +200,7 @@
             app:layout_constraintBottom_toBottomOf="@id/team2_img"
             tools:text="@string/dummyScoreHomeScreen"
             android:textSize="@dimen/score_summary_text_size"
+            android:textAlignment="center"
             android:textColor="@color/darkLightTint"
             />
 
@@ -208,6 +213,7 @@
             app:layout_constraintStart_toStartOf="@id/team2_score"
             tools:text="@string/dummyOvers"
             android:textSize="@dimen/score_summary_text_size"
+            android:textAlignment="center"
             android:textColor="@color/darkLightTint"
             />
 

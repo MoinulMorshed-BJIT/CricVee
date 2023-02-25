@@ -86,13 +86,37 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         val stageLeagueTitle = holder.itemView.stage_league_title
         val countdownTimer = holder.itemView.timer_txtV
 
+
+
+        if(match.status!="NS"){
+                noteResult.text = match.note
+        }else {
+            noteResult.text = "Yet to start"
+        }
+
+
         if(!inFixtureFragment){
             viewModel.getCountdownList().observe(lifecycleOwner) { countdownList ->
-                val countdown = countdownList[position]
-                val countdownText = formatCountdownText(countdown)
-                Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
-                countdownTimer.text = countdownText
+                if(countdownList.isNotEmpty()) {
+                    val countdown = countdownList[position]
+                    val countdownText = formatCountdownText(countdown)
+                    Log.d(TAG, "onBindViewHolder: Countdown: $countdownText")
+                    countdownTimer.text = countdownText
+
+                    if(match.status!="NS"){
+                        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+                        formatter.timeZone = TimeZone.getTimeZone("UTC")
+                        val date = formatter.parse(match.starting_at)
+                        var dateString = date.toString()
+                        //countdownTimer.text = date.toString()
+                        var timeZoneSliceIndex = dateString.indexOf("GMT")
+                        var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
+                        dateString = dateString.substring(0, timeZoneSliceIndex)
+                        countdownTimer.text = dateString+yearString
+                    }
+                }
             }
+
         }else{
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
             formatter.timeZone = TimeZone.getTimeZone("UTC")
@@ -103,30 +127,6 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
             var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
             dateString = dateString.substring(0, timeZoneSliceIndex)
             countdownTimer.text = dateString+yearString
-        }
-
-        when(match.status){
-            "Finished" -> {
-                noteResult.text = match.note
-                val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
-                formatter.timeZone = TimeZone.getTimeZone("UTC")
-                val date = formatter.parse(match.starting_at)
-                var dateString = date.toString()
-                //countdownTimer.text = date.toString()
-                var timeZoneSliceIndex = dateString.indexOf("GMT")
-                var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
-                dateString = dateString.substring(0, timeZoneSliceIndex)
-                countdownTimer.text = dateString+yearString
-            }
-            "NS" -> {
-                if(countdownTimer.text=="Countdown ended"){
-                    noteResult.text = "LIVE/Ongoing"
-                    //countdownTimer.text = "Countdown ended"
-                }else{
-                    noteResult.text = "Yet to start"
-                }
-
-            }
         }
 
 

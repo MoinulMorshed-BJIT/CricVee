@@ -9,7 +9,6 @@ data class FixtureData(
     var draw_noresult: String?,
     @Ignore
     var elected: String?,
-    @Ignore
     var first_umpire_id: Int?,
     var follow_on: Boolean?,
     @PrimaryKey
@@ -24,7 +23,6 @@ data class FixtureData(
     var man_of_match_id: Int?,
     var man_of_series_id: Int?,
     var note: String?,
-    @Ignore
     var referee_id: Int?,
     @Ignore
     var resource: String?,
@@ -34,7 +32,6 @@ data class FixtureData(
     @Ignore
     var rpc_target: String?,
     var season_id: Int?,
-    @Ignore
     var second_umpire_id: Int?,
     var stage_id: Int?,
     var starting_at: String?,
@@ -42,7 +39,6 @@ data class FixtureData(
     var super_over: Boolean?,
     var toss_won_team_id: Int?,
     var total_overs_played: Int?,
-    @Ignore
     var tv_umpire_id: Int?,
     var type: String?,
     var venue_id: Int?,

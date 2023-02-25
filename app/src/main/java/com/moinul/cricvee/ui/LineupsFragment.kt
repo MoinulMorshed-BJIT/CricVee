@@ -34,8 +34,6 @@ class LineupsFragment : Fragment() {
     private lateinit var teamBenchRecyclerViewA: RecyclerView
     private lateinit var teamXIRecyclerViewB: RecyclerView
     private lateinit var teamBenchRecyclerViewB: RecyclerView
-   /* private var visitorTeamId:Int = 0
-    private var localTeamId:Int = 0*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +50,6 @@ class LineupsFragment : Fragment() {
         if (savedInstanceState != null) {
             binding.localTeamHeader.text = savedInstanceState.getString("localTeamTextViewValue")
             binding.visitorTeamHeader.text = savedInstanceState.getString("visitorTeamTextViewValue")
-        }else{
-            binding.visitorTeamHeader.text = parentMatchDetailsFragment.view?.findViewById<TextView>(R.id.visitor_team_name)?.text.toString()
-            binding.localTeamHeader.text = parentMatchDetailsFragment.view?.findViewById<TextView>(R.id.local_team_name)?.text.toString()
-
-
         }
 
         teamXIRecyclerViewA = binding.xiARecyclerView
@@ -110,7 +103,7 @@ class LineupsFragment : Fragment() {
             GlobalScope.launch(Dispatchers.IO){
                 val team = visitorTeamId?.let { it1 -> viewModel.readTeamById(it1) }
                 GlobalScope.launch(Dispatchers.Main){
-                    binding.visitorTeamHeader.text = team?.name
+                    binding.visitorTeamHeader.text = team?.code
                     Glide.with(requireContext()).load(team?.image_path).fitCenter()
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .priority(Priority.HIGH)
@@ -123,7 +116,7 @@ class LineupsFragment : Fragment() {
             GlobalScope.launch(Dispatchers.IO) {
                 val team = localTeamId?.let { it1 -> viewModel.readTeamById(it1) }
                 GlobalScope.launch(Dispatchers.Main) {
-                    binding.localTeamHeader.text = team?.name
+                    binding.localTeamHeader.text = team?.code
                     Glide.with(requireContext()).load(team?.image_path).fitCenter()
                         .diskCacheStrategy(DiskCacheStrategy.DATA)
                         .priority(Priority.HIGH)
@@ -133,30 +126,6 @@ class LineupsFragment : Fragment() {
                 }
             }
 
-            /*for(teams in it.data?.balls!!){
-                if(localTeamFound && visitorTeamFound){
-                    break;
-                }
-                if(!localTeamFound && teams.team?.id == localTeamId){
-                    binding.localTeamHeader.text = teams.team?.code
-                    Glide.with(requireContext()).load(teams.team?.image_path).fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        .priority(Priority.HIGH)
-                        .error(R.drawable.ic_connection_error)
-                        .into(binding.localImgSmall)
-                    localTeamFound = true
-                }
-
-                else if(!visitorTeamFound && teams.team?.id == visitorTeamId){
-                    binding.visitorTeamHeader.text = teams.team?.code
-                    Glide.with(requireContext()).load(teams.team?.image_path).fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        .priority(Priority.HIGH)
-                        .error(R.drawable.ic_connection_error)
-                        .into(binding.visitorImgSmall)
-                    visitorTeamFound = true
-                }
-            }*/
 
             val teamA = it.data?.lineup?.filter { it.lineup?.team_id==visitorTeamId }
             val teamB = it.data?.lineup?.filter { it.lineup?.team_id==localTeamId }

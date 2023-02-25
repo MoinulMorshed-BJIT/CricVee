@@ -27,6 +27,7 @@ import com.moinul.cricvee.model.fixtures.Run
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureScoreboardData
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
 import com.moinul.cricvee.model.league.LeagueData
+import com.moinul.cricvee.model.officials.OfficialsData
 import com.moinul.cricvee.model.season.SeasonData
 import com.moinul.cricvee.model.stage.StageData
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
@@ -74,7 +75,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
 
 
     init {
-        _internetStatus.value = ConnectivityReceiver.isConnected(application.applicationContext)
+        //_internetStatus.value = ConnectivityReceiver.isConnected(application.applicationContext)
+        _internetStatus.postValue(ConnectivityReceiver.isConnected(application.applicationContext))
 
         val sportsDao = SportsDatabase.getDatabase(application).getDao()
         repository = Repository(sportsDao)
@@ -234,6 +236,17 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun fetchOfficials(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val officialsList = SportsApi.retrofitService.fetchOfficials().data
+                repository.insertAllOfficials(officialsList)
+            }catch (e: Exception){
+                Log.d(TAG, "fetchStages: $e")
+            }
+        }
+    }
+
     fun fetchTeamRankings(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -314,6 +327,8 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+
+
     private val _playerCareer = MutableLiveData<Career>()
     val playerCareer: LiveData<Career>
         get() = _playerCareer
@@ -338,11 +353,19 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
 
         }
     }
+    fun readFixtureById(fixtureId: Int): LiveData<FixtureData>{
+        return repository.readFixtureById(fixtureId)
+    }
 
 
     fun readTeamById(teamId: Int):TeamData{
         return repository.readTeamById(teamId)
     }
+
+    fun readOfficialById(officialId: Int):OfficialsData{
+        return repository.readOfficialById(officialId)
+    }
+
     fun fetchCurrentSquad(teamIdList: List<Int>){
         Log.d(TAG, "fetchCurrentSquad: CALLED")
         viewModelScope.launch(Dispatchers.IO) {
@@ -360,9 +383,15 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
+
+
     fun readLeagueById(leagueId: Int): LeagueData{
         return repository.readLeagueById(leagueId)
     }
+
+   /* private val _currentVenue = MutableLiveData<VenueData>()
+    val currentVenue: LiveData<VenueData>
+        get() = _currentVenue*/
 
     fun readVenueById(venueId: Int):VenueData{
         return repository.readVenueById(venueId)

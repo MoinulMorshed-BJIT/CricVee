@@ -12,12 +12,12 @@
     <color name="colorOnBackground">#757575</color>
     <color name="colorSelectedTab">#2A1B56</color>
     <color name="colorTabIndicator">#F7D54E</color>
-    <color name="colorTabIndicator2">#E68913</color>
+    <color name="colorTabIndicator2">#C66F00</color>
     <color name="scoreHeaderRowColor">#87B8E9</color>
     <color name="photoBackground">#706969</color>
     <color name="darkLightTint">#000000</color>
     <color name="darkLightFill">#FFFFFF</color>
     <color name="roundInfoTextColor">#976C0B</color>
-    <color name="finishedStatusColor">#179786</color>
+    <color name="finishedStatusColor">#0C7567</color>
 
 </resources>

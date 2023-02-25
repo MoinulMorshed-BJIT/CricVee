@@ -34,6 +34,7 @@
                     android:layout_marginBottom="@dimen/text_to_text_margin"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
 
+
                     />
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/fixtureLeagueTitle"
@@ -44,6 +45,10 @@
                     app:layout_constraintTop_toTopOf="@id/leagueImageView"
                     app:layout_constraintBottom_toBottomOf="@id/leagueImageView"
                     tools:text="Bangladesh Premier League 2023\nFixture"
+                    android:textStyle="bold"
+                    android:textColor="@color/darkLightTint"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textSize="@dimen/activity_horizontal_margin"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

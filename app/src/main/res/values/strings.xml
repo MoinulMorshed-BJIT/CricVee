@@ -9,8 +9,8 @@
     <string name="dummyMatchNote">Team 2 won by X runs/Y wickets</string>
     <string name="dummyName">Team Name</string>
     <string name="dummyScore">Total: 195/9(20.0)</string>
-    <string name="dummyScoreHomeScreen">Total: 195/9</string>
-    <string name="dummyOvers">Overs: 20</string>
+    <string name="dummyScoreHomeScreen">Total: 888/80</string>
+    <string name="dummyOvers">Overs: 88</string>
     <string name="no_internet">No Internet</string>
     <string name="home">HOME</string>
     <string name="more">MORE</string>
@@ -29,5 +29,6 @@
     <string name="recent_matches">RECENT MATCHES</string>
     <string name="vs">VS</string>
     <string name="upcomingStr">Upcoming</string>
+    <string name="missing">Not Available</string>
 
 </resources>

@@ -97,25 +97,29 @@ class BattingScoreboardFragment() : Fragment() {
             }*/
             if(it.data?.status=="Finished"){
                 GlobalScope.launch(Dispatchers.IO) {
-                    val firstInningsTeam = it.data?.batting?.first()?.team_id?.let { it1 ->
-                        viewModel.readTeamById(
-                            it1
-                        )
-                    }
-                    val secondInningsTeam = it.data?.batting?.last()?.team_id?.let { it1 ->
-                        viewModel.readTeamById(
-                            it1
-                        )
-                    }
-                    GlobalScope.launch(Dispatchers.Main){
-                        binding.inningsTeam1.text = firstInningsTeam?.code+" Innings"
-                        binding.inningsTeam2.text = secondInningsTeam?.code+" Innings"
+                    try {
+                        val firstInningsTeam = it.data?.batting?.first()?.team_id?.let { it1 ->
+                            viewModel.readTeamById(
+                                it1
+                            )
+                        }
+                        val secondInningsTeam = it.data?.batting?.last()?.team_id?.let { it1 ->
+                            viewModel.readTeamById(
+                                it1
+                            )
+                        }
+                        GlobalScope.launch(Dispatchers.Main){
+                            binding.inningsTeam1.text = firstInningsTeam?.code+" Innings"
+                            binding.inningsTeam2.text = secondInningsTeam?.code+" Innings"
+                        }
+                    }catch (e: Exception){
+                        Log.d(TAG, "observeData: $e")
                     }
                 }
-
-
-                battingScoreRecyclerView.adapter = BattingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
-                bowlingScoreRecyclerView.adapter = BowlingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
+                if(it!=null){
+                    battingScoreRecyclerView.adapter = BattingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
+                    bowlingScoreRecyclerView.adapter = BowlingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
+                }
             }
 
         }

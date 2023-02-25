@@ -3,10 +3,12 @@ package com.moinul.cricvee.network
 import com.moinul.cricvee.model.career.Career
 import com.moinul.cricvee.model.countries.Countries
 import com.moinul.cricvee.model.currentPlayers.CurrentSquad
+import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.fixtures.AllFixtures
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
 import com.moinul.cricvee.model.league.League
+import com.moinul.cricvee.model.officials.Officials
 import com.moinul.cricvee.model.season.Season
 import com.moinul.cricvee.model.stage.Stage
 import com.moinul.cricvee.model.teamRanking.TeamRanking
@@ -68,9 +70,17 @@ interface SportsApiService {
         @Path("teamId") teamId: Int,
         @Query("api_token") api_token: String = Constants.API_KEY
     ): CurrentSquad
+    /*@GET("players/{playerId}")
+    fun fetchPlayerById(
+        @Path("playerId") playerId: Int,
+        @Query("api_token") api_token: String = Constants.API_KEY
+    ): Call<Squad>*/
 
     @GET("countries")
     suspend fun fetchCountries(@Query("api_token") api_token: String = Constants.API_KEY): Countries
+
+    @GET("officials")
+    suspend fun fetchOfficials(@Query("api_token") api_token: String = Constants.API_KEY): Officials
 
     @GET("team-rankings")
     suspend fun fetchTeamRankings(@Query("api_token") api_token: String = Constants.API_KEY): TeamRanking

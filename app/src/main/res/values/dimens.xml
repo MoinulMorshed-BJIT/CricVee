@@ -11,7 +11,7 @@
     <dimen name="player_img_width">55dp</dimen>
     <dimen name="player_img_height">55dp</dimen>
     <dimen name="lineup_text_size">11.5sp</dimen>
-    <dimen name="score_summary_text_size">12.65sp</dimen>
+    <dimen name="score_summary_text_size">13.75sp</dimen>
 
     <dimen name="bottNavElevation">10dp</dimen>
     <dimen name="bottNavIconSize">27dp</dimen>
@@ -50,6 +50,8 @@
     <dimen name="profilePictureStrokeWidth">3sp</dimen>
     <dimen name="profilePicturePadding">2dp</dimen>
     <dimen name="bigMargin">64dp</dimen>
+    <dimen name="matchInfoRowWidth">90dp</dimen>
     <dimen name="scoreTopMargin">65sp</dimen>
     <dimen name="matchNotePadding">4dp</dimen>
+    <dimen name="scoreSummaryWidth">83dp</dimen>
 </resources>
