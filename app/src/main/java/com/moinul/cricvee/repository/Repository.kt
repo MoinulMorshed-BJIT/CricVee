@@ -85,7 +85,7 @@ class Repository(private val sportsDao: SportsDao) {
         return sportsDao.readTeamById(teamId)
     }
 
-    fun readFixtureById(fixtureId: Int): LiveData<FixtureData>{
+    fun readFixtureById(fixtureId: Int): FixtureData{
         return sportsDao.readFixtureById(fixtureId)
     }
 

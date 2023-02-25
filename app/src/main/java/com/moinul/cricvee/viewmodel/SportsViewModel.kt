@@ -353,8 +353,21 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
 
         }
     }
-    fun readFixtureById(fixtureId: Int): LiveData<FixtureData>{
-        return repository.readFixtureById(fixtureId)
+
+    private val _currentFixture = MutableLiveData<FixtureData>()
+    val currentFixture: LiveData<FixtureData>
+        get() = _currentFixture
+    fun readFixtureById(fixtureId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _currentFixture.postValue(repository.readFixtureById(fixtureId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
     }
 
 
@@ -362,8 +375,91 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         return repository.readTeamById(teamId)
     }
 
-    fun readOfficialById(officialId: Int):OfficialsData{
-        return repository.readOfficialById(officialId)
+    private val _currentTeam = MutableLiveData<TeamData>()
+    val currentTeam: LiveData<TeamData>
+    get() = _currentTeam
+
+    fun readTeamByIdLive(teamId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _currentTeam.postValue(repository.readTeamById(teamId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
+    }
+
+
+
+    private val _current1stUmpire= MutableLiveData<OfficialsData>()
+    val current1stUmpire: LiveData<OfficialsData>
+        get() = _current1stUmpire
+
+    fun read1stUmpireById(firstUmpireId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _current1stUmpire.postValue(repository.readOfficialById(firstUmpireId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
+    }
+
+    private val _current2ndUmpire = MutableLiveData<OfficialsData>()
+    val current2ndUmpire: LiveData<OfficialsData>
+        get() = _current2ndUmpire
+
+    fun read2ndUmpireById(officialId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _current2ndUmpire.postValue(repository.readOfficialById(officialId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
+    }
+
+    private val _currentTVUmpire = MutableLiveData<OfficialsData>()
+    val currentTVUmpire: LiveData<OfficialsData>
+        get() = _currentTVUmpire
+
+    fun readTVUmpireById(officialId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _currentTVUmpire.postValue(repository.readOfficialById(officialId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
+    }
+
+    private val _currentReferee = MutableLiveData<OfficialsData>()
+    val currentReferee: LiveData<OfficialsData>
+        get() = _currentReferee
+
+    fun readRefereelById(officialId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _currentReferee.postValue(repository.readOfficialById(officialId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
     }
 
     fun fetchCurrentSquad(teamIdList: List<Int>){
@@ -389,20 +485,44 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
         return repository.readLeagueById(leagueId)
     }
 
-   /* private val _currentVenue = MutableLiveData<VenueData>()
+    private val _currentVenue = MutableLiveData<VenueData>()
     val currentVenue: LiveData<VenueData>
-        get() = _currentVenue*/
+        get() = _currentVenue
 
-    fun readVenueById(venueId: Int):VenueData{
-        return repository.readVenueById(venueId)
+    fun readVenueById(venueId: Int){
+        viewModelScope.launch (Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try{
+                    _currentVenue.postValue(repository.readVenueById(venueId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readFixtureById: $e")
+                }
+
+            }
+        }
     }
 
     fun readSeasonById(seasonId: Int):SeasonData{
         return repository.readSeasonById(seasonId)
     }
 
+    private val _currentStage = MutableLiveData<StageData>()
+    val currentStage: LiveData<StageData>
+        get() = _currentStage
     fun readStageById(stageId: Int):StageData{
         return repository.readStageById(stageId)
+    }
+
+    fun readStageByIdLive(stageId:Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                try {
+                    _currentStage.postValue(repository.readStageById(stageId))
+                }catch (e: Exception){
+                    Log.d(TAG, "readStageById: $e")
+                }
+            }
+        }
     }
 
 

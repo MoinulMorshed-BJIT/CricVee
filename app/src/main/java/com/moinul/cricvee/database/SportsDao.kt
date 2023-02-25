@@ -89,7 +89,7 @@ interface SportsDao {
     @Query("select * from team_table where id= :teamId")
     fun readTeamById(teamId: Int):TeamData
     @Query("select * from fixture_table where id=:fixtureId")
-    fun readFixtureById(fixtureId: Int): LiveData<FixtureData>
+    fun readFixtureById(fixtureId: Int): FixtureData
     @Query("select * from officials_table where id=:officialId")
     fun readOfficialById(officialId: Int): OfficialsData
 

@@ -51,57 +51,86 @@ class MatchInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        var match: FixtureData? = null
-        viewModel.readFixtureById(UtilTools.CLICKED_FIXTURE_ID).observe(viewLifecycleOwner){
-            match = it
-            GlobalScope.launch(Dispatchers.IO){
+        viewModel.readFixtureById(UtilTools.CLICKED_FIXTURE_ID)
+        viewModel.currentFixture.observe(viewLifecycleOwner) {
+            if(it!=null){
+                val matchValue = it?.round
+                setTextValue(binding.matchRoundValue, matchValue)
+                it?.id?.let { it1 -> viewModel.readStageByIdLive(it1) }
+                it.venue_id?.let { it1 -> viewModel.readVenueById(it1) }
+                it.first_umpire_id?.let { it1 -> viewModel.read1stUmpireById(it1) }
+                it.second_umpire_id?.let { it1 -> viewModel.read2ndUmpireById(it1) }
+                it.tv_umpire_id?.let { it1 -> viewModel.readTVUmpireById(it1) }
+                it.referee_id?.let { it1 -> viewModel.readRefereelById(it1) }
+                it.toss_won_team_id?.let { it1 -> viewModel.readTeamByIdLive(it1) }
 
-                val matchValue = match?.round
-                val seriesValue = match?.stage_id?.let { viewModel.readStageById(it).name }
                 val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
                 formatter.timeZone = TimeZone.getTimeZone("UTC")
                 var timeValue = ""
                 try {
-                    val date = formatter.parse(match?.starting_at)
+                    val date = formatter.parse(it?.starting_at)
                     var dateString = date.toString()
                     //countdownTimer.text = date.toString()
                     var timeZoneSliceIndex = dateString.indexOf("GMT")
                     var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
                     dateString = dateString.substring(0, timeZoneSliceIndex)
                     timeValue = dateString+yearString
+
                 }catch (e:Exception){
                     Log.d(TAG, "onViewCreated: $e")
                 }
-                val venueValue = match?.venue_id?.let { viewModel.readVenueById(it).name+", "+viewModel.readVenueById(it).city }
-                val tossValue = match?.toss_won_team_id?.let { viewModel.readTeamById(it).name }
-                match?.man_of_match_id?.let { viewModel.getCareerByPlayerId(it) }
-
-                val firstUmpireValue = match?.first_umpire_id?.let { viewModel.readOfficialById(it).fullname }
-                val secondUmpireValue = match?.second_umpire_id?.let { viewModel.readOfficialById(it).fullname }
-                val tvUmpireValue = match?.tv_umpire_id?.let { viewModel.readOfficialById(it).fullname }
-                val refereeValue = match?.referee_id?.let { viewModel.readOfficialById(it).fullname }
-                GlobalScope.launch(Dispatchers.Main) {
-                    viewModel.playerCareer.observe(viewLifecycleOwner){
-                        val manOfTheMatchValue = it.data?.fullname
-                        binding.manOfTheMatchValue.text = manOfTheMatchValue
-                    }
-                }
-
-                GlobalScope.launch(Dispatchers.Main) {
-                    setTextValue(binding.matchRoundValue, matchValue)
-                    setTextValue(binding.stageValue, seriesValue)
-                    setTextValue(binding.timeValue, timeValue)
-                    setTextValue(binding.venueValue, venueValue)
-                    setTextValue(binding.firstUmpireValue, firstUmpireValue)
-                    setTextValue(binding.secondUmpireValue, secondUmpireValue)
-                    setTextValue(binding.tvUmpireValue, tvUmpireValue)
-                    setTextValue(binding.refereeValue, refereeValue)
-
-                    setTossValue(binding.tossWonValue, tossValue)
-                }
+                setTextValue(binding.timeValue, timeValue)
             }
         }
+        viewModel.currentStage.observe(viewLifecycleOwner){
+            if(it!=null){
+                val seriesValue = it.name
+                setTextValue(binding.stageValue, seriesValue)
+            }
+        }
+        viewModel.currentVenue.observe(viewLifecycleOwner){
+            if(it!=null){
+                val venueValue = "${it.name}, ${it.city}"
+                setTextValue(binding.venueValue, venueValue)
+            }
+        }
+        viewModel.currentTeam.observe(viewLifecycleOwner){
+            if(it!=null){
+                val tossValue = it.name
+                setTossValue(binding.tossWonValue, tossValue)
+            }
 
+        }
+        viewModel.playerCareer.observe(viewLifecycleOwner){
+            if(it!=null){
+                val manOfTheMatchValue = it.data?.fullname
+                setTextValue(binding.manOfTheMatchValue, manOfTheMatchValue)
+            }
+        }
+        viewModel.current1stUmpire.observe(viewLifecycleOwner) {
+            if(it!=null){
+                val firstUmpireValue = it.fullname
+                setTextValue(binding.firstUmpireValue, firstUmpireValue)
+            }
+        }
+        viewModel.current2ndUmpire.observe(viewLifecycleOwner) {
+            if(it!=null){
+                val secondUmpireValue = it.fullname
+                setTextValue(binding.firstUmpireValue, secondUmpireValue)
+            }
+        }
+        viewModel.currentTVUmpire.observe(viewLifecycleOwner) {
+            if(it!=null){
+                val tvUmpireValue = it.fullname
+                setTextValue(binding.tvUmpireValue, tvUmpireValue)
+            }
+        }
+        viewModel.currentReferee.observe(viewLifecycleOwner) {
+            if(it!=null){
+                val refereeValue = it.fullname
+                setTextValue(binding.firstUmpireValue, refereeValue)
+            }
+        }
     }
 
     fun setTextValue(textView: TextView, value: String?){
@@ -119,7 +148,7 @@ class MatchInfoFragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+    /*override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("matchRoundValue", binding.matchRoundValue.text.toString())
         outState.putString("stageValue", binding.stageValue.toString())
@@ -145,6 +174,6 @@ class MatchInfoFragment : Fragment() {
             binding.refereeValue.text = savedInstanceState.getString("refereeValue")
             binding.tossWonValue.text = savedInstanceState.getString("tossWonValue")
         }
-    }
+    }*/
 
 }
