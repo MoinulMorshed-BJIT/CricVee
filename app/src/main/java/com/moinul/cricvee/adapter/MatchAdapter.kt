@@ -113,6 +113,7 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                         var yearString = dateString.substring(timeZoneSliceIndex+10, dateString.length)
                         dateString = dateString.substring(0, timeZoneSliceIndex)
                         countdownTimer.text = dateString+yearString
+
                     }
                 }
             }
@@ -212,6 +213,10 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
                     team2overs.text = team2overData
                     stageLeagueTitle.text = "${leagueData?.name.toString()} | ${stageData?.name.toString()}"
                     round.text = match.round
+
+                    if(countdownTimer.text == "Countdown ended"){
+                        noteResult.text = "Match started."
+                    }
 
 
                    /* if(match.status=="Finished"){
