@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showProgressBar()
 
         recentMatchRecyclerView = binding.recentMatchRecyclerView
         recentMatchRecyclerView.setHasFixedSize(true)
@@ -57,6 +58,7 @@ class HomeFragment : Fragment() {
     }
 
     fun observeData(){
+
         viewModel.readRecentFixtureData.observe(viewLifecycleOwner){
             val adapterScrollState = recentMatchRecyclerView.layoutManager?.onSaveInstanceState()
             recentMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
@@ -67,6 +69,7 @@ class HomeFragment : Fragment() {
             val adapterScrollState = upcomingMatchRecyclerView.layoutManager?.onSaveInstanceState()
             upcomingMatchRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
             upcomingMatchRecyclerView.adapter = MatchAdapter(requireContext(), viewModel, it, viewLifecycleOwner, false)
+            hideProgressBar()
         }
     }
 
@@ -76,6 +79,12 @@ class HomeFragment : Fragment() {
         bottomNavigationView?.let {
             it.menu.getItem(0).isChecked = true
         }
+    }
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }

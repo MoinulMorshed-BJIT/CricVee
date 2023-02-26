@@ -71,6 +71,7 @@ class LineupsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showProgressBar()
         initialiseLayoutManager()
     }
     private fun initialiseLayoutManager() {
@@ -144,7 +145,7 @@ class LineupsFragment : Fragment() {
                 benchTeamA?.let { it1 -> LineupsAdapter(requireContext(),viewModel, it1, 1) }
             teamBenchRecyclerViewB.adapter =
                 benchTeamB?.let { it1 -> LineupsAdapter(requireContext(),viewModel, it1, 2) }
-
+            hideProgressBar()
 
 
         }
@@ -168,6 +169,13 @@ class LineupsFragment : Fragment() {
             binding.localTeamHeader.text = savedInstanceState.getString("localTeamTextViewValue")
             binding.visitorTeamHeader.text = savedInstanceState.getString("visitorTeamTextViewValue")
         }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 

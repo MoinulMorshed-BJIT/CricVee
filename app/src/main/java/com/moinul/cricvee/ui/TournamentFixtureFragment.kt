@@ -77,5 +77,12 @@ class TournamentFixtureFragment : Fragment() {
         requireActivity().bottom_navbar.visibility=View.GONE
     }
 
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+    }
+
 
 }

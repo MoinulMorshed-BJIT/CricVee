@@ -49,7 +49,7 @@ class MatchInfoFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        showProgressBar()
 
         viewModel.readFixtureById(UtilTools.CLICKED_FIXTURE_ID)
         viewModel.currentFixture.observe(viewLifecycleOwner) {
@@ -83,6 +83,7 @@ class MatchInfoFragment : Fragment() {
                 }
                 setTextValue(binding.timeValue, timeValue)
             }
+            hideProgressBar()
         }
         viewModel.currentStage.observe(viewLifecycleOwner){
             if(it!=null){
@@ -151,6 +152,7 @@ class MatchInfoFragment : Fragment() {
     fun setTextValue(textView: TextView, value: String?){
         if(value==null || value == "null" || value == ""){
             textView.text = requireContext().getString(R.string.missing)
+
         }else{
             textView.text = value
         }
@@ -189,6 +191,13 @@ class MatchInfoFragment : Fragment() {
             binding.refereeValue.text = savedInstanceState.getString("refereeValue")
             binding.tossWonValue.text = savedInstanceState.getString("tossWonValue")
         }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }

@@ -52,6 +52,7 @@ class PlayerCareerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showProgressBar()
         Glide.with(requireContext()).load(args.flagImagePath).fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .priority(Priority.HIGH)
@@ -107,6 +108,7 @@ class PlayerCareerFragment : Fragment() {
                     skillPerformanceRecyclerView.adapter =
                         it.data?.let { it1 -> BowlingCareerAdapter(requireContext(), viewModel, it1, careerList) }
                 }
+                hideProgressBar()
             }
 
         }
@@ -146,6 +148,13 @@ class PlayerCareerFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         requireActivity().bottom_navbar.visibility = View.VISIBLE
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }

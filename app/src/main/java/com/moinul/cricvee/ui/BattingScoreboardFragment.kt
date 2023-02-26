@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moinul.cricvee.R
 import com.moinul.cricvee.adapter.BattingScoreAdapter
 import com.moinul.cricvee.adapter.BowlingScoreAdapter
-import com.moinul.cricvee.adapter.MatchAdapter
 import com.moinul.cricvee.databinding.FragmentBattingScoreboardBinding
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
+import kotlinx.android.synthetic.main.fragment_batting_scoreboard.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -83,18 +82,10 @@ class BattingScoreboardFragment() : Fragment() {
 
     @SuppressLint("LongLogTag")
     private fun observeData(scorecardIndex: Int) {
-
+        showProgressBar()
         viewModel.getFixtureWithScoreboard(UtilTools.CLICKED_FIXTURE_ID)
-
         Log.d(TAG, "observeData: ${viewModel.fixtureWithScoreboard.value}")
         viewModel.fixtureWithScoreboard.observe(viewLifecycleOwner){
-//            Log.d(TAG, "observeData: CALLED ${it}")
-//            Log.d(TAG, "observeData: BALLS TEAM 1st NAME: ${it.data?.balls?.get(0)?.team?.code}")
-//            Log.d(TAG, "observeData: BALLS TEAM last NAME: ${it.data?.balls?.last()?.team?.code}")
-            /*if(it.data?.balls?.isNotEmpty() == true){
-                binding.inningsTeam1.text = it.data?.balls?.first()?.team?.code+" Innings"
-                binding.inningsTeam2.text = it.data?.balls?.last()?.team?.code+" Innings"
-            }*/
             if(it.data?.status=="Finished"){
                 GlobalScope.launch(Dispatchers.IO) {
                     try {
@@ -117,13 +108,26 @@ class BattingScoreboardFragment() : Fragment() {
                     }
                 }
                 if(it!=null){
+                    binding.failureTxtV.visibility = View.VISIBLE
                     battingScoreRecyclerView.adapter = BattingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
                     bowlingScoreRecyclerView.adapter = BowlingScoreAdapter(requireContext(), viewModel, it, scorecardIndex)
                 }
+                hideProgressBar()
             }
 
         }
+        binding.failureTxtV.visibility = View.GONE
+
     }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+    }
+
+
 
     @SuppressLint("ResourceAsColor")
     fun selectInningsTab(){

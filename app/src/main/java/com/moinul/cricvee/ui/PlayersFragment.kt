@@ -37,6 +37,7 @@ class PlayersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showProgressBar()
         searchPlayerRecyclerView = binding.searchPlayerRecyclerView
         searchPlayerRecyclerView.setHasFixedSize(true)
 
@@ -57,9 +58,6 @@ class PlayersFragment : Fragment() {
                 if (newText != null) {
                     adapter?.performSearch(newText)
                 }
-
-
-
                 return  false
             }
 
@@ -86,6 +84,7 @@ class PlayersFragment : Fragment() {
             searchPlayerRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
             searchPlayerRecyclerView.adapter = PlayerSearchAdapter(requireContext(), viewModel, it)
             Log.d("Observe first", "observeData: Here first before Search")
+            hideProgressBar()
         }
     }
 
@@ -97,6 +96,13 @@ class PlayersFragment : Fragment() {
         }
         binding.searchView.isIconified=true
         binding.searchView.clearFocus()
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }

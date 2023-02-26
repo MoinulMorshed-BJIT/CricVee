@@ -261,4 +261,6 @@ class MatchAdapter(val context: Context, val viewModel: SportsViewModel, val lis
         return String.format("⏳ %02dD:%02dH:%02dM:%02dS", days, hours, minutes, seconds)
     }
 
+
+
 }

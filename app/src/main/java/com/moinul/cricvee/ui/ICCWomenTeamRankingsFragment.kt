@@ -45,6 +45,7 @@ class ICCWomenTeamRankingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().bottom_navbar.visibility=View.GONE
+        showProgressBar()
 
         selectFormatTab()
 
@@ -79,29 +80,6 @@ class ICCWomenTeamRankingsFragment : Fragment() {
         }
     }
 
-    private fun observeMenTestData() {
-        viewModel.readTestRankingMen.observe(viewLifecycleOwner){
-            val adapterScrollState = team_ranking_recyclerView.layoutManager?.onSaveInstanceState()
-            teamRankingRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            teamRankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it)
-        }
-    }
-
-    private fun observeMenODIData() {
-        viewModel.readODIRankingMen.observe(viewLifecycleOwner){
-            val adapterScrollState = team_ranking_recyclerView.layoutManager?.onSaveInstanceState()
-            teamRankingRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            teamRankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it)
-        }
-    }
-
-    private fun observeMenT20IData() {
-        viewModel.readT20IRankingMen.observe(viewLifecycleOwner){
-            val adapterScrollState = team_ranking_recyclerView.layoutManager?.onSaveInstanceState()
-            teamRankingRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
-            teamRankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it)
-        }
-    }
 
     private fun observeWomenTestData() {
         viewModel.readTestRankingWomen.observe(viewLifecycleOwner){
@@ -116,6 +94,7 @@ class ICCWomenTeamRankingsFragment : Fragment() {
             val adapterScrollState = team_ranking_recyclerView.layoutManager?.onSaveInstanceState()
             teamRankingRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
             teamRankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it)
+            hideProgressBar()
         }
     }
 
@@ -124,6 +103,7 @@ class ICCWomenTeamRankingsFragment : Fragment() {
             val adapterScrollState = team_ranking_recyclerView.layoutManager?.onSaveInstanceState()
             teamRankingRecyclerView.layoutManager?.onRestoreInstanceState(adapterScrollState)
             teamRankingRecyclerView.adapter = RankingAdapter(requireContext(), viewModel, it)
+            hideProgressBar()
         }
     }
 
@@ -161,6 +141,12 @@ class ICCWomenTeamRankingsFragment : Fragment() {
 
             }
         }
+    }
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 

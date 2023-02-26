@@ -59,6 +59,7 @@ class MatchDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().bottom_navbar.visibility=View.GONE
+        showProgressBar()
 
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         val tabLayout = binding.tabLayout
@@ -112,6 +113,7 @@ class MatchDetailsFragment : Fragment() {
                         .into(binding.localTeamImg)
                 }
             }
+            hideProgressBar()
         }
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
@@ -145,6 +147,12 @@ class MatchDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         UtilTools.CLICKED_FIXTURE_ID = 0
+    }
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }
