@@ -2,10 +2,10 @@ package com.moinul.cricvee.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -15,16 +15,16 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.moinul.cricvee.R
 import com.moinul.cricvee.adapter.ViewPagerAdapter
 import com.moinul.cricvee.databinding.FragmentMatchDetailsBinding
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_match_details.*
-import kotlinx.android.synthetic.main.fragment_match_details.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val TAG = "MatchDetailsFragment"
+
 class MatchDetailsFragment : Fragment() {
     private lateinit var binding: FragmentMatchDetailsBinding
     private val viewModel: SportsViewModel by viewModels()
@@ -45,21 +45,20 @@ class MatchDetailsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        try{
-            binding = FragmentMatchDetailsBinding.inflate(layoutInflater)    
-        }catch (e:Exception){
+        try {
+            binding = FragmentMatchDetailsBinding.inflate(layoutInflater)
+        } catch (e: Exception) {
             Log.d(TAG, "onCreateView: $e")
         }
-        
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().bottom_navbar.visibility=View.GONE
+        requireActivity().bottom_navbar.visibility = View.GONE
         showProgressBar()
 
 
@@ -72,35 +71,35 @@ class MatchDetailsFragment : Fragment() {
 
         viewModel.getFixtureWithScoreboard(UtilTools.CLICKED_FIXTURE_ID)
 
-        viewModel.fixtureWithScoreboard.observe(viewLifecycleOwner){
+        viewModel.fixtureWithScoreboard.observe(viewLifecycleOwner) {
             val visitorTeamId = it.data?.visitorteam_id
             val localTeamId = it.data?.localteam_id
             var localTotalValue = ""
             var visitorTotalValue = ""
             try {
-                for(run in it.data?.runs!!){
-                    if(run.team_id==localTeamId){
-                        localTotalValue = "Total: ${run.score}/${run.wickets} (${run.overs})"
-                    }else{
-                        visitorTotalValue = "Total: ${run.score}/${run.wickets} (${run.overs})"
+                for (run in it.data?.runs!!) {
+                    if (run.team_id == localTeamId) {
+                        localTotalValue =
+                            "${Constants.TOTAL_COLON}${run.score}/${run.wickets} (${run.overs})"
+                    } else {
+                        visitorTotalValue =
+                            "${Constants.TOTAL_COLON}${run.score}/${run.wickets} (${run.overs})"
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "onViewCreated: $e")
             }
 
             binding.localTotal.text = localTotalValue
             binding.visitorTotal.text = visitorTotalValue
 
-            GlobalScope.launch(Dispatchers.IO){
+            GlobalScope.launch(Dispatchers.IO) {
                 val team = visitorTeamId?.let { it1 -> viewModel.readTeamById(it1) }
-                GlobalScope.launch(Dispatchers.Main){
+                GlobalScope.launch(Dispatchers.Main) {
                     binding.visitorTeamName.text = team?.name
                     Glide.with(requireContext()).load(team?.image_path).fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        .priority(Priority.HIGH)
-                        .error(R.drawable.ic_connection_error)
-                        .into(binding.visitorTeamImg)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA).priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error).into(binding.visitorTeamImg)
                 }
             }
 
@@ -109,10 +108,8 @@ class MatchDetailsFragment : Fragment() {
                 GlobalScope.launch(Dispatchers.Main) {
                     binding.localTeamName.text = team?.name
                     Glide.with(requireContext()).load(team?.image_path).fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                        .priority(Priority.HIGH)
-                        .error(R.drawable.ic_connection_error)
-                        .into(binding.localTeamImg)
+                        .diskCacheStrategy(DiskCacheStrategy.DATA).priority(Priority.HIGH)
+                        .error(R.drawable.ic_connection_error).into(binding.localTeamImg)
                 }
             }
             hideProgressBar()
@@ -121,23 +118,21 @@ class MatchDetailsFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "MATCH INFO"
+                    tab.text = Constants.MATCH_INFO
                 }
                 1 -> {
-                    tab.text = "SCORECARD"
+                    tab.text = Constants.SCORECARD
                 }
                 2 -> {
-                    tab.text = "LINEUP"
+                    tab.text = Constants.LINEUP
                 }
-
-
             }
         }.attach()
     }
 
     override fun onResume() {
         super.onResume()
-        requireActivity().bottom_navbar.visibility=View.GONE
+        requireActivity().bottom_navbar.visibility = View.GONE
     }
 
     override fun onStop() {
@@ -149,9 +144,11 @@ class MatchDetailsFragment : Fragment() {
         super.onDestroyView()
         UtilTools.CLICKED_FIXTURE_ID = 0
     }
+
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
+
     private fun hideProgressBar() {
         binding.progressBar.visibility = View.GONE
     }

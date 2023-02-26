@@ -83,7 +83,5 @@ data class FixtureData(
         null,
         null,
         null
-    ){
-
-    }
+    )
 }

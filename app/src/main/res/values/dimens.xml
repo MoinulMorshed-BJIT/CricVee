@@ -54,4 +54,6 @@
     <dimen name="scoreTopMargin">65sp</dimen>
     <dimen name="matchNotePadding">4dp</dimen>
     <dimen name="scoreSummaryWidth">83dp</dimen>
+    <dimen name="columnTextSize">18sp</dimen>
+    <dimen name="textSizeSp">16sp</dimen>
 </resources>

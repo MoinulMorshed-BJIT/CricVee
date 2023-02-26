@@ -30,5 +30,18 @@
     <string name="vs">VS</string>
     <string name="upcomingStr">Upcoming</string>
     <string name="missing">Not Available</string>
+    <string name="Batting">Batting</string>
+    <string name="Bowling">Bowling</string>
+    <string name="_125_00">125.00</string>
+    <string name="_2">2</string>
+    <string name="_4">4</string>
+    <string name="_40">40</string>
+    <string name="_50">50</string>
+    <string name="position">POSITION</string>
+    <string name="batting_style">BATTING STYLE</string>
+    <string name="bowling_style">BOWLING STYLE</string>
+    <string name="career_recent_season">CAREER (RECENT SEASON)</string>
+    <string name="batting">BATTING</string>
+    <string name="bowling">BOWLING</string>
 
 </resources>

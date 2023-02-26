@@ -8,7 +8,7 @@ data class Lineup(
     val firstname: String?,
     val fullname: String?,
     val gender: String?,
-    val id: Int?,
+    val id: Int,
     val image_path: String?,
     val lastname: String?,
     val lineup: LineupX?,

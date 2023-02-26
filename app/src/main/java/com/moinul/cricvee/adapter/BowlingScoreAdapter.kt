@@ -16,16 +16,20 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "BowlingScoreAdapter"
 
-class BowlingScoreAdapter  (val context: Context, val viewModel: SportsViewModel, val scoreboard: FixtureWithScoreboard, scorecardIndex: Int)
-    : RecyclerView.Adapter<BowlingScoreAdapter.BowlingScoreViewHolder>() {
-    private var bowlingList = scoreboard.data?.bowling?.filter { it.scoreboard == "S${scorecardIndex}" }
+class BowlingScoreAdapter(
+    val context: Context,
+    val viewModel: SportsViewModel,
+    val scoreboard: FixtureWithScoreboard,
+    scorecardIndex: Int
+) : RecyclerView.Adapter<BowlingScoreAdapter.BowlingScoreViewHolder>() {
+    private var bowlingList =
+        scoreboard.data?.bowling?.filter { it.scoreboard == "S${scorecardIndex}" }
 
-    class BowlingScoreViewHolder(private val binding: View): RecyclerView.ViewHolder(binding){
-
-    }
+    class BowlingScoreViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BowlingScoreViewHolder {
-        val root = LayoutInflater.from(parent.context).inflate(R.layout.bowling_score_item, parent, false)
+        val root =
+            LayoutInflater.from(parent.context).inflate(R.layout.bowling_score_item, parent, false)
         return BowlingScoreViewHolder(root)
     }
 
@@ -34,7 +38,7 @@ class BowlingScoreAdapter  (val context: Context, val viewModel: SportsViewModel
     }
 
     override fun onBindViewHolder(holder: BowlingScoreViewHolder, position: Int) {
-        val bowler  = bowlingList?.get(position)
+        val bowler = bowlingList?.get(position)
         Log.d(TAG, "onBindViewHolder: $bowler")
 
         val playerId = bowler?.player_id
@@ -47,14 +51,12 @@ class BowlingScoreAdapter  (val context: Context, val viewModel: SportsViewModel
         val economyRate = holder.itemView.bowler_economy_rate
 
         GlobalScope.launch(Dispatchers.Default) {
-            for(player in scoreboard.data?.lineup!!){
-                if(player.id == bowler?.player_id){
+            for (player in scoreboard.data?.lineup!!) {
+                if (player.id == bowler?.player_id) {
                     playerNameValue = player.fullname.toString()
-                    break;
+                    break
                 }
             }
-            
-            
             GlobalScope.launch(Dispatchers.Main) {
                 playerName.text = playerNameValue
                 overs.text = bowler?.overs.toString()
@@ -64,12 +66,5 @@ class BowlingScoreAdapter  (val context: Context, val viewModel: SportsViewModel
                 economyRate.text = bowler?.rate.toString()
             }
         }
-
-
-
-
-
-
-
     }
 }

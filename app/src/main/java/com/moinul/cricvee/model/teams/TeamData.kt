@@ -25,7 +25,5 @@ data class TeamData(
         null,
         null,
         null,
-        null){
-
-    }
+        null)
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moinul.cricvee.R
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.batting_score_item.view.*
 import kotlinx.coroutines.Dispatchers
@@ -15,16 +16,21 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 private const val TAG = "BattingScoreAdapter"
-class BattingScoreAdapter (val context: Context, val viewModel: SportsViewModel, val scoreboard: FixtureWithScoreboard, scorecardIndex: Int)
-    : RecyclerView.Adapter<BattingScoreAdapter.BattingScoreViewHolder>() {
-    private var battingList = scoreboard.data?.batting?.filter { it.scoreboard == "S${scorecardIndex}" }
 
-    class BattingScoreViewHolder(private val binding: View): RecyclerView.ViewHolder(binding){
+class BattingScoreAdapter(
+    val context: Context,
+    val viewModel: SportsViewModel,
+    val scoreboard: FixtureWithScoreboard,
+    scorecardIndex: Int
+) : RecyclerView.Adapter<BattingScoreAdapter.BattingScoreViewHolder>() {
+    private var battingList =
+        scoreboard.data?.batting?.filter { it.scoreboard == "S${scorecardIndex}" }
 
-    }
+    class BattingScoreViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BattingScoreViewHolder {
-        val root = LayoutInflater.from(parent.context).inflate(R.layout.batting_score_item, parent, false)
+        val root =
+            LayoutInflater.from(parent.context).inflate(R.layout.batting_score_item, parent, false)
         return BattingScoreViewHolder(root)
     }
 
@@ -33,7 +39,7 @@ class BattingScoreAdapter (val context: Context, val viewModel: SportsViewModel,
     }
 
     override fun onBindViewHolder(holder: BattingScoreViewHolder, position: Int) {
-        val batsman  = battingList?.get(position)
+        val batsman = battingList?.get(position)
         Log.d(TAG, "onBindViewHolder: $batsman")
 
         val playerId = batsman?.player_id
@@ -44,81 +50,85 @@ class BattingScoreAdapter (val context: Context, val viewModel: SportsViewModel,
         val fours = holder.itemView.player1_fours
         val sixes = holder.itemView.player1_sixes
         val strikeRate = holder.itemView.player1_strike_rate
-        var dismissal = holder.itemView.player1_dismissal
+        val dismissal = holder.itemView.player1_dismissal
         var dismissalValue = ""
 
         GlobalScope.launch(Dispatchers.Default) {
-            for(player in scoreboard.data?.lineup!!){
-                if(player.id == batsman?.player_id){
+            for (player in scoreboard.data?.lineup!!) {
+                if (player.id == batsman?.player_id) {
                     playerNameValue = player.fullname.toString()
-                    break;
+                    break
                 }
             }
-            if(batsman?.fow_balls == 0.0){
-                dismissalValue = " not out"
-            }else if(batsman?.catch_stump_player_id==null && batsman?.runout_by_id == null){
-                dismissalValue = " lbw b/ b "
-                for (player in scoreboard.data?.lineup!!){
-                    if(player.id == batsman?.bowling_player_id){
+            if (batsman?.fow_balls == 0.0) {
+                dismissalValue = Constants.NOT_OUT
+            } else if (batsman?.catch_stump_player_id == null && batsman?.runout_by_id == null) {
+                dismissalValue = Constants.BOWLED_LBW
+                for (player in scoreboard.data.lineup) {
+                    if (player.id == batsman?.bowling_player_id) {
                         dismissalValue += player.fullname
-                        break;
+                        break
                     }
                 }
-            }else if(batsman?.catch_stump_player_id != null
-                        && batsman?.bowling_player_id!=null
-                        && batsman?.runout_by_id == null){
-                var caught = " c "
-                var bowled = " b "
-                for (player in scoreboard.data?.lineup!!){
-                    if(player.id == batsman?.catch_stump_player_id){
-                        caught = caught+player.fullname
+            } else if (batsman.catch_stump_player_id != null
+                && batsman.bowling_player_id != null
+                && batsman.runout_by_id == null
+            ) {
+                var caught = Constants.CAUGHT
+                var bowled = Constants.BOWLED
+                for (player in scoreboard.data.lineup) {
+                    if (player.id == batsman.catch_stump_player_id) {
+                        caught = caught + player.fullname
                     }
-                    if(player.id == batsman?.bowling_player_id){
-                        bowled = bowled+player.fullname
+                    if (player.id == batsman.bowling_player_id) {
+                        bowled = bowled + player.fullname
                     }
 
-                    if(caught.length > 3 && bowled.length > 3){
-                        break;
+                    if (caught.length > 3 && bowled.length > 3) {
+                        break
                     }
                 }
 
-                dismissalValue = caught+" "+bowled
-            }else if(batsman?.catch_stump_player_id!=null
-                        && batsman?.bowling_player_id==null
-                        && batsman?.runout_by_id==null){
-                for(player in scoreboard.data?.lineup!!){
-                    if(player.id == batsman?.catch_stump_player_id){
-                        dismissalValue = " run out (${player.fullname})"
-                        break;
+                dismissalValue = caught + " " + bowled
+            } else if (batsman.catch_stump_player_id != null
+                && batsman.bowling_player_id == null
+                && batsman.runout_by_id == null
+            ) {
+                for (player in scoreboard.data.lineup) {
+                    if (player.id == batsman.catch_stump_player_id) {
+                        dismissalValue = "${Constants.RUN_OUT}(${player.fullname})"
+                        break
                     }
                 }
-            } else if(batsman?.runout_by_id!=null
-                        && batsman?.catch_stump_player_id ==null
-                        && batsman?.bowling_player_id ==null){
-                for(player in scoreboard.data?.lineup!!){
-                    if(player.id == batsman?.runout_by_id){
-                        dismissalValue = " run out (${player.fullname})"
-                        break;
+            } else if (batsman.runout_by_id != null
+                && batsman.catch_stump_player_id == null
+                && batsman.bowling_player_id == null
+            ) {
+                for (player in scoreboard.data.lineup) {
+                    if (player.id == batsman.runout_by_id) {
+                        dismissalValue = "${Constants.RUN_OUT}(${player.fullname})"
+                        break
                     }
                 }
-            }else if(batsman?.runout_by_id!=null
-                && batsman?.catch_stump_player_id !=null
-                && batsman?.bowling_player_id ==null){
+            } else if (batsman.runout_by_id != null
+                && batsman.catch_stump_player_id != null
+                && batsman.bowling_player_id == null
+            ) {
                 var runOutThrow = ""
                 var runOutStumps = ""
-                for(player in scoreboard.data?.lineup!!){
+                for (player in scoreboard.data.lineup) {
 
-                    if(player.id == batsman?.catch_stump_player_id){
+                    if (player.id == batsman.catch_stump_player_id) {
                         runOutStumps = player.fullname.toString()
                     }
-                    if(player.id == batsman?.runout_by_id){
+                    if (player.id == batsman.runout_by_id) {
                         runOutThrow = player.fullname.toString()
                     }
-                    if(runOutThrow.length > 1 && runOutStumps.length > 1){
-                        break;
+                    if (runOutThrow.length > 1 && runOutStumps.length > 1) {
+                        break
                     }
                 }
-                dismissalValue = " run out ($runOutStumps/$runOutThrow)"
+                dismissalValue = "${Constants.RUN_OUT}($runOutStumps/$runOutThrow)"
             }
             GlobalScope.launch(Dispatchers.Main) {
                 playerName.text = playerNameValue
@@ -130,11 +140,6 @@ class BattingScoreAdapter (val context: Context, val viewModel: SportsViewModel,
                 dismissal.text = dismissalValue
             }
         }
-
-
-
-
-
 
 
     }

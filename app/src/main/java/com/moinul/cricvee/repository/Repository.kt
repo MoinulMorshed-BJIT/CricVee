@@ -2,11 +2,9 @@ package com.moinul.cricvee.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.room.Query
 import com.moinul.cricvee.database.SportsDao
 import com.moinul.cricvee.model.countries.CountryData
 import com.moinul.cricvee.model.currentPlayers.Squad
-import com.moinul.cricvee.model.currentPlayers.SquadPlayerData
 import com.moinul.cricvee.model.fixtures.FixtureData
 import com.moinul.cricvee.model.league.LeagueData
 import com.moinul.cricvee.model.officials.OfficialsData
@@ -17,6 +15,7 @@ import com.moinul.cricvee.model.teams.TeamData
 import com.moinul.cricvee.model.venue.VenueData
 
 private const val TAG = "Repository"
+
 class Repository(private val sportsDao: SportsDao) {
     val readRecentFixtureData: LiveData<List<FixtureData>> = sportsDao.readRecentFixtureData()
     val readUpcomingFixtureData: LiveData<List<FixtureData>> = sportsDao.readUpcomingFixtureData()
@@ -24,7 +23,7 @@ class Repository(private val sportsDao: SportsDao) {
     val readAllTeamIdList: LiveData<List<Int>> = sportsDao.readAllTeamIdList()
     val readAllSquadPlayers: LiveData<List<Squad>> = sportsDao.readAllSquadPlayers()
     val readTestRankingMen: LiveData<List<LocalTeamRanking>> = sportsDao.readTestRankingMen()
-    var readODIRankingMen: LiveData<List<LocalTeamRanking>> =sportsDao.readODIRankingMen()
+    var readODIRankingMen: LiveData<List<LocalTeamRanking>> = sportsDao.readODIRankingMen()
     var readT20IRankingMen: LiveData<List<LocalTeamRanking>> = sportsDao.readT20IRankingMen()
     var readTestRankingWomen: LiveData<List<LocalTeamRanking>> = sportsDao.readTestRankingWomen()
     var readODIRankingWomen: LiveData<List<LocalTeamRanking>> = sportsDao.readODIRankingWomen()
@@ -35,106 +34,114 @@ class Repository(private val sportsDao: SportsDao) {
     var readAllStageData: LiveData<List<StageData>> = sportsDao.readAllStageData()
 
 
-
-
-
-    suspend fun insertAllFixtures(fixtureList: List<FixtureData>){
+    suspend fun insertAllFixtures(fixtureList: List<FixtureData>) {
         sportsDao.insertAllFixtures(fixtureList)
     }
-    suspend fun deleteAllFixtures(){
+
+    suspend fun deleteAllFixtures() {
         sportsDao.deleteAllFixtures()
     }
 
-    suspend fun deleteAllTeamRankings(){
+    suspend fun deleteAllTeamRankings() {
         sportsDao.deleteAllTeamRankings()
     }
 
 
-    suspend fun insertAllTeams(teamList: List<TeamData>){
+    suspend fun insertAllTeams(teamList: List<TeamData>) {
         sportsDao.insertAllTeams(teamList)
     }
 
-    suspend fun insertAllCountries(countryList: List<CountryData>){
+    suspend fun insertAllCountries(countryList: List<CountryData>) {
         sportsDao.insertAllCountries(countryList)
     }
 
-    suspend fun insertTeamRankings(localTeamRankingList: List<LocalTeamRanking>){
+    suspend fun insertTeamRankings(localTeamRankingList: List<LocalTeamRanking>) {
         sportsDao.insertTeamRankings(localTeamRankingList)
     }
-    fun insertAllLeagues(leagueList: List<LeagueData>){
+
+    fun insertAllLeagues(leagueList: List<LeagueData>) {
         sportsDao.insertAllLeagueData(leagueList)
     }
-    fun insertAllVenues(venueList: List<VenueData>){
+
+    fun insertAllVenues(venueList: List<VenueData>) {
         sportsDao.insertAllVenueData(venueList)
     }
-    fun insertAllSeasons(seasonList: List<SeasonData>){
+
+    fun insertAllSeasons(seasonList: List<SeasonData>) {
         sportsDao.insertAllSeasonData(seasonList)
     }
-    fun insertAllStages(stageList: List<StageData>){
+
+    fun insertAllStages(stageList: List<StageData>) {
         sportsDao.insertAllStageData(stageList)
     }
-    fun insertAllOfficials(officialsList: List<OfficialsData>){
+
+    fun insertAllOfficials(officialsList: List<OfficialsData>) {
         sportsDao.insertAllOfficials(officialsList)
     }
 
-    fun deleteAllTeams(){
+    fun deleteAllTeams() {
         sportsDao.deleteAllTeams()
     }
 
-    fun readTeamById(teamId: Int):TeamData{
+    fun readTeamById(teamId: Int): TeamData {
         return sportsDao.readTeamById(teamId)
     }
 
-    fun readFixtureById(fixtureId: Int): FixtureData{
+    fun readFixtureById(fixtureId: Int): FixtureData {
         return sportsDao.readFixtureById(fixtureId)
     }
 
-    fun readOfficialById(officialId: Int): OfficialsData{
+    fun readOfficialById(officialId: Int): OfficialsData {
         return sportsDao.readOfficialById(officialId)
     }
 
-    fun readStagesByLeagueId(leagueId: Int, seasonId: Int):LiveData<List<StageData>>{
+    fun readStagesByLeagueId(leagueId: Int, seasonId: Int): LiveData<List<StageData>> {
         return sportsDao.readStagesByLeagueId(leagueId, seasonId)
     }
 
-    fun readFixturesByStageId(stageId: Int):LiveData<List<FixtureData>>{
+    fun readFixturesByStageId(stageId: Int): LiveData<List<FixtureData>> {
         return sportsDao.readFixturesByStageId(stageId)
     }
 
-    fun getCountryIdByTeamName(teamName: String):Int{
-        Log.d(TAG, "getCountryIdByTeamName: TeamName: $teamName Retrieved: ${sportsDao.getCountryIdByTeamName(teamName)}")
+    fun getCountryIdByTeamName(teamName: String): Int {
+        Log.d(
+            TAG,
+            "getCountryIdByTeamName: TeamName: $teamName Retrieved: ${
+                sportsDao.getCountryIdByTeamName(teamName)
+            }"
+        )
         return sportsDao.getCountryIdByTeamName(teamName)
     }
 
-    fun getCountryById(countryId: Int):CountryData{
+    fun getCountryById(countryId: Int): CountryData {
         return sportsDao.getCountryById(countryId)
     }
 
-    fun getCountryByName(countryName: String):CountryData{
+    fun getCountryByName(countryName: String): CountryData {
         return sportsDao.getCountryByName(countryName)
     }
 
-    fun getTeamByName(teamName: String):TeamData{
+    fun getTeamByName(teamName: String): TeamData {
         return sportsDao.getTeamByName(teamName)
     }
 
-    suspend fun insertAllSquadPlayers(playersList :List<Squad>){
+    suspend fun insertAllSquadPlayers(playersList: List<Squad>) {
         return sportsDao.insertAllSquadPlayers(playersList)
     }
 
-    fun readLeagueById(leagueId: Int): LeagueData{
+    fun readLeagueById(leagueId: Int): LeagueData {
         return sportsDao.readLeagueById(leagueId)
     }
 
-    fun readVenueById(venueId: Int):VenueData{
+    fun readVenueById(venueId: Int): VenueData {
         return sportsDao.readVenueById(venueId)
     }
 
-    fun readSeasonById(seasonId: Int):SeasonData{
+    fun readSeasonById(seasonId: Int): SeasonData {
         return sportsDao.readSeasonById(seasonId)
     }
 
-    fun readStageById(stageId: Int):StageData{
+    fun readStageById(stageId: Int): StageData {
         return sportsDao.readStageById(stageId)
     }
 

@@ -11,37 +11,39 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.moinul.cricvee.MainActivity
 import com.moinul.cricvee.R
+import com.moinul.cricvee.utils.Constants
 
-class MatchNotificationWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
-
+class MatchNotificationWorker(context: Context, workerParams: WorkerParameters) :
+    Worker(context, workerParams) {
     override fun doWork(): Result {
-        val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // Create the notification channel for Android O and above
+        val notificationManager =
+            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "match_notification_channel"
-            val channel = NotificationChannel(channelId, "Match Notification", NotificationManager.IMPORTANCE_DEFAULT)
+            val channelId = Constants.APP_NOTIFICATION_CHANNEL_ID
+            val channel = NotificationChannel(
+                channelId,
+                Constants.APP_NOTIFICATION_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             notificationManager.createNotificationChannel(channel)
         }
-
-        // Create the notification content
-        val contentIntent = PendingIntent.getActivity(applicationContext, 0, Intent(applicationContext, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
-        val builder = NotificationCompat.Builder(applicationContext, "match_notification_channel")
-            .setContentTitle("Match Notification")
-            .setContentText("A match is starting soon!")
-            .setSmallIcon(R.drawable.fixtures_icon)
-            .setContentIntent(contentIntent)
-            .setAutoCancel(true)
-
-        // Show the notification
+        val contentIntent = PendingIntent.getActivity(
+            applicationContext,
+            0,
+            Intent(applicationContext, MainActivity::class.java),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        val builder =
+            NotificationCompat.Builder(applicationContext, Constants.APP_NOTIFICATION_CHANNEL_ID)
+                .setContentTitle(Constants.APP_NOTIFICATION_CHANNEL_NAME)
+                .setContentText(Constants.APP_NOTIFICATION_CHANNEL_CONTENT)
+                .setSmallIcon(R.mipmap.ic_launcher_round).setContentIntent(contentIntent)
+                .setAutoCancel(true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.notify(0, builder.build())
         } else {
-            @Suppress("DEPRECATION")
-            notificationManager.notify(0, builder.notification)
+            @Suppress("DEPRECATION") notificationManager.notify(0, builder.notification)
         }
-
         return Result.success()
     }
-
 }

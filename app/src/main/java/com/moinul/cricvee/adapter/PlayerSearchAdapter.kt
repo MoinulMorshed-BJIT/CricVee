@@ -15,8 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moinul.cricvee.R
 import com.moinul.cricvee.model.countries.CountryData
 import com.moinul.cricvee.model.currentPlayers.Squad
-import com.moinul.cricvee.model.currentPlayers.SquadPlayerData
-import com.moinul.cricvee.model.fixtures.FixtureData
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.player_item.view.*
 import kotlinx.android.synthetic.main.rank_item.view.*
@@ -25,14 +24,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-class PlayerSearchAdapter(val context: Context, val viewModel: SportsViewModel, val listFromFragment: List<Squad>)
-    : RecyclerView.Adapter<PlayerSearchAdapter.PlayerSearchViewHolder>() {
+class PlayerSearchAdapter(
+    val context: Context,
+    val viewModel: SportsViewModel,
+    val listFromFragment: List<Squad>
+) : RecyclerView.Adapter<PlayerSearchAdapter.PlayerSearchViewHolder>() {
     private var playersList = listFromFragment
-    private var country:String? = null
+    private var country: String? = null
 
-    class PlayerSearchViewHolder(private val binding: View): RecyclerView.ViewHolder(binding){
-
-    }
+    class PlayerSearchViewHolder(private val binding: View) : RecyclerView.ViewHolder(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerSearchViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.player_item, parent, false)
@@ -53,7 +53,7 @@ class PlayerSearchAdapter(val context: Context, val viewModel: SportsViewModel, 
         var countryData: CountryData?
         var countryFlagPath = ""
 
-        Glide.with(context).load(player?.image_path).fitCenter()
+        Glide.with(context).load(player.image_path).fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .priority(Priority.HIGH)
             .error(R.drawable.ic_connection_error)
@@ -76,13 +76,13 @@ class PlayerSearchAdapter(val context: Context, val viewModel: SportsViewModel, 
             }
         }
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("playerName", playerName.text.toString())
-            bundle.putString("flagImagePath", countryFlagPath)
-            bundle.putString("playerImagePath", player.image_path)
-            bundle.putString("playerCountryName", countryNameValue)
-            bundle.putInt("playerID", player.id)
+            bundle.putString(Constants.PLAYER_NAME_KEY, playerName.text.toString())
+            bundle.putString(Constants.FLAG_IMG_PATH_KEY, countryFlagPath)
+            bundle.putString(Constants.PLAYER_IMG_PATH_KEY, player.image_path)
+            bundle.putString(Constants.PLAYER_COUNTRY_NAME_KEY, countryNameValue)
+            bundle.putInt(Constants.PLAYER_ID_KEY, player.id)
 
             holder.itemView.findNavController().navigate(R.id.playerCareerFragment, bundle)
         }
@@ -93,28 +93,13 @@ class PlayerSearchAdapter(val context: Context, val viewModel: SportsViewModel, 
         Log.d("Search Test", "performSearch: HERE!")
         val searchResults = ArrayList<Squad>()
         for (player in listFromFragment) {
-            //Log.d("List e ki?", "$newsList")
-
             if (player.fullname?.lowercase(Locale.ROOT)
                     ?.contains(text.lowercase(Locale.ROOT)) == true
             ) {
                 searchResults.add(player)
             }
-
-
         }
         showResults(searchResults)
-
-        /*GlobalScope.launch(Dispatchers.IO) {
-
-            for(player in listFromFragment){
-                var countryData: CountryData?
-                countryData = player.country_id?.let { viewModel.getCountryById(it) }
-
-
-            }
-        }*/
-
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -3,11 +3,9 @@ package com.moinul.cricvee.adapter
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,11 +13,12 @@ import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moinul.cricvee.R
 import com.moinul.cricvee.databinding.StatOptionsItemBinding
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.utils.UtilTools
-import kotlinx.android.synthetic.main.stat_options_item.view.*
 
-class FixtureOptionsAdapter (private val context: Context,
-                             private val values: List<UtilTools.Companion.Option>
+class FixtureOptionsAdapter(
+    private val context: Context,
+    private val values: List<UtilTools.Companion.Option>
 ) : RecyclerView.Adapter<FixtureOptionsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,14 +40,14 @@ class FixtureOptionsAdapter (private val context: Context,
             .priority(Priority.HIGH)
             .error(R.drawable.ic_connection_error)
             .into(holder.optionImgView)
-        holder.optionTextView.setText(item.optionName)
+        holder.optionTextView.text = item.optionName
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("leagueId",item.optionLeagueId)
-            bundle.putInt("seasonId", item.optionSeasonId)
-            bundle.putString("leagueImagePath", item.optionImagePath)
-            bundle.putString("leagueName", item.optionName)
+            bundle.putInt(Constants.LEAGUE_ID, item.optionLeagueId)
+            bundle.putInt(Constants.SEASON_ID, item.optionSeasonId)
+            bundle.putString(Constants.LEAGUE_IMG_PATH_KEY, item.optionImagePath)
+            bundle.putString(Constants.LEAGUE_NAME_KEY, item.optionName)
             holder.itemView.findNavController().navigate(R.id.stageListFragment, bundle)
         }
     }

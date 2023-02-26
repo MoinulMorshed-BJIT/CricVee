@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="@dimen/columnTextSize" />
 
     <TextView
         android:id="@+id/runs_column"
@@ -30,8 +30,8 @@
         app:layout_constraintTop_toTopOf="@id/player_column"
         app:layout_constraintBottom_toBottomOf="@id/player_column"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:layout_marginRight="16dp" />
+        android:textSize="@dimen/columnTextSize"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:id="@+id/balls_column"
@@ -42,8 +42,8 @@
         app:layout_constraintTop_toTopOf="@id/player_column"
         app:layout_constraintBottom_toBottomOf="@id/player_column"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:layout_marginRight="16dp" />
+        android:textSize="@dimen/columnTextSize"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:id="@+id/fours_column"
@@ -54,8 +54,8 @@
         app:layout_constraintBottom_toBottomOf="@id/player_column"
 
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:layout_marginRight="16dp" />
+        android:textSize="@dimen/columnTextSize"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:id="@+id/sixes_column"
@@ -66,8 +66,8 @@
         app:layout_constraintBottom_toBottomOf="@id/player_column"
 
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:layout_marginRight="16dp" />
+        android:textSize="@dimen/columnTextSize"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:id="@+id/strike_rate_column"
@@ -77,8 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Strike\nRate"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:layout_marginLeft="16dp" />
+        android:textSize="@dimen/columnTextSize"
+        android:layout_marginStart="@dimen/activity_horizontal_margin" />
 
 
     <!-- Sample scorecard row1 -->
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
         app:layout_constraintStart_toStartOf="@id/player_column"
         app:layout_constraintEnd_toStartOf="@id/runs_column"
-        android:layout_marginRight="@dimen/options_margin"
+        android:layout_marginEnd="@dimen/options_margin"
         tools:text="Player 1"
         android:singleLine="true"
         android:ellipsize="marquee"
@@ -97,7 +97,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:scrollHorizontally="true"
-        android:textSize="16sp" />
+        android:textSize="@dimen/textSizeSp" />
     <TextView
         android:id="@+id/player1_dismissal"
         android:layout_width="0dp"
@@ -105,8 +105,8 @@
         app:layout_constraintTop_toBottomOf="@id/player1_name"
         app:layout_constraintStart_toStartOf="@id/player1_name"
         app:layout_constraintEnd_toStartOf="@id/runs_column"
-        android:layout_marginTop="1dp"
-        android:layout_marginRight="@dimen/options_margin"
+        android:layout_marginTop="@dimen/rankMargin"
+        android:layout_marginEnd="@dimen/options_margin"
         tools:text="c wsfwk b csmoc"
         android:textSize="12sp"
         android:singleLine="true"
@@ -124,9 +124,9 @@
         app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
         app:layout_constraintStart_toStartOf="@id/runs_column"
         app:layout_constraintEnd_toEndOf="@id/runs_column"
-        android:text="50"
+        android:text="@string/_50"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="@dimen/textSizeSp" />
 
     <TextView
         android:id="@+id/player1_balls"
@@ -135,42 +135,42 @@
         app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
         app:layout_constraintStart_toStartOf="@id/balls_column"
         app:layout_constraintEnd_toEndOf="@id/balls_column"
-        android:text="40"
+        android:text="@string/_40"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="@dimen/textSizeSp" />
 
     <TextView
         android:id="@+id/player1_fours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4"
+        android:text="@string/_4"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
         app:layout_constraintStart_toStartOf="@id/fours_column"
         app:layout_constraintEnd_toEndOf="@id/fours_column"
-        android:textSize="16sp" />
+        android:textSize="@dimen/textSizeSp" />
     <TextView
         android:id="@+id/player1_sixes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2"
+        android:text="@string/_2"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
         app:layout_constraintStart_toStartOf="@id/sixes_column"
         app:layout_constraintEnd_toEndOf="@id/sixes_column"
-        android:textSize="16sp" />
+        android:textSize="@dimen/textSizeSp" />
 
     <TextView
         android:id="@+id/player1_strike_rate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="125.00"
+        android:text="@string/_125_00"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/strike_rate_column"
         app:layout_constraintStart_toEndOf="@id/player1_sixes"
         app:layout_constraintEnd_toEndOf="@id/strike_rate_column"
-        android:textSize="16sp"
-        android:layout_marginLeft="22dp"/>
+        android:textSize="@dimen/textSizeSp"
+        android:layout_marginStart="22dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

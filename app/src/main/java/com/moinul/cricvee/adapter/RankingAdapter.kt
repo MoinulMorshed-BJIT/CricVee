@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moinul.cricvee.R
 import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.teamRanking.LocalTeamRanking
+import com.moinul.cricvee.utils.Constants
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.player_item.view.*
 import kotlinx.android.synthetic.main.rank_item.view.*
@@ -27,9 +28,7 @@ class RankingAdapter(val context: Context, val viewModel: SportsViewModel, val l
     : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() {
     private var rankList = listFromFragment
 
-    class RankingViewHolder(private val binding: View): RecyclerView.ViewHolder(binding){
-
-    }
+    class RankingViewHolder(private val binding: View): RecyclerView.ViewHolder(binding)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.rank_item, parent, false)
@@ -48,7 +47,7 @@ class RankingAdapter(val context: Context, val viewModel: SportsViewModel, val l
         val matchesValueTextView = holder.itemView.matchesValue
         val ratingsValueTextView = holder.itemView.ratingValue
         val pointsValueTextView = holder.itemView.pointsValue
-        Log.d(TAG, "onBindViewHolder: RankList Size: ${getItemCount()}")
+        Log.d(TAG, "onBindViewHolder: RankList Size: ${itemCount}")
         if(countryRank.gender=="women"){
             Log.d(TAG, "onBindViewHolder: TeamID: ${countryRank.team_id} CountryID: ${countryRank.country_id}")
         }
@@ -74,7 +73,7 @@ class RankingAdapter(val context: Context, val viewModel: SportsViewModel, val l
             }
         }
         countryPositionTextView.text = countryRank.position.toString()
-        matchesValueTextView.text = "Matches: ${countryRank.matches.toString()}"
+        matchesValueTextView.text = "${Constants.MATCHES_COLON} ${countryRank.matches.toString()}"
         ratingsValueTextView.text = countryRank.rating.toString()
         pointsValueTextView.text = countryRank.points.toString()
 

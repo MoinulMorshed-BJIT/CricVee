@@ -3,7 +3,6 @@ package com.moinul.cricvee.network
 import com.moinul.cricvee.model.career.Career
 import com.moinul.cricvee.model.countries.Countries
 import com.moinul.cricvee.model.currentPlayers.CurrentSquad
-import com.moinul.cricvee.model.currentPlayers.Squad
 import com.moinul.cricvee.model.fixtures.AllFixtures
 import com.moinul.cricvee.model.fixtures.FixtureWithRun
 import com.moinul.cricvee.model.fixturesWithScoreboard.FixtureWithScoreboard
@@ -33,15 +32,7 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(Constants.BASE_URL)
     .build()
 
-
-/*val gson = GsonBuilder().create()
-val retrofit = Retrofit.Builder()
-    .baseUrl(Constants.BASE_URL)
-    .addConverterFactory(GsonConverterFactory.create(gson))
-    .build()*/
-
 interface SportsApiService {
-
     @GET("fixtures")
     suspend fun fetchAllFixtures(
         @Query("page") currentPage: Int,
@@ -53,7 +44,6 @@ interface SportsApiService {
         @Query("filter[starts_between]") duration: String,
         @Query("api_token") api_token: String = Constants.API_KEY
     ): AllFixtures
-
 
     @GET("teams")
     suspend fun fetchAllTeams(@Query("api_token") api_token: String = Constants.API_KEY): AllTeams
@@ -70,11 +60,6 @@ interface SportsApiService {
         @Path("teamId") teamId: Int,
         @Query("api_token") api_token: String = Constants.API_KEY
     ): CurrentSquad
-    /*@GET("players/{playerId}")
-    fun fetchPlayerById(
-        @Path("playerId") playerId: Int,
-        @Query("api_token") api_token: String = Constants.API_KEY
-    ): Call<Squad>*/
 
     @GET("countries")
     suspend fun fetchCountries(@Query("api_token") api_token: String = Constants.API_KEY): Countries
@@ -102,23 +87,23 @@ interface SportsApiService {
     @GET("leagues")
     suspend fun fetchAllLeagues(
         @Query("api_token") api_token: String = Constants.API_KEY
-    ):League
+    ): League
+
     @GET("seasons")
     suspend fun fetchAllSeasons(
         @Query("api_token") api_token: String = Constants.API_KEY
-    ):Season
+    ): Season
+
     @GET("stages")
     suspend fun fetchAllStages(
         @Query("api_token") api_token: String = Constants.API_KEY
-    ):Stage
+    ): Stage
+
     @GET("venues")
     suspend fun fetchAllVenues(
         @Query("api_token") api_token: String = Constants.API_KEY
-    ):Venue
-
-
+    ): Venue
 }
-
 object SportsApi {
     val retrofitService: SportsApiService by lazy {
         retrofit.create(SportsApiService::class.java)
