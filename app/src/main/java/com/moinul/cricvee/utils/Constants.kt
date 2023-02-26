@@ -5,13 +5,7 @@ private const val TAG = "Constants"
 class Constants {
     companion object {
         const val BASE_URL = "https://cricket.sportmonks.com/api/v2.0/"
-//        const val API_KEY = "JGD4ZcPgkJq1waNCkx8CydFwlwuMdQa3dpWWIhJ0pWW9sLKY7gVb8usITjNe"
-
-        //        const val API_KEY = "bux85Cu7ucRrr3vLYgiW8ZKEGAYGCxSOFUUJnZwWOPTKqhy25pwuIcDMfZUK"
         const val API_KEY = "dk2eWyJAQmtLKQxD1R2Dq3tLzvfkWNFtqDGAzcfZlNxD9PTHLsTvJzgkVE1V"
-
-        //        const val API_KEY = "PcvoBre62XxgTdtfAyaNjCb2ZTynH4QGKStFTQaZnmpSjDx53qhsJDgWtX3U"
-
         const val MENS = "Men's"
         const val WOMENS = "Women's"
         const val WOMEN_ATTRIBUTE_VALUE = "women"
