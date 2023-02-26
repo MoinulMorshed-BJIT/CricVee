@@ -34,7 +34,12 @@ class MatchNotificationWorker(context: Context, workerParams: WorkerParameters) 
             .setAutoCancel(true)
 
         // Show the notification
-        notificationManager.notify(0, builder.build())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.notify(0, builder.build())
+        } else {
+            @Suppress("DEPRECATION")
+            notificationManager.notify(0, builder.notification)
+        }
 
         return Result.success()
     }
