@@ -9,10 +9,6 @@ import com.moinul.cricvee.ui.LineupsFragment
 import com.moinul.cricvee.ui.MatchInfoFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
-
-    private val childFragmentManager = fragmentManager
-
-
     override fun getItemCount(): Int {
         return 3
     }

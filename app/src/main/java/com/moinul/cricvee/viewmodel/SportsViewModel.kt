@@ -2,10 +2,12 @@ package com.moinul.cricvee.viewmodel
 
 import android.app.Application
 import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeUnit
 import android.icu.util.TimeZone
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.service.autofill.FieldClassification
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
@@ -13,6 +15,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide.init
 import com.moinul.cricvee.MyApplication
 import com.moinul.cricvee.database.SportsDao
@@ -37,6 +41,7 @@ import com.moinul.cricvee.network.SportsApi
 import com.moinul.cricvee.repository.Repository
 import com.moinul.cricvee.utils.ConnectivityReceiver
 import com.moinul.cricvee.utils.Constants
+import com.moinul.cricvee.worker.MatchNotificationWorker
 import kotlinx.coroutines.*
 import retrofit2.await
 import java.util.*
@@ -66,12 +71,33 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     var readAllSeasonData: LiveData<List<SeasonData>>
     var readAllStageData: LiveData<List<StageData>>
 
-//    var readAllT20IStages: LiveData<List<StageData>>
-
     var readTestRankingWomen: LiveData<List<LocalTeamRanking>>
     var readODIRankingWomen: LiveData<List<LocalTeamRanking>>
     var readT20IRankingWomen: LiveData<List<LocalTeamRanking>>
     private val countdownList = MutableLiveData<List<Long>>()
+
+    private val workManager = WorkManager.getInstance(application)
+
+    fun scheduleMatchNotifications() {
+        countdownList.value?.let { listOfCountdown ->
+            listOfCountdown.forEach{
+                countdown ->
+                run {
+                    if (countdown > 0 && countdown <= 14160000 /*countdown <= 900000*/) {
+                        val notificationWorkRequest =
+                            OneTimeWorkRequestBuilder<MatchNotificationWorker>()
+                                .setInitialDelay(
+                                    60000,
+                                    java.util.concurrent.TimeUnit.MILLISECONDS
+                                )
+                                .addTag("match_notification")
+                                .build()
+                        workManager.enqueue(notificationWorkRequest)
+                    }
+                }
+            }
+        }
+    }
 
 
     init {
@@ -169,6 +195,7 @@ class SportsViewModel(application: Application): AndroidViewModel(application) {
     @RequiresApi(Build.VERSION_CODES.N)
     fun getCountdownList(): LiveData<List<Long>> {
         calculateCountdown()
+        scheduleMatchNotifications()
         return countdownList
     }
 

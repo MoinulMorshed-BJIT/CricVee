@@ -18,6 +18,7 @@ import com.moinul.cricvee.databinding.FragmentMatchDetailsBinding
 import com.moinul.cricvee.utils.UtilTools
 import com.moinul.cricvee.viewmodel.SportsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_match_details.*
 import kotlinx.android.synthetic.main.fragment_match_details.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -60,6 +61,7 @@ class MatchDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().bottom_navbar.visibility=View.GONE
         showProgressBar()
+
 
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager, lifecycle)
         val tabLayout = binding.tabLayout
@@ -123,7 +125,6 @@ class MatchDetailsFragment : Fragment() {
                 }
                 1 -> {
                     tab.text = "SCORECARD"
-
                 }
                 2 -> {
                     tab.text = "LINEUP"
